@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, DateTime, func
+from sqlalchemy import Column, Integer, String, ForeignKey
 from app.utils.database import Base
 
 class DatasetKomentar(Base):
@@ -6,5 +6,4 @@ class DatasetKomentar(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     komentar = Column(String, nullable=False)
-    label = Column(String, nullable=True)  # Label emosi setelah klasifikasi
-    created_at = Column(DateTime, default=func.now())
+    label = Column(Integer, ForeignKey("label_emosi.id"), nullable=True) 
