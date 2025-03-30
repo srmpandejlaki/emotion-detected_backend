@@ -1,21 +1,34 @@
 from fastapi import FastAPI
-from app.config import config
-from app.routes import dataset, classification, preprocessing
+from fastapi.middleware.cors import CORSMiddleware
+from app.database import engine
+from app.models import Base
+from app.routers import all_routers
+
+# Buat database jika belum ada
+Base.metadata.create_all(bind=engine)
 
 # Inisialisasi FastAPI
-app = FastAPI(title=config.APP_NAME, debug=config.DEBUG)
+app = FastAPI(
+    title="Emotion Classification API",
+    description="Backend API for Emotion Classification System",
+    version="1.0.0"
+)
 
-# Registrasi router API
-app.include_router(dataset.router, prefix="/dataset", tags=["Dataset"])
-app.include_router(classification.router, prefix="/classify", tags=["Classification"])
-app.include_router(preprocessing.router, prefix="/preprocess", tags=["Preprocessing"])
+# melakukan konfigurasi CORS agar frontend dapat berkomunikasi dengan backend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Ganti dengan domain frontend jika sudah deploy
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-# Endpoint utama
+# menambahkan semua router yang ada di routers/__init__.py
+for router in all_routers:
+    app.include_router(router)
+
+# Endpoint Root
 @app.get("/")
-def home():
-    return {"message": f"{config.APP_NAME} is running!", "debug_mode": config.DEBUG}
+def read_root():
+    return {"message": "Welcome to Emotion Classification API"}
 
-# Menjalankan aplikasi jika dijalankan secara langsung
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
