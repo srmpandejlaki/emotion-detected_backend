@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta
+from fastapi import HTTPException, Depends
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from sqlalchemy.orm import Session
-from app import models
+from app import models, database
 from passlib.context import CryptContext
 
 # konfigurasi JWT
@@ -36,12 +37,29 @@ def create_access_token(user_id: int):
     return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
 
 # token verification function
-def get_current_user(token: str, db: Session):
+def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(database.get_db)):
+    credentials_exception = HTTPException(
+        status_code=401,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        user_id = payload.get("sub")
-        if not user_id:
-            return None
-        return db.query(models.User).filter(models.User.id == user_id).first()
+        if token in blacklisted_tokens:
+            raise credentials_exception  # Jika token ada di blacklist, ditolak
+        user_id = int(payload.get("sub"))
+        user = db.query(models.User).filter(models.User.id == user_id).first()
+        if user is None:
+            raise credentials_exception
+        return user
     except JWTError:
-        return None
+        raise credentials_exception
+
+# blacklist for invalid tokens
+blacklisted_tokens = set()
+
+# logout function 
+def logout_user(token: str):
+    if token in blacklisted_tokens:
+        raise HTTPException(status_code=400, detail="Token already invalidated")
+    blacklisted_tokens.add(token)
