@@ -5,11 +5,12 @@ from jose import JWTError, jwt
 from sqlalchemy.orm import Session
 from app import models, database
 from passlib.context import CryptContext
+import os
 
 # konfigurasi JWT
-SECRET_KEY = "supersecretkey"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM")
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 
 # hashing password & token authentication
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -20,7 +21,7 @@ def has_password(password: str):
     return pwd_context.hash(password)
 
 # verifying password function
-def verify_password(plain_password, hashed_password):
+def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
 # authentication function 

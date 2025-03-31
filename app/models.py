@@ -16,6 +16,8 @@ class EmotionLabel(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, nullable=False)
 
+    datasets = relationship("Dataset", back_populates="label")
+
 class Dataset(Base):
     __tablename__ = "dataset"
     
@@ -23,7 +25,7 @@ class Dataset(Base):
     text = Column(String, nullable=False)
     label_id = Column(Integer, ForeignKey("emotion_labels.id"), nullable=True)
     
-    label = relationship("EmotionLabel")
+    label = relationship("EmotionLabel", back_populates="datasets")
 
 class ValidationResult(Base):
     __tablename__ = "validation_results"
