@@ -1,5 +1,5 @@
-from pydantic import BaseModel
-from typing import Optional, List
+from pydantic import BaseModel, ConfigDict
+from typing import Optional
 from datetime import datetime
 
 class UserBase(BaseModel):
@@ -10,35 +10,25 @@ class Token(BaseModel):
     access_token: str
     token_type: str
 
-class EmotionLabelBase(BaseModel):
-    name: str
-
-class EmotionLabelResponse(EmotionLabelBase):
-    id: int
-    
-    class Config:
-        from_attributes = True
-
 class DatasetBase(BaseModel):
     text: str
     label_id: Optional[int] = None
 
+class DatasetCreate(DatasetBase):  
+    label_id: int  
+
 class DatasetResponse(DatasetBase):
     id: int
-
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)  # Untuk Pydantic v2
 
 class ValidationResultBase(BaseModel):
     text: str
     label_id: int
-    accuracy: int
-    precision: int
-    recall: int
+    accuracy: float  
+    precision: float
+    recall: float
 
 class ValidationResultResponse(ValidationResultBase):
     id: int
     created_at: datetime
-
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
