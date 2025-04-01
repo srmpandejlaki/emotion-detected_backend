@@ -1,14 +1,15 @@
 from fastapi import FastAPI
+from app.routers import auth, dataset, preprocessing, training, validation
 from app.database import engine, Base
-from app.routers import user, dataset, validation
 
 # Inisialisasi database
 Base.metadata.create_all(bind=engine)
 
-# Inisialisasi aplikasi FastAPI
-app = FastAPI()
+app = FastAPI(title="Emotion Classification API")
 
-# Include Routers
-app.include_router(user.router)
+# Register routers
+app.include_router(auth.router)
 app.include_router(dataset.router)
+app.include_router(preprocessing.router)
+app.include_router(training.router)
 app.include_router(validation.router)
