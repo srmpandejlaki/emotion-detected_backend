@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from app import database, schemas
-from app.services.auth import create_access_token, authenticate_user, logout_user
+from app.services.auth import oauth2_scheme, create_access_token, authenticate_user, logout_user
 
 router = APIRouter()
 
@@ -16,6 +16,6 @@ def login(user_data: schemas.UserBase, db: Session = Depends(database.get_db)):
     return {"access_token": token, "token_type": "bearer"}
 
 @router.post("/logout")
-def logout(token: str = Depends(database.oauth2_scheme)):
+def logout(token: str = Depends(oauth2_scheme)):
     logout_user(token)
     return {"message": "Successfully logged out"}
