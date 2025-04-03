@@ -1,7 +1,7 @@
 # app/routers/preprocessing.py
 from fastapi import APIRouter
 from pydantic import BaseModel
-from app.services.preprocessing_service import get_preprocessing_dataset, preprocess_data, get_processed_results, update_label, save_preprocessed_data
+from app.services.preprocessing import get_preprocessing_dataset, preprocess_data, get_processed_results, update_label, save_preprocessed_data
 
 class LabelUpdate(BaseModel):
     id: int

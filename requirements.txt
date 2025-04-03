@@ -1,9 +1,10 @@
 fastapi
 uvicorn
-pydantic
+pydantic-settings
 sqlalchemy
 psycopg2-binary
 alembic
 passlib[bcrypt]
 python-dotenv
 loguru
+nltk
