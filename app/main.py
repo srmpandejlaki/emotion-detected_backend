@@ -10,7 +10,7 @@ Base.metadata.create_all(bind=engine)
 # Inisialisasi FastAPI
 app = FastAPI(
     title="Emotion Classification API",
-    description="Backend API for Emotion Classification System",
+    description="Backend API for Sentiment Analysis App for Police Performance in Indonesia",
     version="1.0.0"
 )
 
