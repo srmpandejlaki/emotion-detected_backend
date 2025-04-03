@@ -1,54 +1,54 @@
-from fastapi import APIRouter, Depends, UploadFile, File, HTTPException
+import pandas as pd
 from sqlalchemy.orm import Session
-from app.database import get_db
-from app.services.dataset import (
-    process_uploaded_file, 
-    add_manual_data, 
-    get_paginated_dataset, 
-    save_dataset
-)
+from fastapi import HTTPException
+from app.models import Dataset
 
-router = APIRouter(
-    prefix="/data-collection",
-    tags=["Data Collection"]
-)
+# Data sementara sebelum disimpan ke database
+temp_data = []
 
-# Endpoint untuk upload CSV (data belum masuk database, hanya ditampilkan di frontend)
-@router.post("/upload-csv")
-def upload_csv(file: UploadFile = File(...)):
+def process_uploaded_csv(file):
     try:
-        # Proses file CSV menjadi preview data
-        dataset = process_uploaded_file(file)
-        return {"message": "File processed successfully", "data": dataset}
+        df = pd.read_csv(file)
+
+        # Pastikan file memiliki kolom "text"
+        if "text" not in df.columns:
+            raise HTTPException(status_code=400, detail="CSV harus memiliki kolom 'text'")
+
+        # Konversi data ke dictionary
+        dataset = df.to_dict(orient="records")
+
+        # Simpan sementara untuk preview
+        global temp_data
+        temp_data = dataset
+
+        return dataset
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
-# Endpoint untuk menambahkan data manual
-@router.post("/add-data")
-def add_data(text: str):
-    try:
-        # Menambahkan data manual ke list sementara
-        data = add_manual_data(text)
-        return {"message": "Data added successfully", "data": data}
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+def add_manual_data(text: str):
+    if not text or len(text.strip()) < 3:
+        raise HTTPException(status_code=400, detail="Teks terlalu pendek")
 
-# Endpoint untuk menampilkan dataset dengan pagination
-@router.get("/dataset")
-def get_dataset(page: int = 1, db: Session = Depends(get_db)):
-    try:
-        # Mengambil data dari database dengan pagination
-        dataset = get_paginated_dataset(page, db)
-        return {"message": "Dataset retrieved", "data": dataset}
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+    data = {"text": text, "label": None}
+    temp_data.append(data)
+    return temp_data
 
-# Endpoint untuk menyimpan dataset ke database
-@router.post("/save-dataset")
-def save_dataset_api(data: list, db: Session = Depends(get_db)):
-    try:
-        # Menyimpan data yang sudah diproses ke dalam database
-        saved_data = save_dataset(data, db)
-        return {"message": "Dataset saved successfully", "data": saved_data}
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+def get_paginated_dataset(page: int, db: Session):
+    limit = 10
+    offset = (page - 1) * limit
+
+    dataset = db.query(Dataset).offset(offset).limit(limit).all()
+
+    return dataset
+
+def save_dataset(data: list, db: Session):
+    global temp_data
+
+    for item in temp_data:
+        if not db.query(Dataset).filter(Dataset.text == item["text"]).first():
+            new_entry = Dataset(text=item["text"], label=item.get("label"))
+            db.add(new_entry)
+
+    db.commit()
+    temp_data = []  # Kosongkan setelah disimpan
+    return {"message": "Dataset berhasil disimpan"}

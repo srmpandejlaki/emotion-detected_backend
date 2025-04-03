@@ -1,45 +1,54 @@
-# app/services/data_service.py
-from typing import List, Dict
-
-def process_uploaded_csv(df) -> List[Dict[str, str]]:
-    preview = []
-    for index, row in df.iterrows():
-        # Preview hanya text dan label kosong
-        preview.append({
-            "id": index + 1,
-            "text": row['text'],  # Pastikan kolom 'text' ada di CSV
-            "label": None
-        })
-    return preview
-
-# app/services/data_service.py
+import pandas as pd
+from sqlalchemy.orm import Session
 from app.models import Dataset
+from fastapi import HTTPException
 
-def add_manual_data(data) -> Dict:
-    # Menambahkan data manual ke database
-    new_entry = Dataset(text=data.text, label=data.label)
-    new_entry.save()  # Asumsikan kamu memiliki fungsi save()
-    return {"id": new_entry.id, "text": new_entry.text, "label": new_entry.label}
+# Data sementara sebelum disimpan ke database
+temp_data = []
 
-# app/services/data_service.py
-from app.models import Dataset
+def process_uploaded_csv(file):
+    try:
+        df = pd.read_csv(file)
 
-def save_dataset(dataset):
-    for data in dataset:
-        new_entry = Dataset(text=data.text, label=data.label)
-        new_entry.save()
+        # Pastikan file memiliki kolom "text"
+        if "text" not in df.columns:
+            raise HTTPException(status_code=400, detail="CSV harus memiliki kolom 'text'")
 
-# app/services/data_service.py
-from app.models import Dataset
+        # Konversi data ke dictionary
+        dataset = df.to_dict(orient="records")
 
-def get_paginated_dataset(page: int, limit: int):
+        # Simpan sementara untuk preview
+        global temp_data
+        temp_data = dataset
+
+        return dataset
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+def add_manual_data(text: str):
+    if not text or len(text.strip()) < 3:
+        raise HTTPException(status_code=400, detail="Teks terlalu pendek")
+
+    data = {"text": text, "label": None}
+    temp_data.append(data)
+    return temp_data
+
+def get_paginated_dataset(page: int, db: Session):
+    limit = 10
     offset = (page - 1) * limit
-    data = Dataset.query.offset(offset).limit(limit).all()
-    total_items = Dataset.query.count()
-    total_pages = (total_items + limit - 1) // limit
 
-    return {
-        "page": page,
-        "total_pages": total_pages,
-        "data": [{"id": item.id, "text": item.text, "label": item.label} for item in data]
-    }
+    dataset = db.query(Dataset).offset(offset).limit(limit).all()
+
+    return dataset
+
+def save_dataset(data: list, db: Session):
+    global temp_data
+
+    for item in temp_data:
+        if not db.query(Dataset).filter(Dataset.text == item["text"]).first():
+            new_entry = Dataset(text=item["text"], label=item.get("label"))
+            db.add(new_entry)
+
+    db.commit()
+    temp_data = []  # Kosongkan setelah disimpan
+    return {"message": "Dataset berhasil disimpan"}

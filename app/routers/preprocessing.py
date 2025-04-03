@@ -1,35 +1,29 @@
-# app/routers/preprocessing.py
-from fastapi import APIRouter
-from pydantic import BaseModel
-from app.services.preprocessing import get_preprocessing_dataset, preprocess_data, get_processed_results, update_label, save_preprocessed_data
+from fastapi import APIRouter, HTTPException, Depends
+from sqlalchemy.orm import Session
+from app.services.preprocessing_service import process_preprocessing, save_preprocessed_data
+from app.database import get_db
 
-class LabelUpdate(BaseModel):
-    id: int
-    label: int
+router = APIRouter(
+    prefix="/preprocessing",
+    tags=["Preprocessing"]
+)
 
-router = APIRouter()
+# Endpoint untuk memulai preprocessing
+@router.post("/process")
+def process_data(db: Session = Depends(get_db)):
+    try:
+        # Proses data yang diambil dari database untuk preprocessing
+        result = process_preprocessing(db)
+        return {"message": "Preprocessing done", "data": result}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-@router.get("/dataset")
-async def get_dataset():
-    dataset = get_preprocessing_dataset()
-    return dataset
-
-@router.post("/")
-async def preprocess():
-    processed_data = preprocess_data()
-    return {"message": "Preprocessing selesai", "processed_data": processed_data}
-
-@router.get("/results")
-async def get_results():
-    results = get_processed_results()
-    return results
-
-@router.post("/label")
-async def update_label_data(label_data: LabelUpdate):
-    update_label(label_data)
-    return {"message": "Label berhasil diperbarui"}
-
+# Endpoint untuk menyimpan hasil preprocessing
 @router.post("/save")
-async def save_data():
-    save_preprocessed_data()
-    return {"message": "Data berhasil disimpan setelah preprocessing"}
+def save_processed_data(data: list, db: Session = Depends(get_db)):
+    try:
+        # Simpan hasil preprocessing ke database
+        saved_data = save_preprocessed_data(data, db)
+        return {"message": "Preprocessed data saved", "data": saved_data}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))

@@ -1,52 +1,55 @@
-# app/services/preprocessing_service.py
-from app.models import Dataset
-
-def get_preprocessing_dataset():
-    dataset = Dataset.query.filter(Dataset.label.is_(None)).all()
-    return [{"id": item.id, "text": item.text} for item in dataset]
-
-# app/services/preprocessing_service.py
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-from nltk.stem import PorterStemmer
-
-# Pastikan untuk mengunduh stopwords dan punkt
 import nltk
-nltk.download('punkt')
-nltk.download('stopwords')
+from sqlalchemy.orm import Session
+from app.models import Dataset
+from fastapi import HTTPException
 
-def preprocess_data():
-    stop_words = set(stopwords.words('indonesian'))
-    stemmer = PorterStemmer()
-    
-    dataset = Dataset.query.filter(Dataset.label.is_(None)).all()
-    processed_data = []
-    
-    for item in dataset:
-        tokens = word_tokenize(item.text.lower())  # Tokenisasi
-        filtered_tokens = [word for word in tokens if word not in stop_words]  # Hapus stopwords
-        stemmed_tokens = [stemmer.stem(word) for word in filtered_tokens]  # Stemming
-        processed_text = " ".join(stemmed_tokens)
+nltk.download("stopwords")
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+
+def process_preprocessing(db: Session):
+    try:
+        # Ambil dataset yang perlu diproses
+        dataset = db.query(Dataset).filter(Dataset.label == None).all()
+
+        if not dataset:
+            raise HTTPException(status_code=404, detail="No data to preprocess")
+
+        processed_data = []
         
-        processed_data.append({"id": item.id, "processed_text": processed_text, "label": item.label})
-    
-    return processed_data
+        for data in dataset:
+            text = data.text
+            # Tokenisasi dan hapus stopwords
+            words = word_tokenize(text)
+            words = [word for word in words if word.isalnum()]  # Hapus tanda baca
+            stop_words = set(stopwords.words("indonesian"))
+            words = [word for word in words if word not in stop_words]
+            
+            # Lematisasi atau stemming (jika diperlukan)
+            # Anda bisa menggunakan Lemmatizer atau Stemmer dari NLTK atau Spacy
+            
+            processed_text = " ".join(words)
+            processed_data.append({"text": processed_text, "label": data.label})
+        
+        return processed_data
 
-# app/services/preprocessing_service.py
-def get_processed_results():
-    dataset = Dataset.query.filter(Dataset.label.is_(None)).all()
-    return [{"id": item.id, "processed_text": item.text, "label": item.label} for item in dataset]
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-# app/services/preprocessing_service.py
-def update_label(label_data):
-    item = Dataset.query.get(label_data.id)
-    if item:
-        item.label = label_data.label
-        item.save()  # Asumsikan ada fungsi save untuk menyimpan perubahan
-
-# app/services/preprocessing_service.py
-def save_preprocessed_data():
-    # Dataset sudah memiliki label, jadi kita bisa simpan ke database
-    dataset = Dataset.query.filter(Dataset.label.is_(None)).all()
-    for item in dataset:
-        item.save()  # Menyimpan data setelah preprocessing
+def save_preprocessed_data(data: list, db: Session):
+    try:
+        for item in data:
+            # Update label setelah preprocessing
+            existing_data = db.query(Dataset).filter(Dataset.text == item["text"]).first()
+            if existing_data:
+                existing_data.text = item["text"]
+                existing_data.label = item["label"]
+            else:
+                # Jika data belum ada, tambahkan sebagai data baru
+                new_data = Dataset(text=item["text"], label=item["label"])
+                db.add(new_data)
+        
+        db.commit()
+        return {"message": "Data successfully saved"}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
