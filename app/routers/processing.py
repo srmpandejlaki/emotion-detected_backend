@@ -1,42 +1,35 @@
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Depends, Query
 from sqlalchemy.orm import Session
-from fastapi.responses import FileResponse
-from app.services import model_service
-from app.dependencies import get_db
+from app.database import get_db
+from app.services.processing_service import train_model, load_latest_metrics
 
 router = APIRouter(prefix="/processing", tags=["Processing"])
 
-@router.post("/train")
-def train_model(
-    ratio: str = Query("80:20", description="Rasio pembagian data latih:uji, contoh: 80:20"),
+@router.post("/train", summary="Melatih model Naïve Bayes dengan rasio dataset")
+async def train(
+    ratio: str = Query(..., description="Format rasio contoh: '80:20'"),
     db: Session = Depends(get_db)
 ):
-    try:
-        result, error = model_service.train_model(ratio, db)
-        if error:
-            raise HTTPException(status_code=400, detail=error)
+    if ":" not in ratio:
+        raise HTTPException(status_code=400, detail="Format rasio tidak valid. Gunakan format seperti '80:20'.")
 
-        # Simpan file data uji
-        file_path = model_service.save_test_data_to_csv(result["test_data"])
-        return {
-            "message": "Model berhasil dilatih.",
-            "metrics": result["metrics"],
-            "download_test_data": f"/processing/download-test-data"
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    result, error_message = train_model(ratio, db)
+    if error_message:
+        raise HTTPException(status_code=400, detail=error_message)
 
+    return {
+        "message": "Model berhasil dilatih.",
+        "metrics": result["metrics"],
+        "test_data": result["test_data"].to_dict()
+    }
 
-@router.get("/metrics")
-def get_model_metrics():
-    if not model_service.is_model_available():
-        raise HTTPException(status_code=404, detail="Model belum tersedia.")
-
-    metrics = model_service.load_latest_metrics()
-    return {"metrics": metrics}
-
-
-@router.get("/download-test-data")
-def download_test_data():
-    file_path = model_service.TEST_DATA_PATH
-    return FileResponse(path=file_path, filename="data_uji.csv", media_type="text/csv")
+@router.get("/metrics", summary="Mendapatkan metrik evaluasi model terbaru")
+async def get_metrics():
+    metrics = load_latest_metrics()
+    if not metrics:
+        raise HTTPException(status_code=404, detail="Belum ada metrik evaluasi yang tersedia.")
+    
+    return {
+        "message": "Metrik evaluasi terbaru",
+        "metrics": metrics
+    }

@@ -1,15 +1,17 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends, Body
-from app.dependencies import get_db
-from app.services import model, validation
 from sqlalchemy.orm import Session
 import pandas as pd
 import io
 
-router = APIRouter(prefix="/evaluation", tags=["Evaluation"])
+from app.database import get_db
+from app.services.model_service import is_model_available, evaluate_model_with_csv
+from app.services.validation_service import predict_single_text, predict_batch_texts
 
-@router.post("/validate-model")
+router = APIRouter(prefix="/validation", tags=["Validation"])
+
+@router.post("/evaluate", summary="Evaluasi model dengan file CSV data uji")
 async def validate_model(file: UploadFile = File(...), db: Session = Depends(get_db)):
-    if not model.is_model_available():
+    if not is_model_available():
         raise HTTPException(status_code=404, detail="Model belum tersedia.")
 
     if not file.filename.endswith(".csv"):
@@ -19,13 +21,13 @@ async def validate_model(file: UploadFile = File(...), db: Session = Depends(get
         contents = await file.read()
         df = pd.read_csv(io.BytesIO(contents))
 
+        # Validasi kolom
         if "text" not in df.columns or "label" not in df.columns:
-            raise HTTPException(
-                status_code=400,
-                detail="File CSV harus memiliki kolom 'text' dan 'label'."
-            )
+            raise HTTPException(status_code=400, detail="CSV harus memiliki kolom 'text' dan 'label'.")
 
-        results = model.evaluate_model_with_csv(df, db)
+        df = df.dropna(subset=["text"])  # Hapus baris dengan teks kosong
+
+        results = evaluate_model_with_csv(df, db)
 
         return {
             "message": "Evaluasi berhasil.",
@@ -36,26 +38,20 @@ async def validate_model(file: UploadFile = File(...), db: Session = Depends(get
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@router.post("/predict-text")
-async def predict_text(
-    text: str = Body(..., embed=True),
-    db: Session = Depends(get_db)
-):
-    if not model.is_model_available():
+@router.post("/predict-single", summary="Prediksi emosi dari input tunggal")
+async def predict_text(text: str = Body(..., embed=True), db: Session = Depends(get_db)):
+    if not is_model_available():
         raise HTTPException(status_code=404, detail="Model belum tersedia.")
 
-    prediction = validation.predict_single_text(text, db)
+    prediction = predict_single_text(text, db)
     return {
         "text": text,
         "predicted_emotion": prediction
     }
 
-@router.post("/predict-batch")
-async def predict_batch(
-    file: UploadFile = File(...),
-    db: Session = Depends(get_db)
-):
-    if not model.is_model_available():
+@router.post("/predict-batch", summary="Prediksi emosi dari file CSV")
+async def predict_batch(file: UploadFile = File(...), db: Session = Depends(get_db)):
+    if not is_model_available():
         raise HTTPException(status_code=404, detail="Model belum tersedia.")
 
     if not file.filename.endswith(".csv"):
@@ -65,50 +61,13 @@ async def predict_batch(
         contents = await file.read()
         df = pd.read_csv(io.BytesIO(contents))
 
+        # Validasi kolom
         if "text" not in df.columns:
             raise HTTPException(status_code=400, detail="CSV harus memiliki kolom 'text'.")
 
-        result = validation.predict_batch_texts(df, db)
+        df = df.dropna(subset=["text"])  # Hapus baris kosong
 
-        return {
-            "message": "Prediksi batch berhasil.",
-            "results": result
-        }
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))@router.post("/predict-text")
-async def predict_text(
-    text: str = Body(..., embed=True),
-    db: Session = Depends(get_db)
-):
-    if not model.is_model_available():
-        raise HTTPException(status_code=404, detail="Model belum tersedia.")
-
-    prediction = validation.predict_single_text(text, db)
-    return {
-        "text": text,
-        "predicted_emotion": prediction
-    }
-
-@router.post("/predict-batch")
-async def predict_batch(
-    file: UploadFile = File(...),
-    db: Session = Depends(get_db)
-):
-    if not model.is_model_available():
-        raise HTTPException(status_code=404, detail="Model belum tersedia.")
-
-    if not file.filename.endswith(".csv"):
-        raise HTTPException(status_code=400, detail="File harus berupa CSV.")
-
-    try:
-        contents = await file.read()
-        df = pd.read_csv(io.BytesIO(contents))
-
-        if "text" not in df.columns:
-            raise HTTPException(status_code=400, detail="CSV harus memiliki kolom 'text'.")
-
-        result = validation.predict_batch_texts(df, db)
+        result = predict_batch_texts(df, db)
 
         return {
             "message": "Prediksi batch berhasil.",
