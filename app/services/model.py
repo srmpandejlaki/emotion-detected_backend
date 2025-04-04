@@ -2,12 +2,12 @@ import os
 import joblib
 import pandas as pd
 from typing import Tuple
+from sqlalchemy.orm import Session
+from app.models import PreprocessedData
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score, precision_score, recall_score
-from sqlalchemy.orm import Session
-from app.models import PreprocessedData
 
 MODEL_PATH = "app/models_ml/naive_bayes_model.pkl"
 TEST_DATA_PATH = "app/models_ml/data_uji.csv"
@@ -21,7 +21,6 @@ def train_model(ratio_str: str, db: Session) -> Tuple[dict, str]:
     texts = [item.cleaned_text for item in data]
     labels = [item.label for item in data]
 
-    # Konversi rasio
     try:
         train_ratio = int(ratio_str.split(":")[0]) / 100
     except:
@@ -38,10 +37,8 @@ def train_model(ratio_str: str, db: Session) -> Tuple[dict, str]:
     model = MultinomialNB()
     model.fit(X_train_vec, y_train)
 
-    # Simpan model dan vectorizer
     joblib.dump((model, vectorizer), MODEL_PATH)
 
-    # Prediksi & evaluasi
     y_pred = model.predict(X_test_vec)
     metrics = {
         "accuracy": round(accuracy_score(y_test, y_pred) * 100, 2),
@@ -49,10 +46,8 @@ def train_model(ratio_str: str, db: Session) -> Tuple[dict, str]:
         "recall": round(recall_score(y_test, y_pred, average="macro") * 100, 2),
     }
 
-    # Simpan metrik ke file
     pd.Series(metrics).to_json(METRICS_PATH)
 
-    # Buat DataFrame untuk data uji
     df_test = pd.DataFrame({
         "text": X_test,
         "label": y_test,
