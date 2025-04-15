@@ -1,4 +1,4 @@
-from app.constants import EMOTION_LABELS
+from app.utils.constants import EMOTION_LABELS
 
 def map_label_to_emotion(label: int) -> str:
     """

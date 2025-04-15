@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.routers import auth, dataset, preprocessing, training, validation
-from app.database import engine, Base
+from app.database.database import engine, Base
 
 # Inisialisasi database
 Base.metadata.create_all(bind=engine)

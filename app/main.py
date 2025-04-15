@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.database import engine
-from app.models import Base
+from app.database.database import engine
+from app.models.models import Base
 from app.routers import all_routers
 
 # Buat database jika belum ada
