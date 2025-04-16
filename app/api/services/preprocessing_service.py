@@ -1,7 +1,8 @@
 import nltk
 from sqlalchemy.orm import Session
-from app.database.model_database import Dataset, PreprocessedData
+from app.database.model_database import DataCollection, ProcessResult
 from fastapi import HTTPException
+from app.database.model_database import ProcessResult
 
 nltk.download("stopwords")
 nltk.download("punkt")
@@ -10,7 +11,7 @@ from nltk.tokenize import word_tokenize
 
 def process_preprocessing(db: Session):
     try:
-        dataset = db.query(Dataset).all()
+        dataset = db.query(DataCollection).all()
 
         if not dataset:
             raise HTTPException(status_code=404, detail="No data found")
@@ -40,7 +41,7 @@ def save_preprocessed_data(processed_data: list, db: Session):
     try:
         for item in processed_data:
             # Simpan ke tabel hasil preprocessing
-            new_entry = PreprocessedData(
+            new_entry = ProcessResult(
                 original_id=item["original_id"],
                 original_text=item["original_text"],
                 cleaned_text=item["cleaned_text"],
@@ -53,3 +54,17 @@ def save_preprocessed_data(processed_data: list, db: Session):
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+def get_all_preprocessing_results(db: Session):
+    return db.query(ProcessResult).all()
+
+def add_preprocessing_result(db: Session, id_data: int, text_preprocessing: str):
+    result = ProcessResult(
+        id_data=id_data,
+        text_preprocessing=text_preprocessing
+    )
+    db.add(result)
+    db.commit()
+    db.refresh(result)
+    return result
