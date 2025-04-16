@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score, precision_score, recall_score
-from app.models import PreprocessedData
+from models.models import PreprocessedData
 
 MODEL_PATH = "app/models_ml/naive_bayes_model.pkl"
 METRICS_PATH = "app/models_ml/metrics.json"

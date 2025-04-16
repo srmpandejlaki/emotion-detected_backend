@@ -1,6 +1,6 @@
 import nltk
 from sqlalchemy.orm import Session
-from app.models import Dataset
+from models.models import Dataset
 from fastapi import HTTPException
 
 nltk.download("stopwords")

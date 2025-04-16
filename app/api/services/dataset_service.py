@@ -1,8 +1,8 @@
 import pandas as pd
 from sqlalchemy.orm import Session
-from app.models import Dataset
+from models.models import Dataset
 from fastapi import HTTPException
-from app.schemas import DatasetCreate
+from database.schemas import DatasetCreate
 
 # Gunakan list dictionary untuk menyimpan sementara
 temp_data = []
