@@ -4,17 +4,6 @@ from typing import List, Optional
 
 from app.database import model_database
 
-# User CRUD
-def create_user(db: Session, user: schemas.UserCreate):
-    db_user = model_database.User(username=user.username, password=user.password)
-    db.add(db_user)
-    db.commit()
-    db.refresh(db_user)
-    return db_user
-
-def get_user_by_username(db: Session, username: str) -> Optional[model_database.User]:
-    return db.query(model_database.User).filter(model_database.User.username == username).first()
-
 # Emotion Label CRUD
 def get_emotion_labels(db: Session) -> List[model_database.EmotionLabel]:
     return db.query(model_database.EmotionLabel).all()

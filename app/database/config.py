@@ -8,10 +8,10 @@ class Settings(BaseSettings):
     DATABASE_URL: str = os.getenv("DB_URL")
     SECRET_KEY: str = os.getenv("SECRET_KEY")
     ALGORITHM: str = os.getenv("ALGORITHM")
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 
     # Tambahan untuk path model dan data
-    MODEL_DIR: str = "app/models_ml"
+    MODEL_DIR: str = "app/models"
     MODEL_FILE: str = "naive_bayes_model.pkl"
     METRICS_FILE: str = "metrics.json"
     TEST_DATA_FILE: str = "data_uji.csv"
