@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.models.models import PreprocessedData
+from app.database.model_database import PreprocessedData
 
 def save_preprocessed_data(db: Session, data: list):
     """

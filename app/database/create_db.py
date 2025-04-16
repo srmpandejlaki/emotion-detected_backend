@@ -1,7 +1,7 @@
 from app.database.database import engine
-from app.models import models
+from app.database import model_database
 
 # create table in database
-models.Base.metadata.create_all(bind=engine)
+model_database.Base.metadata.create_all(bind=engine)
 
 # jalankan dengan cara python app/create_db.py

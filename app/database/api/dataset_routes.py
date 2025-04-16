@@ -1,7 +1,7 @@
 import pandas as pd
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
-from models.models import Dataset
+from app.database.model_database import Dataset
 
 # Data sementara sebelum disimpan ke database
 temp_data = []
