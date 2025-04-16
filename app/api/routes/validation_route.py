@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 import pandas as pd
 import io
 
-from database.database import get_db
+from app.database.session import get_db
 from services.model_service import is_model_available, evaluate_model_with_csv
 from services.validation_service import predict_single_text, predict_batch_texts
 

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException, Depends, Query
 from sqlalchemy.orm import Session
-from database.database import get_db
+from app.database.session import get_db
 from services.processing_service import train_model, load_latest_metrics
 
 router = APIRouter(prefix="/processing", tags=["Processing"])

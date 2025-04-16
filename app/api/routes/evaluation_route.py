@@ -1,7 +1,7 @@
 from fastapi import APIRouter, UploadFile, File, Depends
 import pandas as pd
 from sqlalchemy.orm import Session
-from database.database import get_db
+from app.database.session import get_db
 from services.evaluation_service import evaluate_model_with_csv
 
 router = APIRouter()

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.database.database import engine, Base
+from app.database.session import engine, Base
 from app.api.routers import classification_router, validation_router, dataset_router
 from app.services.model_service import check_model_availability
 

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from app.database.api import dataset_controller
-from app.database.database import get_db
+from app.database.session import get_db
 from app.database.model_database import DataCollection
 
 router = APIRouter(prefix="/data-collection", tags=["Data Collection"])
