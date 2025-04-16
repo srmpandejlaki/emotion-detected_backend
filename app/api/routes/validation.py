@@ -3,9 +3,9 @@ from sqlalchemy.orm import Session
 import pandas as pd
 import io
 
-from app.database import get_db
-from app.services.model_service import is_model_available, evaluate_model_with_csv
-from app.services.validation_service import predict_single_text, predict_batch_texts
+from database.database import get_db
+from services.model_service import is_model_available, evaluate_model_with_csv
+from services.validation_service import predict_single_text, predict_batch_texts
 
 router = APIRouter(prefix="/validation", tags=["Validation"])
 

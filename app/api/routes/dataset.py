@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.database import get_db
-from app.schemas import DatasetCreate, DatasetResponse
-from app.services.dataset_service import add_dataset_service, get_all_datasets_service
+from database.database import get_db
+from database.schemas import DatasetCreate, DatasetResponse
+from services.dataset_service import add_dataset_service, get_all_datasets_service
 
 router = APIRouter(prefix="/dataset", tags=["Dataset"])
 
