@@ -1,34 +1,22 @@
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from app.database.database import engine
-from app.models.models import Base
-from app.routers import all_routers
+from app.database.database import engine, Base
+from app.api.routers import classification_router, validation_router, dataset_router
+from app.services.model_service import check_model_availability
 
-# Buat database jika belum ada
+# Inisialisasi aplikasi FastAPI
+app = FastAPI()
+
+# Create the database tables if they do not exist
 Base.metadata.create_all(bind=engine)
 
-# Inisialisasi FastAPI
-app = FastAPI(
-    title="Emotion Classification API",
-    description="Backend API for Sentiment Analysis App for Police Performance in Indonesia",
-    version="1.0.0"
-)
+# Register routers
+app.include_router(classification_router.router)
+app.include_router(validation_router.router)
+app.include_router(dataset_router.router)
 
-# melakukan konfigurasi CORS agar frontend dapat berkomunikasi dengan backend
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Ganti dengan domain frontend jika sudah deploy
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# menambahkan semua router yang ada di routers/__init__.py
-for router in all_routers:
-    app.include_router(router)
-
-# Endpoint Root
-@app.get("/")
-def read_root():
-    return {"message": "Welcome to Emotion Classification API"}
+# Endpoint untuk mengecek status model
+@app.get("/model/status")
+def model_status():
+    model_available, message = check_model_availability()
+    return {"model_available": model_available, "message": message}
 
