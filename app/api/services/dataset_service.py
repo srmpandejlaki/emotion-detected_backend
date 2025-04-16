@@ -1,46 +1,54 @@
 import pandas as pd
 from sqlalchemy.orm import Session
-from fastapi import HTTPException
 from app.models import Dataset
+from fastapi import HTTPException
 from app.schemas import DatasetCreate
-from app.utils.validation_utils import validate_csv_columns
-from app.utils.logging_utils import log_error
-from app.utils.temp_storage import temp_data, clear_temp_data, add_temp_data, get_temp_data
-# (opsional) from app.utils.db_handler import dataset_exists
+
+# Gunakan list dictionary untuk menyimpan sementara
+temp_data = []
+
+def validate_csv_columns(df: pd.DataFrame):
+    """Memeriksa apakah CSV memiliki kolom yang sesuai."""
+    required_columns = {"text"}
+    if not required_columns.issubset(set(df.columns)):
+        raise HTTPException(status_code=400, detail=f"CSV harus memiliki kolom {required_columns}")
 
 def process_uploaded_csv(file):
-    """Proses file CSV dan menyimpannya sementara untuk preview."""
+    """Proses file CSV yang diunggah dan menyimpannya untuk preview."""
     try:
         df = pd.read_csv(file)
-        validate_csv_columns(df, required_columns={"text"})
+
+        # Validasi kolom
+        validate_csv_columns(df)
+
         dataset = df.to_dict(orient="records")
 
-        # Simpan sementara
-        temp_data.clear()
-        temp_data.extend(dataset)
+        global temp_data
+        temp_data = dataset
 
         return dataset
     except Exception as e:
-        log_error(f"Error in process_uploaded_csv: {str(e)}")
         raise HTTPException(status_code=400, detail=str(e))
 
 def add_manual_data(text: str):
-    """Tambah data manual ke temp_data."""
+    """Menambahkan data secara manual ke daftar sementara."""
     if not text or len(text.strip()) < 3:
         raise HTTPException(status_code=400, detail="Teks terlalu pendek")
 
     data = {"text": text, "label": None}
-    add_temp_data(data)
-    return get_temp_data()
+    temp_data.append(data)
+    return temp_data
 
 def get_paginated_dataset(page: int, db: Session):
-    """Ambil dataset dari DB dengan paginasi."""
+    """Mengambil dataset dengan paginasi."""
     limit = 10
     offset = (page - 1) * limit
-    return db.query(Dataset).offset(offset).limit(limit).all()
+
+    dataset = db.query(Dataset).offset(offset).limit(limit).all()
+    return dataset
 
 def add_dataset_service(data: DatasetCreate, db: Session):
-    """Tambah satu entri dataset ke database."""
+    """Menambahkan dataset ke database."""
     if db.query(Dataset).filter(Dataset.text == data.text).first():
         raise HTTPException(status_code=400, detail="Dataset sudah ada")
 
@@ -48,19 +56,22 @@ def add_dataset_service(data: DatasetCreate, db: Session):
     db.add(new_entry)
     db.commit()
     db.refresh(new_entry)
+
     return new_entry
 
 def get_all_datasets_service(db: Session):
-    """Ambil semua dataset dari DB."""
+    """Mengambil semua dataset dari database."""
     return db.query(Dataset).all()
 
 def save_dataset(db: Session):
-    """Simpan semua data dari `temp_data` ke DB."""
-    for item in get_temp_data():
+    """Menyimpan data dari temp_data ke database."""
+    global temp_data
+
+    for item in temp_data:
         if not db.query(Dataset).filter(Dataset.text == item["text"]).first():
             new_entry = Dataset(text=item["text"], label=item.get("label"))
             db.add(new_entry)
 
     db.commit()
-    clear_temp_data()
+    temp_data = []  # Kosongkan setelah disimpan
     return {"message": "Dataset berhasil disimpan"}

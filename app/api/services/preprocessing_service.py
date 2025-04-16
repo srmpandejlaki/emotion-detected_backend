@@ -1,12 +1,15 @@
+import nltk
 from sqlalchemy.orm import Session
-from fastapi import HTTPException
 from app.models import Dataset
-from app.utils.text_processing import preprocess_text
-from app.utils.logging_utils import log_error
+from fastapi import HTTPException
+
+nltk.download("stopwords")
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
 
 def process_preprocessing(db: Session):
     try:
-        # Ambil dataset yang belum diberi label
+        # Ambil dataset yang perlu diproses
         dataset = db.query(Dataset).filter(Dataset.label == None).all()
 
         if not dataset:
@@ -15,13 +18,22 @@ def process_preprocessing(db: Session):
         processed_data = []
         
         for data in dataset:
-            processed_text = preprocess_text(data.text)
+            text = data.text
+            # Tokenisasi dan hapus stopwords
+            words = word_tokenize(text)
+            words = [word for word in words if word.isalnum()]  # Hapus tanda baca
+            stop_words = set(stopwords.words("indonesian"))
+            words = [word for word in words if word not in stop_words]
+            
+            # Lematisasi atau stemming (jika diperlukan)
+            # Anda bisa menggunakan Lemmatizer atau Stemmer dari NLTK atau Spacy
+            
+            processed_text = " ".join(words)
             processed_data.append({"text": processed_text, "label": data.label})
         
         return processed_data
 
     except Exception as e:
-        log_error(f"Error in process_preprocessing: {str(e)}")
         raise HTTPException(status_code=400, detail=str(e))
 
 def save_preprocessed_data(data: list, db: Session):
@@ -40,5 +52,4 @@ def save_preprocessed_data(data: list, db: Session):
         db.commit()
         return {"message": "Data successfully saved"}
     except Exception as e:
-        log_error(f"Error in save_preprocessed_data: {str(e)}")
         raise HTTPException(status_code=400, detail=str(e))

@@ -2,6 +2,11 @@ from pydantic import BaseModel, ConfigDict
 from typing import Optional
 from datetime import datetime
 
+class InputData(BaseModel):
+    text: str
+    label: Optional[str] = None
+
+# lama
 
 class DatasetBase(BaseModel):
     text: str
