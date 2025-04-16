@@ -1,54 +1,27 @@
-import pandas as pd
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from fastapi import HTTPException
-from app.database.model_database import Dataset
+from app.database.api import dataset_controller
+from app.database.database import get_db
+from app.database.model_database import DataCollection
 
-# Data sementara sebelum disimpan ke database
-temp_data = []
+router = APIRouter(prefix="/data-collection", tags=["Data Collection"])
 
-def process_uploaded_csv(file):
-    try:
-        df = pd.read_csv(file)
+@router.get("/")
+def get_data(db: Session = Depends(get_db)):
+    return dataset_controller.get_all_data_collection(db)
 
-        # Pastikan file memiliki kolom "text"
-        if "text" not in df.columns:
-            raise HTTPException(status_code=400, detail="CSV harus memiliki kolom 'text'")
+@router.get("/{id}", response_model=DataCollection)  # Optional: Tambah response_model untuk validasi response
+def get_data_by_id(id: int, db: Session = Depends(get_db)):
+    data = dataset_controller.get_data_collection_by_id(db, id)
+    if not data:
+        raise HTTPException(status_code=404, detail="Data not found")
+    return data
 
-        # Konversi data ke dictionary
-        dataset = df.to_dict(orient="records")
+@router.post("/")
+def create_data(text: str, label_id: int = None, db: Session = Depends(get_db)):
+    return dataset_controller.create_data_entry(db, text, label_id)
 
-        # Simpan sementara untuk preview
-        global temp_data
-        temp_data = dataset
-
-        return dataset
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
-
-def add_manual_data(text: str):
-    if not text or len(text.strip()) < 3:
-        raise HTTPException(status_code=400, detail="Teks terlalu pendek")
-
-    data = {"text": text, "label": None}
-    temp_data.append(data)
-    return temp_data
-
-def get_paginated_dataset(page: int, db: Session):
-    limit = 10
-    offset = (page - 1) * limit
-
-    dataset = db.query(Dataset).offset(offset).limit(limit).all()
-
-    return dataset
-
-def save_dataset(data: list, db: Session):
-    global temp_data
-
-    for item in temp_data:
-        if not db.query(Dataset).filter(Dataset.text == item["text"]).first():
-            new_entry = Dataset(text=item["text"], label=item.get("label"))
-            db.add(new_entry)
-
-    db.commit()
-    temp_data = []  # Kosongkan setelah disimpan
-    return {"message": "Dataset berhasil disimpan"}
+@router.delete("/")
+def delete_all_data(db: Session = Depends(get_db)):
+    dataset_controller.delete_all_data_collection(db)
+    return {"message": "All data deleted"}
