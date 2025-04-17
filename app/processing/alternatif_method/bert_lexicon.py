@@ -1,50 +1,62 @@
 from collections import defaultdict
+from typing import List
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
 import torch
 import torch.nn.functional as F
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
+import json
 
-# Load model sekali saja
-MODEL_NAME = "indobenchmark/indobert-base-p1"  # Ganti sesuai model kamu
-bert_model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME)
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-bert_model.eval()
+class BERTEmotionClassifier:
+    def __init__(self, model_name: str = "indobenchmark/indobert-base-p1", 
+                 label_file_path: str = "app/utils/labels.json", 
+                 lexicon_file_path: str = "app/utils/emotion_lexicon.json"):
+        self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
+        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+        self.model.eval()
+        self.label_list = self.load_label_list(label_file_path)
+        self.emotion_lexicon = self.load_lexicon(lexicon_file_path)
 
-# Contoh lexicon
-# Format: {"word": ["emotion1", "emotion2"]}
-emotion_lexicon = {
-    "senang": ["joy"],
-    "percaya": ["trust"],
-    "terkejut": ["shock"],
-    "netral": ["netral"],
-    "takut": ["fear"],
-    "sedih": ["sadness"],
-    "marah": ["anger"]
-    # Tambahkan lebih banyak kata sesuai kamusmu
-}
+    # Fungsi untuk membaca label dari file JSON
+    def load_label_list(self, file_path: str) -> list:
+        try:
+            with open(file_path, 'r') as f:
+                data = json.load(f)
+                return data.get("labels", [])
+        except Exception as e:
+            print(f"Error loading label list: {e}")
+            return []
 
-def predict_with_bert(text: str, label_list: list[str]) -> list[float]:
-    inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True)
-    with torch.no_grad():
-        outputs = bert_model(**inputs)
-        probs = F.softmax(outputs.logits, dim=1).squeeze().tolist()
-    return probs  # Sesuaikan urutan dengan label_list
+    # Fungsi untuk membaca kamus lexikon dari file JSON
+    def load_lexicon(self, file_path: str) -> dict:
+        try:
+            with open(file_path, 'r') as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"Error loading lexicon: {e}")
+            return {}
 
-def lexicon_score(text: str, label_list: list[str]) -> dict:
-    scores = defaultdict(int)
-    words = text.lower().split()
-    for word in words:
-        if word in emotion_lexicon:
-            for emotion in emotion_lexicon[word]:
-                scores[emotion] += 1
-    total = sum(scores.values()) or 1
-    normalized = {k: v / total for k, v in scores.items()}
-    return {label: normalized.get(label, 0) for label in label_list}
+    def predict_with_bert(self, text: str) -> List[float]:
+        inputs = self.tokenizer(text, return_tensors="pt", truncation=True, padding=True)
+        with torch.no_grad():
+            outputs = self.model(**inputs)
+            probs = F.softmax(outputs.logits, dim=1).squeeze().tolist()
+        return probs  # Sesuaikan urutan dengan self.label_list
 
-def combined_score(text: str, label_list: list[str]) -> str:
-    bert_probs = predict_with_bert(text, label_list)
-    lexicon_probs_dict = lexicon_score(text, label_list)
-    lexicon_probs = [lexicon_probs_dict[label] for label in label_list]
+    def lexicon_score(self, text: str) -> List[float]:
+        scores = defaultdict(int)
+        words = text.lower().split()
+        for word in words:
+            if word in self.emotion_lexicon:
+                for emotion in self.emotion_lexicon[word]:
+                    scores[emotion] += 1
 
-    combined = [(b + l) / 2 for b, l in zip(bert_probs, lexicon_probs)]
-    best_idx = combined.index(max(combined))
-    return label_list[best_idx]
+        total = sum(scores.values()) or 1  # Hindari pembagian 0
+        normalized = {k: v / total for k, v in scores.items()}
+        return [normalized.get(label, 0) for label in self.label_list]
+
+    def combined_score(self, text: str) -> str:
+        bert_probs = self.predict_with_bert(text)
+        lexicon_probs = self.lexicon_score(text)
+
+        combined = [(b + l) / 2 for b, l in zip(bert_probs, lexicon_probs)]
+        best_idx = combined.index(max(combined))
+        return self.label_list[best_idx]
