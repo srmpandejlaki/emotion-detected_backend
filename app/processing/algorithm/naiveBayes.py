@@ -1,6 +1,5 @@
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
-from collections import defaultdict
 import math
 
 class ManualNaiveBayes:
@@ -34,7 +33,7 @@ class ManualNaiveBayes:
 
         self.fitted = True
 
-    def predict(self, text):
+    def predict(self, text, use_fallback=False):
         if not self.fitted:
             raise Exception("Model belum dilatih. Jalankan .fit() dulu.")
 
@@ -52,11 +51,34 @@ class ManualNaiveBayes:
                     total_words = self.class_total_words[c]
                     prob = (word_count + 1) / (total_words + self.vocab_size)
                     log_prob += x[idx] * math.log(prob)
-            
+
             log_probs[c] = log_prob
 
-        # Ambil kelas dengan nilai log_prob tertinggi
-        return max(log_probs, key=log_probs.get)
+        # Deteksi apakah ada dua kelas dengan log_prob yang sama
+        sorted_probs = sorted(log_probs.items(), key=lambda item: item[1], reverse=True)
+        top_class = sorted_probs[0][0]
+        second_class = sorted_probs[1][0] if len(sorted_probs) > 1 else None
 
-    def predict_batch(self, texts):
-        return [self.predict(text) for text in texts]
+        # Jika dua kelas memiliki probabilitas yang sama, gunakan fallback
+        if sorted_probs[0][1] == sorted_probs[1][1] and use_fallback:
+            # Panggil fungsi fallback yang menggabungkan BERT + Lexicon
+            fallback_class = self.fallback(text, top_class, second_class)
+            return fallback_class
+
+        return top_class
+
+    def predict_batch(self, texts, use_fallback=False):
+        return [self.predict(text, use_fallback) for text in texts]
+
+    def fallback(self, text, class_1, class_2):
+        # Fallback logic: combine BERT and Lexicon to resolve conflict
+        # Misalnya, BERT akan melakukan prediksi untuk kedua kelas dan Lexicon memberi bobot lebih
+        # Bergantung pada implementasi BERT dan Lexicon kamu, di sini misalnya kita panggil fungsi external
+        # Contoh implementasi fallback ini, pastikan menggunakan metode sesuai dengan logika yang ada.
+
+        # Contoh logika fallback yang menggunakan BERT dan Lexicon
+        # Ini hanya placeholder, implementasi aktual harus disesuaikan
+        from app.processing.fallback.bert_lexicon_fallback import combined_score  # Mengimpor fungsi fallback
+        
+        final_prediction = combined_score(text, class_1, class_2)
+        return final_prediction
