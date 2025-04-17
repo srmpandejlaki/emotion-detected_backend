@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean, Text, Float, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import relationship
-from app.database.base import Base
+from app.database.config import Base
 
 
 class LabelEmotion(Base):

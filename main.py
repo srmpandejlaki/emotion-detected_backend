@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app.database.session import engine, Base
+from app.database.config import engine, Base
 from app.api.routes.preprocessing_router import preprocessing_router
 from app.api.routes.processing_router import processing_router
 

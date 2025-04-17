@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from app.database import get_db
+from app.database.config import get_db
 from app.controllers.preprocessing_controller import (
     get_all_preprocessing_results_controller,
     create_preprocessing_result_controller,
