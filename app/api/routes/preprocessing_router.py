@@ -1,33 +1,33 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from app.api.services import preprocessing_service
-from app.database.session import get_db
+from app.database import get_db
+from app.controllers.preprocessing_controller import (
+    get_all_preprocessing_results_controller,
+    create_preprocessing_result_controller,
+    process_and_save_preprocessing_controller
+)
 
-router = APIRouter(prefix="/preprocessing", tags=["Preprocessing"])
+router = APIRouter()
 
-# Endpoint untuk memproses dan menyimpan semua data preprocessing
-@router.post("/process")
-def process_and_save_data(db: Session = Depends(get_db)):
-    return preprocessing_service.process_and_save_preprocessing(db)
-
-# Endpoint untuk mendapatkan semua hasil preprocessing
-@router.get("/all")
-def get_all_preprocessed_data(db: Session = Depends(get_db)):
-    return preprocessing_service.get_all_preprocessing_results(db)
-
-# Endpoint untuk menambahkan hasil preprocessing secara manual (opsional)
-@router.post("/add")
-def add_preprocessing_result(id_data: int, text_preprocessing: str, db: Session = Depends(get_db)):
-    return preprocessing_service.add_preprocessing_result(db, id_data, text_preprocessing)
-
-@router.post("/run", response_model=str)
-def run_preprocessing_endpoint(db: Session = Depends(get_db)):
+@router.get("/preprocessing_results")
+def get_preprocessing_results(db: Session = Depends(get_db)):
     """
-    Endpoint untuk menjalankan proses preprocessing.
-    Mengambil data yang belum diproses dan memulai langkah-langkah preprocessing.
+    Mendapatkan semua hasil preprocessing.
     """
-    try:
-        result = preprocessing_service.run_preprocessing(db)
-        return result
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    return get_all_preprocessing_results_controller(db)
+
+
+@router.post("/preprocessing_result")
+def create_preprocessing_result(id_data: int, text_preprocessing: str, db: Session = Depends(get_db)):
+    """
+    Menambahkan hasil preprocessing ke dalam database.
+    """
+    return create_preprocessing_result_controller(id_data, text_preprocessing, db)
+
+
+@router.post("/process_and_save_preprocessing")
+def process_and_save(db: Session = Depends(get_db)):
+    """
+    Memproses data yang belum dipreprocessing dan menyimpannya.
+    """
+    return process_and_save_preprocessing_controller(db)
