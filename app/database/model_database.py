@@ -1,5 +1,4 @@
-from sqlalchemy import Column, Integer, String, Boolean, Text, Float, ForeignKey, UniqueConstraint, DateTime
-from datetime import datetime
+from sqlalchemy import Column, Integer, String, Boolean, Text, Float, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import relationship
 from app.database.base import Base
 
@@ -9,12 +8,22 @@ class LabelEmotion(Base):
     id_label = Column(Integer, primary_key=True, index=True)
     nama_label = Column(String(50), nullable=False)
 
+    # Relasi ke DataCollection dan ProcessResult
+    data_collection = relationship("DataCollection", back_populates="label")
+    process_results_auto = relationship("ProcessResult", back_populates="auto_label", foreign_keys="[ProcessResult.automatic_label]")
+
 
 class DataCollection(Base):
     __tablename__ = "data_collection"
     id_data = Column(Integer, primary_key=True, index=True)
     text_data = Column(Text, nullable=False)
     label_id = Column(Integer, ForeignKey("label_emotion.id_label"))
+
+    # Relasi ke label_emotion
+    label = relationship("LabelEmotion", back_populates="data_collection")
+
+    # Relasi ke ProcessResult
+    process_results = relationship("ProcessResult", back_populates="data")
 
 
 class ProcessResult(Base):
@@ -25,6 +34,16 @@ class ProcessResult(Base):
     is_training_data = Column(Boolean, nullable=False)
     automatic_label = Column(Integer, ForeignKey("label_emotion.id_label"))
 
+    # Relasi ke data_collection
+    data = relationship("DataCollection", back_populates="process_results")
+
+    # Relasi ke label_emotion
+    auto_label = relationship("LabelEmotion", back_populates="process_results_auto", foreign_keys=[automatic_label])
+
+    # Relasi ke model_data dan validation_data
+    model_data = relationship("ModelData", back_populates="process_result")
+    validation_data = relationship("ValidationData", back_populates="process_result")
+
 
 class Model(Base):
     __tablename__ = "model"
@@ -34,11 +53,17 @@ class Model(Base):
     matrix_id = Column(Integer)
     metrics_id = Column(Integer)
 
+    model_data = relationship("ModelData", back_populates="model")
+    validation_results = relationship("ValidationResult", back_populates="model")
+
 
 class ModelData(Base):
     __tablename__ = "model_data"
     id_model = Column(Integer, ForeignKey("model.id_model"), primary_key=True)
     id_process = Column(Integer, ForeignKey("process_result.id_process"), primary_key=True)
+
+    model = relationship("Model", back_populates="model_data")
+    process_result = relationship("ProcessResult", back_populates="model_data")
 
 
 class ValidationResult(Base):
@@ -49,12 +74,18 @@ class ValidationResult(Base):
     matrix_id = Column(Integer)
     metrics_id = Column(Integer)
 
+    model = relationship("Model", back_populates="validation_results")
+    validation_data = relationship("ValidationData", back_populates="validation_result")
+
 
 class ValidationData(Base):
     __tablename__ = "validation_data"
     id_validation = Column(Integer, ForeignKey("validation_result.id_validation"), primary_key=True)
     id_process = Column(Integer, ForeignKey("process_result.id_process"), primary_key=True)
     is_correct = Column(Boolean)
+
+    validation_result = relationship("ValidationResult", back_populates="validation_data")
+    process_result = relationship("ProcessResult", back_populates="validation_data")
 
 
 class ConfusionMatrix(Base):
