@@ -1,6 +1,6 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from app.services.preprocessing_service import (
+from app.api.services.preprocessing_service import (
     get_all_preprocessing_results,
     add_preprocessing_result,
     process_and_save_preprocessing

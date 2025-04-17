@@ -1,17 +1,15 @@
-import os
 import joblib
-import pandas as pd
 from sqlalchemy.orm import Session
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import precision_recall_fscore_support
 from app.database.model_database import ProcessResult, Model, ModelData, ConfusionMatrix, ClassMetrics
 from app.processing.algorithm.naiveBayes import ManualNaiveBayes
-from app.processing.alternatif_method.bert_lexicon import combined_score
 from app.processing.metrics.class_metrics import accuracy_score, precision_score, recall_score
 from app.processing.metrics.confusion_matrix import confusion_matrix
+from app.processing.alternatif_method.bert_lexicon import BERTEmotionClassifier  # Ganti ini sesuai nama file
 
-MODEL_PATH = "app/models_ml/naive_bayes_manual_model.pkl"
-VECTORIZER_PATH = "app/models_ml/vectorizer.pkl"
+MODEL_PATH = "app/models/models_ml/naive_bayes_manual_model.pkl"
+VECTORIZER_PATH = "app/models/models_ml/vectorizer.pkl"
 
 RATIO_MAP = {
     "60:40": 0.4,
@@ -42,13 +40,16 @@ def train_model(ratio_str: str, db: Session):
     joblib.dump(manual_nb, MODEL_PATH)
     joblib.dump(manual_nb.vectorizer, VECTORIZER_PATH)
 
+    # Inisialisasi hanya sekali saat dibutuhkan
+    fallback_classifier = BERTEmotionClassifier()
+
     y_pred = []
     for text in X_test:
         prob_dict = manual_nb.predict_proba(text)
         top_probs = sorted(prob_dict.items(), key=lambda x: x[1], reverse=True)
 
         if len(top_probs) >= 2 and top_probs[0][1] == top_probs[1][1]:
-            fallback_label = combined_score(text, list(prob_dict.keys()))
+            fallback_label = fallback_classifier.combined_score(text)
             y_pred.append(fallback_label)
         else:
             y_pred.append(top_probs[0][0])
