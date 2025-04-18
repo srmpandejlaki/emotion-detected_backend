@@ -137,3 +137,4 @@ class ClassMetricsCreate(ClassMetricsBase):
 class ClassMetrics(ClassMetricsBase):
     class Config:
         orm_mode = True
+
