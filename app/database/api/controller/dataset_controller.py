@@ -1,117 +1,69 @@
+import os
+import pandas as pd
+import shutil
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
-from typing import Optional
-from app.database import model_database
-from app.database import schemas
+from app.database import model_database, schemas
 
+def get_all_data_collections(db: Session):
+    return db.query(model_database.DataCollection).all()
 
-# ---------- Label Emotion ----------
-def create_label_emotion(db: Session, label: schemas.LabelEmotionCreate):
-    db_label = model_database.LabelEmotion(**label.dict())
-    db.add(db_label)
-    db.commit()
-    db.refresh(db_label)
-    return db_label
+def get_data_collection_by_id(db: Session, data_id: int):
+    return db.query(model_database.DataCollection).filter(
+        model_database.DataCollection.id_data == data_id
+    ).first()
 
-def get_all_label_emotion(db: Session):
-    return db.query(model_database.LabelEmotion).all()
+def create_data_collection(db: Session, data: schemas.DataCollectionCreate = None, file: schemas.UploadFile = None):
+    if file:
+        file_location = f"temp/{file.filename}"
+        os.makedirs("temp", exist_ok=True)
+        with open(file_location, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+        return upload_csv_data(db, file_location)
 
+    elif data:
+        return [create_single_data(db, data)]
 
-# ---------- Data Collection ----------
-def create_data_collection(db: Session, data: schemas.DataCollectionCreate):
-    db_data = model_database.DataCollection(**data.dict())
+    else:
+        raise HTTPException(status_code=400, detail="Harus mengirimkan file CSV.")
+
+def create_single_data(db: Session, data: schemas.DataCollectionCreate):
+    db_data = model_database.DataCollection(text_data=data.text_data, label_id=data.label_id)
     db.add(db_data)
     db.commit()
     db.refresh(db_data)
     return db_data
 
-def get_all_data_collection(db: Session):
-    return db.query(model_database.DataCollection).all()
+def upload_csv_data(db: Session, file_path: str):
+    try:
+        df = pd.read_csv(file_path)
+        if 'text' not in df.columns or 'emotion' not in df.columns:
+            raise HTTPException(status_code=400, detail="CSV harus memiliki kolom 'text' dan 'emotion'.")
 
-def delete_all_data_collection(db: Session):
+        created_data = []
+        for _, row in df.iterrows():
+            data = schemas.DataCollectionCreate(
+                text_data=row['text'],
+                label_id=row['emotion'] if not pd.isnull(row['emotion']) else None
+            )
+            created_data.append(create_single_data(db, data))
+
+        return created_data
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Gagal memproses file CSV: {str(e)}")
+
+    finally:
+        if os.path.exists(file_path):
+            os.remove(file_path)
+
+def delete_data_collection(db: Session, data_id: int):
+    data = get_data_collection_by_id(db, data_id)
+    if not data:
+        raise HTTPException(status_code=404, detail="Data Collection not found")
+    db.delete(data)
+    db.commit()
+
+def delete_all_data_collections(db: Session):
     db.query(model_database.DataCollection).delete()
     db.commit()
-
-
-# ---------- Process Result ----------
-def create_process_result(db: Session, result: schemas.ProcessResultCreate):
-    db_result = model_database.ProcessResult(**result.dict())
-    db.add(db_result)
-    db.commit()
-    db.refresh(db_result)
-    return db_result
-
-def get_all_process_result(db: Session):
-    return db.query(model_database.ProcessResult).all()
-
-def delete_all_process_result(db: Session):
-    db.query(model_database.ProcessResult).delete()
-    db.commit()
-
-
-# ---------- Model ----------
-def create_model(db: Session, model: schemas.ModelCreate):
-    db_model = model_database.Model(**model.dict())
-    db.add(db_model)
-    db.commit()
-    db.refresh(db_model)
-    return db_model
-
-def get_all_model(db: Session):
-    return db.query(model_database.Model).all()
-
-
-# ---------- Model Data ----------
-def create_model_data(db: Session, data: schemas.ModelDataCreate):
-    db_data = model_database.ModelData(**data.dict())
-    db.add(db_data)
-    db.commit()
-    return db_data
-
-def get_all_model_data(db: Session):
-    return db.query(model_database.ModelData).all()
-
-
-# ---------- Validation Result ----------
-def create_validation_result(db: Session, result: schemas.ValidationResultCreate):
-    db_result = model_database.ValidationResult(**result.dict())
-    db.add(db_result)
-    db.commit()
-    db.refresh(db_result)
-    return db_result
-
-def get_all_validation_result(db: Session):
-    return db.query(model_database.ValidationResult).all()
-
-
-# ---------- Validation Data ----------
-def create_validation_data(db: Session, data: schemas.ValidationDataCreate):
-    db_data = model_database.ValidationData(**data.dict())
-    db.add(db_data)
-    db.commit()
-    return db_data
-
-def get_all_validation_data(db: Session):
-    return db.query(model_database.ValidationData).all()
-
-
-# ---------- Confusion Matrix ----------
-def create_confusion_matrix(db: Session, matrix: schemas.ConfusionMatrixCreate):
-    db_matrix = model_database.ConfusionMatrix(**matrix.dict())
-    db.add(db_matrix)
-    db.commit()
-    return db_matrix
-
-def get_all_confusion_matrix(db: Session):
-    return db.query(model_database.ConfusionMatrix).all()
-
-
-# ---------- Class Metrics ----------
-def create_class_metrics(db: Session, metric: schemas.ClassMetricsCreate):
-    db_metric = model_database.ClassMetrics(**metric.dict())
-    db.add(db_metric)
-    db.commit()
-    return db_metric
-
-def get_all_class_metrics(db: Session):
-    return db.query(model_database.ClassMetrics).all()

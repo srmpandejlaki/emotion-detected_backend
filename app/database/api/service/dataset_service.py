@@ -1,3 +1,6 @@
+import os
+import pandas as pd
+import shutil
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from app.database import model_database
@@ -10,13 +13,6 @@ def get_all_labels(db: Session):
 def get_label_by_id(db: Session, label_id: int):
     return db.query(model_database.LabelEmotion).filter(model_database.LabelEmotion.id_label == label_id).first()
 
-def create_label(db: Session, label: schemas.LabelEmotionCreate):
-    db_label = model_database.LabelEmotion(**label.dict())
-    db.add(db_label)
-    db.commit()
-    db.refresh(db_label)
-    return db_label
-
 
 # ---------------- Data Collection ----------------
 def get_all_data_collections(db: Session):
@@ -25,12 +21,57 @@ def get_all_data_collections(db: Session):
 def get_data_collection_by_id(db: Session, data_id: int):
     return db.query(model_database.DataCollection).filter(model_database.DataCollection.id_data == data_id).first()
 
-def create_data_collection(db: Session, data: schemas.DataCollectionCreate):
-    db_data = model_database.DataCollection(**data.dict())
+def create_data_collection(db: Session, data: schemas.DataCollectionCreate = None, file: schemas.UploadFile = None):
+    if file:
+        # Simpan file sementara
+        file_location = f"temp/{file.filename}"
+        os.makedirs("temp", exist_ok=True)
+        with open(file_location, "wb") as buffer:
+            shutil.copyfileobj(file.file, buffer)
+
+        return upload_csv_data(db, file_location)
+
+    elif data:
+        return [create_single_data(db, data)]
+
+    else:
+        raise HTTPException(status_code=400, detail="Harus mengirimkan file CSV.")
+
+
+def create_single_data(db: Session, data: schemas.DataCollectionCreate):
+    db_data = model_database.DataCollection(text_data=data.text_data, label_id=data.label_id)
     db.add(db_data)
     db.commit()
     db.refresh(db_data)
     return db_data
+
+
+def upload_csv_data(db: Session, file_path: str):
+    try:
+        df = pd.read_csv(file_path)
+
+        # Validasi kolom wajib
+        if 'text' not in df.columns or 'emotion' not in df.columns:
+            raise HTTPException(status_code=400, detail="CSV harus memiliki kolom 'text' dan 'emotion'.")
+
+        created_data = []
+        for _, row in df.iterrows():
+            data = schemas.DataCollectionCreate(
+                text_data=row['text'],
+                label_id=row['emotion'] if not pd.isnull(row['emotion']) else None
+            )
+            created = create_single_data(db, data)
+            created_data.append(created)
+
+        return created_data
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Gagal memproses file CSV: {str(e)}")
+
+    finally:
+        # Hapus file sementara
+        if os.path.exists(file_path):
+            os.remove(file_path)
 
 def delete_data_collection(db: Session, data_id: int):
     data = get_data_collection_by_id(db, data_id)

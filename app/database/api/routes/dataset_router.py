@@ -1,117 +1,187 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.database.api.service import dataset_service
-from app.database.config import get_db
-from app.database.schemas import schemas
+from app.database import crud, schemas
+from app.api.dependencies import get_db
 
 router = APIRouter()
 
+# ------------------------- Label Emotion -------------------------
+@router.post("/label-emotion")
+def create_label(label: schemas.LabelEmotionCreate, db: Session = Depends(get_db)):
+    return crud.create_label_emotion(db, label)
 
-# ---------------- Label Emotion ----------------
-@router.get("/label-emotion", response_model=list[schemas.LabelEmotion])
-def get_label_emotions(db: Session = Depends(get_db)):
-    return dataset_service.get_all_label_emotions(db)
+@router.get("/label-emotion")
+def get_all_label(db: Session = Depends(get_db)):
+    return crud.get_all_label_emotion(db)
 
-@router.post("/label-emotion", response_model=schemas.LabelEmotion)
-def create_label_emotion(label: schemas.LabelEmotionCreate, db: Session = Depends(get_db)):
-    return dataset_service.create_label_emotion(db, label)
+@router.get("/label-emotion/{id_label}")
+def get_label_by_id(id_label: int, db: Session = Depends(get_db)):
+    return crud.get_label_emotion_by_id(db, schemas.LabelEmotion(id_label=id_label))
 
 
-# ---------------- Data Collection ----------------
-@router.get("/data-collection", response_model=list[schemas.DataCollection])
-def get_data_collections(db: Session = Depends(get_db)):
-    return dataset_service.get_all_data_collections(db)
+# ------------------------- Data Collection -------------------------
+@router.post("/data-collection")
+def create_data(data: schemas.DataCollectionCreate, db: Session = Depends(get_db)):
+    return crud.create_data_collection(db, data)
 
-@router.post("/data-collection", response_model=schemas.DataCollection)
-def create_data_collection(data: schemas.DataCollectionCreate, db: Session = Depends(get_db)):
-    return dataset_service.create_data_collection(db, data)
+@router.get("/data-collection")
+def get_all_data(db: Session = Depends(get_db)):
+    return crud.get_all_data_collection(db)
 
-@router.delete("/data-collection/{data_id}")
-def delete_data_collection(data_id: int, db: Session = Depends(get_db)):
-    dataset_service.delete_data_collection(db, data_id)
-    return {"message": "Data collection deleted successfully"}
+@router.get("/data-collection/{id_data}")
+def get_data_by_id(id_data: int, db: Session = Depends(get_db)):
+    return crud.get_data_collection_by_id(db, schemas.DataCollection(id_data=id_data))
+
+@router.delete("/data-collection/{id_data}")
+def delete_data_by_id(id_data: int, db: Session = Depends(get_db)):
+    return crud.delete_data_collection_by_id(db, id_data)
 
 @router.delete("/data-collection")
-def delete_all_data_collection(data: int, db: Session = Depends(get_db)):
-    dataset_service.delete_all_data_collection(db)
-    return {"message": "Data collection deleted successfully"}
+def delete_all_data(db: Session = Depends(get_db)):
+    return crud.delete_all_data_collection(db)
 
 
-# ---------------- Process Result ----------------
-@router.get("/process-result", response_model=list[schemas.ProcessResult])
-def get_process_results(db: Session = Depends(get_db)):
-    return dataset_service.get_all_process_results(db)
+# ------------------------- Process Result -------------------------
+@router.post("/process-result")
+def create_result(result: schemas.ProcessResultCreate, db: Session = Depends(get_db)):
+    return crud.create_process_result(db, result)
 
-@router.post("/process-result", response_model=schemas.ProcessResult)
-def create_process_result(result: schemas.ProcessResultCreate, db: Session = Depends(get_db)):
-    return dataset_service.create_process_result(db, result)
+@router.get("/process-result")
+def get_all_results(db: Session = Depends(get_db)):
+    return crud.get_all_process_result(db)
 
-@router.delete("/process-result/{process_id}")
-def delete_process_result(process_id: int, db: Session = Depends(get_db)):
-    dataset_service.delete_process_result(db, process_id)
-    return {"message": "Process result deleted successfully"}
+@router.get("/process-result/{id_process}")
+def get_result_by_id(id_process: int, db: Session = Depends(get_db)):
+    return crud.get_process_result_by_id(db, schemas.ProcessResult(id_process=id_process))
 
-@router.delete("/process-result/{process_id}")
-def delete_process_result(process_id: int, db: Session = Depends(get_db)):
-    dataset_service.delete_process_result(db, process_id)
-    return {"message": "Process result deleted successfully"}
+@router.delete("/process-result/{id_process}")
+def delete_result_by_id(id_process: int, db: Session = Depends(get_db)):
+    return crud.delete_process_result_by_id(db, id_process)
+
+@router.delete("/process-result")
+def delete_all_results(db: Session = Depends(get_db)):
+    return crud.delete_all_process_result(db)
 
 
-# ---------------- Model ----------------
-@router.get("/model", response_model=list[schemas.Model])
-def get_models(db: Session = Depends(get_db)):
-    return dataset_service.get_all_models(db)
-
-@router.post("/model", response_model=schemas.Model)
+# ------------------------- Model -------------------------
+@router.post("/model")
 def create_model(model: schemas.ModelCreate, db: Session = Depends(get_db)):
-    return dataset_service.create_model(db, model)
+    return crud.create_model(db, model)
+
+@router.get("/model")
+def get_all_models(db: Session = Depends(get_db)):
+    return crud.get_all_model(db)
+
+@router.get("/model/{id_model}")
+def get_model_by_id(id_model: int, db: Session = Depends(get_db)):
+    return crud.get_model_by_id(db, schemas.Model(id_model=id_model))
+
+@router.delete("/model/{id_model}")
+def delete_model_by_id(id_model: int, db: Session = Depends(get_db)):
+    return crud.delete_model_by_id(db, id_model)
+
+@router.delete("/model")
+def delete_all_models(db: Session = Depends(get_db)):
+    return crud.delete_all_model(db)
 
 
-# ---------------- Model Data ----------------
-@router.get("/model-data", response_model=list[schemas.ModelData])
-def get_model_data(db: Session = Depends(get_db)):
-    return dataset_service.get_all_model_data(db)
-
-@router.post("/model-data", response_model=schemas.ModelData)
+# ------------------------- Model Data -------------------------
+@router.post("/model-data")
 def create_model_data(data: schemas.ModelDataCreate, db: Session = Depends(get_db)):
-    return dataset_service.create_model_data(db, data)
+    return crud.create_model_data(db, data)
+
+@router.get("/model-data")
+def get_all_model_data(db: Session = Depends(get_db)):
+    return crud.get_all_model_data(db)
+
+@router.get("/model-data/{id_model}/{id_process}")
+def get_model_data_by_ids(id_model: int, id_process: int, db: Session = Depends(get_db)):
+    return crud.get_model_data_by_id(db, id_model, id_process)
+
+@router.delete("/model-data/{id_model}/{id_process}")
+def delete_model_data_by_ids(id_model: int, id_process: int, db: Session = Depends(get_db)):
+    return crud.delete_model_data_by_id(db, id_model, id_process)
+
+@router.delete("/model-data")
+def delete_all_model_data(db: Session = Depends(get_db)):
+    return crud.delete_all_model_data(db)
 
 
-# ---------------- Validation Result ----------------
-@router.get("/validation-result", response_model=list[schemas.ValidationResult])
-def get_validation_results(db: Session = Depends(get_db)):
-    return dataset_service.get_all_validation_results(db)
-
-@router.post("/validation-result", response_model=schemas.ValidationResult)
+# ------------------------- Validation Result -------------------------
+@router.post("/validation-result")
 def create_validation_result(result: schemas.ValidationResultCreate, db: Session = Depends(get_db)):
-    return dataset_service.create_validation_result(db, result)
+    return crud.create_validation_result(db, result)
+
+@router.get("/validation-result")
+def get_all_validation_result(db: Session = Depends(get_db)):
+    return crud.get_all_validation_result(db)
+
+@router.get("/validation-result/{id_validation}")
+def get_validation_result_by_id(id_validation: int, db: Session = Depends(get_db)):
+    return crud.get_validation_result_by_id(db, schemas.ValidationResult(id_validation=id_validation))
+
+@router.delete("/validation-result/{id_validation}")
+def delete_validation_result_by_id(id_validation: int, db: Session = Depends(get_db)):
+    return crud.delete_validation_result_by_id(db, id_validation)
+
+@router.delete("/validation-result")
+def delete_all_validation_result(db: Session = Depends(get_db)):
+    return crud.delete_all_validation_result(db)
 
 
-# ---------------- Validation Data ----------------
-@router.get("/validation-data", response_model=list[schemas.ValidationData])
-def get_validation_data(db: Session = Depends(get_db)):
-    return dataset_service.get_all_validation_data(db)
-
-@router.post("/validation-data", response_model=schemas.ValidationData)
+# ------------------------- Validation Data -------------------------
+@router.post("/validation-data")
 def create_validation_data(data: schemas.ValidationDataCreate, db: Session = Depends(get_db)):
-    return dataset_service.create_validation_data(db, data)
+    return crud.create_validation_data(db, data)
+
+@router.get("/validation-data")
+def get_all_validation_data(db: Session = Depends(get_db)):
+    return crud.get_all_validation_data(db)
+
+@router.get("/validation-data/{id_validation}/{id_process}")
+def get_validation_data_by_ids(id_validation: int, id_process: int, db: Session = Depends(get_db)):
+    return crud.get_validation_data_by_id(db, id_validation, id_process)
+
+@router.delete("/validation-data/{id_validation}/{id_process}")
+def delete_validation_data_by_ids(id_validation: int, id_process: int, db: Session = Depends(get_db)):
+    return crud.delete_validation_data_by_id(db, id_validation, id_process)
+
+@router.delete("/validation-data")
+def delete_all_validation_data(db: Session = Depends(get_db)):
+    return crud.delete_all_validation_data(db)
 
 
-# ---------------- Confusion Matrix ----------------
-@router.get("/confusion-matrix", response_model=list[schemas.ConfusionMatrix])
-def get_confusion_matrix(db: Session = Depends(get_db)):
-    return dataset_service.get_all_confusion_matrix(db)
-
-@router.post("/confusion-matrix", response_model=schemas.ConfusionMatrix)
+# ------------------------- Confusion Matrix -------------------------
+@router.post("/confusion-matrix")
 def create_confusion_matrix(matrix: schemas.ConfusionMatrixCreate, db: Session = Depends(get_db)):
-    return dataset_service.create_confusion_matrix(db, matrix)
+    return crud.create_confusion_matrix(db, matrix)
+
+@router.get("/confusion-matrix")
+def get_all_confusion_matrix(db: Session = Depends(get_db)):
+    return crud.get_all_confusion_matrix(db)
+
+@router.delete("/confusion-matrix/{matrix_id}")
+def delete_confusion_matrix_by_id(matrix_id: int, db: Session = Depends(get_db)):
+    return crud.delete_confusion_matrix_by_id(db, matrix_id)
+
+@router.delete("/confusion-matrix")
+def delete_all_confusion_matrix(db: Session = Depends(get_db)):
+    return crud.delete_all_confusion_matrix(db)
 
 
-# ---------------- Class Metrics ----------------
-@router.get("/class-metrics", response_model=list[schemas.ClassMetrics])
-def get_class_metrics(db: Session = Depends(get_db)):
-    return dataset_service.get_all_class_metrics(db)
+# ------------------------- Class Metrics -------------------------
+@router.post("/class-metrics")
+def create_class_metrics(metric: schemas.ClassMetricsCreate, db: Session = Depends(get_db)):
+    return crud.create_class_metrics(db, metric)
 
-@router.post("/class-metrics", response_model=schemas.ClassMetrics)
-def create_class_metrics(metrics: schemas.ClassMetricsCreate, db: Session = Depends(get_db)):
-    return dataset_service.create_class_metrics(db, metrics)
+@router.get("/class-metrics")
+def get_all_class_metrics(db: Session = Depends(get_db)):
+    return crud.get_all_class_metrics(db)
+
+@router.delete("/class-metrics/{metrics_id}")
+def delete_class_metrics_by_id(metrics_id: int, db: Session = Depends(get_db)):
+    return crud.delete_class_metrics_by_id(db, metrics_id)
+
+@router.delete("/class-metrics")
+def delete_all_class_metrics(db: Session = Depends(get_db)):
+    return crud.delete_all_class_metrics(db)
