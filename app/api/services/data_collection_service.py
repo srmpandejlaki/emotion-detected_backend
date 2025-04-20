@@ -85,32 +85,6 @@ def delete_all_data_collections(db: Session):
     db.commit()
 
 
-# ---------------- Process Result ----------------
-def get_all_process_results(db: Session):
-    return db.query(model_database.ProcessResult).all()
-
-def get_process_result_by_id(db: Session, process_id: int):
-    return db.query(model_database.ProcessResult).filter(model_database.ProcessResult.id_process == process_id).first()
-
-def create_process_result(db: Session, process: schemas.ProcessResultCreate):
-    db_process = model_database.ProcessResult(**process.dict())
-    db.add(db_process)
-    db.commit()
-    db.refresh(db_process)
-    return db_process
-
-def delete_process_result(db: Session, process_id: int):
-    process = get_process_result_by_id(db, process_id)
-    if not process:
-        raise HTTPException(status_code=404, detail="Process Result not found")
-    db.delete(process)
-    db.commit()
-
-def delete_all_process_result(db: Session):
-    db.query(model_database.ProcessResult).delete()
-    db.commit()
-
-
 # ---------------- Model ----------------
 def get_all_models(db: Session):
     return db.query(model_database.Model).all()

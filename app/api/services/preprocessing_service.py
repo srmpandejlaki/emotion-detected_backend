@@ -47,3 +47,17 @@ def process_and_save_preprocessing(db: Session):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing and saving preprocessing data: {str(e)}")
+
+def get_preprocess_result_by_id(db: Session, process_id: int):
+    return db.query(ProcessResult).filter(ProcessResult.id_process == process_id).first()
+
+def delete_preprocess_result(db: Session, process_id: int):
+    process = get_preprocess_result_by_id(db, process_id)
+    if not process:
+        raise HTTPException(status_code=404, detail="Process Result not found")
+    db.delete(process)
+    db.commit()
+
+def delete_all_preprocess_result(db: Session):
+    db.query(ProcessResult).delete()
+    db.commit()
