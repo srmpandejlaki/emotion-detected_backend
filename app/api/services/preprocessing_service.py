@@ -22,7 +22,7 @@ def add_preprocessing_result(db: Session, id_data: int, text_preprocessing: str)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error adding preprocessing result: {str(e)}")
 
-def process_and_save_preprocessing(db: Session):
+def preprocessing_and_save(db: Session):
     try:
         """
         Fungsi untuk memproses data yang belum dipreprocessing.
