@@ -10,15 +10,13 @@ class Settings(BaseSettings):
     ALGORITHM: str = os.getenv("ALGORITHM")
     ACCESS_TOKEN_EXPIRE_MINUTES: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
 
-    # Path model Naive Bayes dan data evaluasi
-    MODEL_DIR: str = "app/models"
-    MODEL_FILE: str = "naive_bayes_model.pkl"
+    PREPROCESS_DATA_PATH: str = "app/dataCollection/kinerja_polisi.csv"
+    MODEL_PATH: str = "app/models/models_ml/naive_bayes_model.pkl"
     METRICS_FILE: str = "metrics.json"
-    TEST_DATA_FILE: str = "data_uji.csv"
 
-    # Path untuk model BERT dan lexicon (untuk langkah lanjutan)
+    # Path untuk model BERT dan lexicon
     BERT_MODEL_PATH: str = "app/models/bert_model"
-    LEXICON_FILE: str = "app/lexicons/lexicon.json"
+    LEXICON_FILE: str = "app/models/lexicon.json"
 
     @property
     def model_path(self):
