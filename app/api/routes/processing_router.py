@@ -1,16 +1,8 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
-from app.database.config import get_db
-from app.api.controllers import processing_controller
+from fastapi import APIRouter
+from app.api.controllers.processing_controller import train_model_endpoint, delete_model_endpoint
 
-router = APIRouter(
-    prefix="/processing",
-    tags=["Processing"]
-)
+router = APIRouter()
 
-@router.post("/train")
-def train_model_endpoint(ratio: str, db: Session = Depends(get_db)):
-    result, error = processing_controller.train_model(ratio, db)
-    if error:
-        raise HTTPException(status_code=400, detail=error)
-    return result
+# Menambahkan endpoint ke router
+router.post("/train_model/{ratio_str}")(train_model_endpoint)
+router.delete("/delete_model/{model_id}")(delete_model_endpoint)

@@ -1,9 +1,26 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from app.api.services import processing_service
+from app.api.services.processing_service import train_model, delete_model_by_id
 
-def train_model(ratio: str, db: Session):
-    try:
-        return processing_service.train_model(ratio, db)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error get processing_service result: {str(e)}")
+# Endpoint untuk melatih model
+async def train_model_endpoint(ratio_str: str, db: Session):
+    result, error = train_model(ratio_str, db)
+    
+    if error:
+        raise HTTPException(status_code=400, detail=error)
+    
+    return {
+        "model_id": result['model_id'],
+        "accuracy": result['accuracy'],
+        "precision": result['precision'],
+        "recall": result['recall']
+    }
+
+# Endpoint untuk menghapus model berdasarkan ID
+async def delete_model_endpoint(model_id: int, db: Session):
+    success, message = delete_model_by_id(model_id, db)
+    
+    if not success:
+        raise HTTPException(status_code=404, detail=message)
+    
+    return {"message": message}
