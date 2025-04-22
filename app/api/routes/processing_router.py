@@ -20,6 +20,7 @@ def train_model_endpoint(ratio_str: str, db: Session = Depends(get_db)):
         "recall": result['recall']
     }
 
+
 # Endpoint untuk menghapus model berdasarkan ID
 @router.delete("/delete_model/{model_id}")
 def delete_model_endpoint(model_id: int, db: Session = Depends(get_db)):

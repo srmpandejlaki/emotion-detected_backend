@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional, List
-
+from datetime import datetime
 
 # ---------- Label Emotion ----------
 class LabelEmotionBase(BaseModel):
@@ -34,14 +34,14 @@ class DataCollection(DataCollectionBase):
 # ---------- Process Result ----------
 class ProcessResultBase(BaseModel):
     id_data: int
-    text_preprocessing: str
-    is_training_data: bool
-    automatic_label: Optional[int]
+    text_preprocessing: Optional[str] = None
+    is_processed: Optional[bool] = False
+    processed_at: Optional[datetime] = None
 
 class ProcessResultCreate(ProcessResultBase):
     pass
 
-class ProcessResult(ProcessResultBase):
+class ProcessResultOut(ProcessResultBase):
     id_process: int
 
     class Config:

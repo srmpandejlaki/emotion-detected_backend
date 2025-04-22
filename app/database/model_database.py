@@ -1,7 +1,7 @@
-from sqlalchemy import Column, Integer, String, Boolean, Text, Float, ForeignKey, UniqueConstraint
+from sqlalchemy import Column, Integer, String, Boolean, Text, Float, ForeignKey, UniqueConstraint, DateTime
 from sqlalchemy.orm import relationship
 from app.database.config import Base
-
+from datetime import datetime
 
 class LabelEmotion(Base):
     __tablename__ = "label_emotion"
@@ -15,34 +15,28 @@ class LabelEmotion(Base):
 
 class DataCollection(Base):
     __tablename__ = "data_collection"
-    id_data = Column(Integer, primary_key=True, index=True)
-    text_data = Column(Text, nullable=False)
-    label_id = Column(Integer, ForeignKey("label_emotion.id_label"))
 
-    # Relasi ke label_emotion
-    label = relationship("LabelEmotion", back_populates="data_collection")
+    id_data = Column(Integer, primary_key=True, index=True)
+    text_data = Column(String, nullable=False)
+    emotion = Column(String, nullable=True)
 
     # Relasi ke ProcessResult
-    process_results = relationship("ProcessResult", back_populates="data")
+    processing_result = relationship("ProcessResult", back_populates="data", uselist=False)
 
 
 class ProcessResult(Base):
     __tablename__ = "process_result"
+
     id_process = Column(Integer, primary_key=True, index=True)
-    id_data = Column(Integer, ForeignKey("data_collection.id_data"))
-    text_preprocessing = Column(Text, nullable=False)
-    is_training_data = Column(Boolean, nullable=False)
-    automatic_label = Column(Integer, ForeignKey("label_emotion.id_label"))
+    id_data = Column(Integer, ForeignKey("data_collection.id_data"), nullable=False)
+    text_preprocessing = Column(String, nullable=True)
 
-    # Relasi ke data_collection
-    data = relationship("DataCollection", back_populates="process_results")
+    # Kolom baru
+    is_processed = Column(Boolean, default=False)  # Menandai apakah data ini sudah dipakai untuk training
+    processed_at = Column(DateTime, nullable=True)  # Menyimpan waktu kapan data ini digunakan untuk training
 
-    # Relasi ke label_emotion
-    auto_label = relationship("LabelEmotion", back_populates="process_results_auto", foreign_keys=[automatic_label])
-
-    # Relasi ke model_data dan validation_data
-    model_data = relationship("ModelData", back_populates="process_result")
-    validation_data = relationship("ValidationData", back_populates="process_result")
+    # Relasi ke DataCollection
+    data = relationship("DataCollection", back_populates="processing_result")
 
 
 class Model(Base):

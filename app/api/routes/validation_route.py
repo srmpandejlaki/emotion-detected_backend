@@ -76,3 +76,47 @@ async def predict_batch(file: UploadFile = File(...), db: Session = Depends(get_
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# ------------------------- Validation Result -------------------------
+@router.post("/validation-result")
+def create_validation_result(result: schemas.ValidationResultCreate, db: Session = Depends(get_db)):
+    return crud.create_validation_result(db, result)
+
+@router.get("/validation-result")
+def get_all_validation_result(db: Session = Depends(get_db)):
+    return crud.get_all_validation_result(db)
+
+@router.get("/validation-result/{id_validation}")
+def get_validation_result_by_id(id_validation: int, db: Session = Depends(get_db)):
+    return crud.get_validation_result_by_id(db, schemas.ValidationResult(id_validation=id_validation))
+
+@router.delete("/validation-result/{id_validation}")
+def delete_validation_result_by_id(id_validation: int, db: Session = Depends(get_db)):
+    return crud.delete_validation_result_by_id(db, id_validation)
+
+@router.delete("/validation-result")
+def delete_all_validation_result(db: Session = Depends(get_db)):
+    return crud.delete_all_validation_result(db)
+
+
+# ------------------------- Validation Data -------------------------
+@router.post("/validation-data")
+def create_validation_data(data: schemas.ValidationDataCreate, db: Session = Depends(get_db)):
+    return crud.create_validation_data(db, data)
+
+@router.get("/validation-data")
+def get_all_validation_data(db: Session = Depends(get_db)):
+    return crud.get_all_validation_data(db)
+
+@router.get("/validation-data/{id_validation}/{id_process}")
+def get_validation_data_by_ids(id_validation: int, id_process: int, db: Session = Depends(get_db)):
+    return crud.get_validation_data_by_id(db, id_validation, id_process)
+
+@router.delete("/validation-data/{id_validation}/{id_process}")
+def delete_validation_data_by_ids(id_validation: int, id_process: int, db: Session = Depends(get_db)):
+    return crud.delete_validation_data_by_id(db, id_validation, id_process)
+
+@router.delete("/validation-data")
+def delete_all_validation_data(db: Session = Depends(get_db)):
+    return crud.delete_all_validation_data(db)
