@@ -1,69 +1,57 @@
-from collections import defaultdict
-from typing import List
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
+from transformers import BertTokenizer, BertModel
 import torch
-import torch.nn.functional as F
 import json
+from datetime import datetime
+from sqlalchemy.orm import Session
+from app.database.model_database import ProcessResult
 
-class BERTEmotionClassifier:
-    def __init__(self, model_name: str = "indobenchmark/indobert-base-p1", 
-                 label_file_path: str = "app/utils/labels.json", 
-                 lexicon_file_path: str = "app/utils/emotion_lexicon.json"):
-        # Load BERT model and tokenizer
-        self.model = AutoModelForSequenceClassification.from_pretrained(model_name)
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-        self.model.eval()  # Set model to evaluation mode
+# Load tokenizer dan model hanya sekali
+bert_tokenizer = BertTokenizer.from_pretrained("indobenchmark/indobert-base-p1")
+bert_model = BertModel.from_pretrained("indobenchmark/indobert-base-p1")
 
-        # Load label list and lexicon
-        self.label_list = self.load_label_list(label_file_path)
-        self.emotion_lexicon = self.load_lexicon(lexicon_file_path)
+def load_lexicon(filepath="app/utils/kamus_lexicon.json"):
+    """Memuat kamus leksikon emosi dari file JSON"""
+    with open(filepath, "r", encoding="utf-8") as f:
+        return json.load(f)
 
-    def load_label_list(self, file_path: str) -> list:
-        """Load the label list from a JSON file."""
-        try:
-            with open(file_path, 'r') as f:
-                data = json.load(f)
-                return data.get("labels", [])
-        except Exception as e:
-            print(f"Error loading label list: {e}")
-            return []
+def bert_lexicon_fusion(text: str, lexicon_dict: dict) -> str:
+    """Menggabungkan pendekatan BERT dan Lexicon untuk menentukan emosi akhir"""
+    # --- Lexicon scoring ---
+    lexicon_scores = {}
+    tokens = text.lower().split()
+    for token in tokens:
+        for emotion, words in lexicon_dict.items():
+            if token in words:
+                lexicon_scores[emotion] = lexicon_scores.get(emotion, 0) + 1
 
-    def load_lexicon(self, file_path: str) -> dict:
-        """Load the emotion lexicon from a JSON file."""
-        try:
-            with open(file_path, 'r') as f:
-                return json.load(f)
-        except Exception as e:
-            print(f"Error loading lexicon: {e}")
-            return {}
+    # --- BERT representation (CLS token) ---
+    inputs = bert_tokenizer(text, return_tensors="pt", truncation=True, padding=True)
+    outputs = bert_model(**inputs)
+    cls_embedding = outputs.last_hidden_state[0][0]  # [CLS] token vector
 
-    def predict_with_bert(self, text: str) -> List[float]:
-        """Get BERT model probabilities for a given text."""
-        inputs = self.tokenizer(text, return_tensors="pt", truncation=True, padding=True)
-        with torch.no_grad():
-            outputs = self.model(**inputs)
-            probs = F.softmax(outputs.logits, dim=1).squeeze().tolist()
-        return probs  # Match the order with self.label_list
+    # --- Fusion logic ---
+    if lexicon_scores:
+        final_emotion = max(lexicon_scores, key=lexicon_scores.get)
+    else:
+        final_emotion = "netral"  # fallback emosi jika tidak ditemukan
 
-    def lexicon_score(self, text: str) -> List[float]:
-        """Calculate lexicon-based emotion scores."""
-        scores = defaultdict(int)
-        words = text.lower().split()
-        for word in words:
-            if word in self.emotion_lexicon:
-                for emotion in self.emotion_lexicon[word]:
-                    scores[emotion] += 1
+    return final_emotion
 
-        total = sum(scores.values()) or 1  # Prevent division by 0
-        normalized = {k: v / total for k, v in scores.items()}
-        return [normalized.get(label, 0) for label in self.label_list]
+def process_with_bert_lexicon(db: Session, items_to_process: list):
+    """Memproses data ambiguitas ke metode BERT + Lexicon dan menyimpannya"""
+    lexicon_dict = load_lexicon()
 
-    def combined_score(self, text: str) -> str:
-        """Combine BERT and lexicon scores and return the label with the highest score."""
-        bert_probs = self.predict_with_bert(text)
-        lexicon_probs = self.lexicon_score(text)
+    for item in items_to_process:
+        id_process = item["id_process"]
+        text = item["text"]
 
-        # Combine BERT and lexicon scores by averaging
-        combined = [(b + l) / 2 for b, l in zip(bert_probs, lexicon_probs)]
-        best_idx = combined.index(max(combined))  # Get index of the highest combined score
-        return self.label_list[best_idx]
+        final_emotion = bert_lexicon_fusion(text, lexicon_dict)
+
+        process = db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
+        if process:
+            process.automatic_emotion = final_emotion
+            process.is_processed = True
+            process.processed_at = datetime.now()
+
+    db.commit()
+    return {"processed_with_bert_lexicon": len(items_to_process)}
