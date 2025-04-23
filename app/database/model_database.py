@@ -20,7 +20,8 @@ class DataCollection(Base):
     text_data = Column(String, nullable=False)
     emotion = Column(String, nullable=True)
 
-    # Relasi ke ProcessResult
+    # Relasi ke DataCollection dan ProcessResult
+    label_emotion = relationship("LabelEmotion", back_populates="data", uselist=False)
     processing_result = relationship("ProcessResult", back_populates="data", uselist=False)
 
 

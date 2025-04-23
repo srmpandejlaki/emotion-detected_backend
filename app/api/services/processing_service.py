@@ -1,11 +1,6 @@
 from sqlalchemy.orm import Session
-from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
-from sklearn.metrics import (
-    accuracy_score,
-    confusion_matrix,
-    precision_recall_fscore_support
-)
+from sklearn.metrics import confusion_matrix
 from datetime import datetime
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics import classification_report, confusion_matrix
@@ -49,9 +44,7 @@ def save_model_and_metrics(db: Session, report: dict, matrix: list[list[int]]):
                 model_id=model_entry.id_model,
                 emotion_label=str(label),
                 precision=metrics.get("precision"),
-                recall=metrics.get("recall"),
-                f1_score=metrics.get("f1-score"),
-                support=metrics.get("support")
+                recall=metrics.get("recall")
             ))
 
     db.commit()
