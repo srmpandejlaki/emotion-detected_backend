@@ -31,6 +31,7 @@ class ProcessResult(Base):
     id_process = Column(Integer, primary_key=True, index=True)
     id_data = Column(Integer, ForeignKey("data_collection.id_data"), nullable=False)
     text_preprocessing = Column(String, nullable=True)
+    automatic_label = Column(Integer, ForeignKey("label_emotion.id_label"), nullable=True)
 
     # Kolom baru
     is_processed = Column(Boolean, default=False)  # Menandai apakah data ini sudah dipakai untuk training
