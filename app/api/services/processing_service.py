@@ -1,113 +1,58 @@
+from typing import List, Dict, Union, Optional
 from sqlalchemy.orm import Session
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.metrics import confusion_matrix
-from datetime import datetime
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.metrics import classification_report, confusion_matrix
-from app.database import model_database
+from app.processing.algorithm.naive_bayes import classify_text_naive_bayes
+from app.database.model_database import ProcessResult
 
-def get_unprocessed_data(db: Session):
-    return db.query(model_database.ProcessResult).filter(
-        model_database.ProcessResult.is_processed == False
-    ).all()
+class ProcessingService:
+    @staticmethod
+    def process_texts(
+        db: Session,
+        texts: List[str],
+        labels: List[str],
+        id_process_list: List[int]
+    ) -> List[Dict[str, Union[str, int, None, Dict[str, float]]]]:
+        return classify_text_naive_bayes(db, texts, labels, id_process_list)
 
-def mark_data_as_processed(db: Session, data_ids: list[int]):
-    db.query(model_database.ProcessResult).filter(
-        model_database.ProcessResult.id_process.in_(data_ids)
-    ).update({
-        model_database.ProcessResult.is_processed: True,
-        model_database.ProcessResult.processed_at: datetime.now()
-    }, synchronize_session=False)
-    db.commit()
+    @staticmethod
+    def get_all(db: Session) -> List[ProcessResult]:
+        return db.query(ProcessResult).all()
 
-def save_model_and_metrics(db: Session, report: dict, matrix: list[list[int]]):
-    model_entry = model_database.Model(
-        model_name="Naive Bayes",
-        trained_at=datetime.now()
-    )
-    db.add(model_entry)
-    db.commit()
-    db.refresh(model_entry)
+    @staticmethod
+    def get_by_id(db: Session, id_process: int) -> Optional[ProcessResult]:
+        return db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
 
-    for i, row in enumerate(matrix):
-        for j, val in enumerate(row):
-            db.add(model_database.ConfusionMatrix(
-                model_id=model_entry.id_model,
-                actual_class=i,
-                predicted_class=j,
-                count=val
-            ))
+    @staticmethod
+    def delete_all(db: Session):
+        db.query(ProcessResult).delete()
+        db.commit()
 
-    for label, metrics in report.items():
-        if label not in ["accuracy", "macro avg", "weighted avg"]:
-            db.add(model_database.ClassMetrics(
-                model_id=model_entry.id_model,
-                emotion_label=str(label),
-                precision=metrics.get("precision"),
-                recall=metrics.get("recall")
-            ))
+    @staticmethod
+    def delete_by_id(db: Session, id_process: int):
+        record = db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
+        if record:
+            db.delete(record)
+            db.commit()
 
-    db.commit()
+    @staticmethod
+    def save_by_id(
+        db: Session,
+        id_process: int,
+        automatic_emotion: Optional[str]
+    ):
+        record = db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
+        if record:
+            record.automatic_emotion = automatic_emotion
+            record.is_processed = True
+            db.commit()
 
-def train_from_new_data(db: Session):
-    new_data = get_unprocessed_data(db)
-    if not new_data:
-        return {"message": "Tidak ada data baru yang belum diproses."}
-
-    texts, labels, id_process_list = [], [], []
-
-    for item in new_data:
-        if item.text_preprocessing:
-            # Ambil label dari tabel DataCollection berdasarkan id_data
-            data = db.query(model_database.DataCollection).filter(
-                model_database.DataCollection.id_data == item.id_data
-            ).first()
-            if data and data.label_id is not None:
-                texts.append(item.text_preprocessing)
-                labels.append(data.label_id)
-                id_process_list.append(item.id_process)
-
-    if not texts:
-        return {"message": "Data baru belum lengkap untuk dilatih."}
-
-    # Latih model dengan data baru
-    vectorizer = CountVectorizer()
-    X_train = vectorizer.fit_transform(texts)
-    model = MultinomialNB()
-    model.fit(X_train, labels)
-
-    # Tandai data baru sebagai telah diproses
-    mark_data_as_processed(db, id_process_list)
-
-    # Ambil ulang semua data yang sudah diproses untuk evaluasi keseluruhan
-    all_processed = db.query(model_database.ProcessResult).filter(
-        model_database.ProcessResult.is_processed == True,
-        model_database.ProcessResult.text_preprocessing != None
-    ).all()
-
-    eval_texts, eval_labels = [], []
-
-    for item in all_processed:
-        data = db.query(model_database.DataCollection).filter(
-            model_database.DataCollection.id_data == item.id_data
-        ).first()
-        if data and data.label_id is not None:
-            eval_texts.append(item.text_preprocessing)
-            eval_labels.append(data.label_id)
-
-    X_eval = vectorizer.transform(eval_texts)
-    y_pred = model.predict(X_eval)
-
-    report = classification_report(eval_labels, y_pred, output_dict=True)
-    matrix = confusion_matrix(eval_labels, y_pred)
-
-    # Simpan model dan evaluasinya
-    save_model_and_metrics(db, report, matrix)
-
-    return {
-        "message": "Model berhasil dilatih dari data baru.",
-        "jumlah_data_baru": len(id_process_list),
-        "jumlah_total_terproses": len(eval_labels),
-        "evaluasi": report
-    }
-
+    @staticmethod
+    def save_all(
+        db: Session,
+        data: List[Dict[str, Union[int, Optional[str]]]]
+    ):
+        for item in data:
+            record = db.query(ProcessResult).filter(ProcessResult.id_process == item["id_process"]).first()
+            if record:
+                record.automatic_emotion = item.get("automatic_emotion")
+                record.is_processed = True
+        db.commit()

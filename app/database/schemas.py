@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional, List, Dict
 from datetime import datetime
 
 # ---------- Label Emotion ----------
@@ -32,21 +32,23 @@ class DataCollection(DataCollectionBase):
 
 
 # ---------- Process Result ----------
-class ProcessResultBase(BaseModel):
-    id_data: int
-    text_preprocessing: Optional[str] = None
-    is_processed: Optional[bool] = False
-    processed_at: Optional[datetime] = None
+class ProcessingRequest(BaseModel):
+    texts: List[str]
+    labels: List[str]
+    id_process_list: List[int]
 
-class ProcessResultCreate(ProcessResultBase):
-    pass
-
-class ProcessResultOut(ProcessResultBase):
+class ProcessingResponse(BaseModel):
     id_process: int
+    text: str
+    probabilities: Dict[str, float]
+    predicted_emotion: Optional[str]
 
-    class Config:
-        orm_mode = True
+class SaveRequest(BaseModel):
+    id_process: int
+    automatic_emotion: Optional[str]
 
+class SaveAllRequest(BaseModel):
+    data: List[SaveRequest]
 
 # ---------- Model ----------
 class ModelBase(BaseModel):

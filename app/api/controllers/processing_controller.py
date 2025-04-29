@@ -1,25 +1,68 @@
-from fastapi import HTTPException
+from typing import List
+from fastapi import Depends
 from sqlalchemy.orm import Session
-from app.api.services import processing_service
+from app.database.config import get_db
+from app.api.services.processing_service import ProcessingService
+from app.database.schemas import (
+    ProcessingRequest,
+    ProcessingResponse,
+    SaveRequest,
+    SaveAllRequest
+)
 
-def get_unprocessed_data_controller(db: Session):
-    try:
-        return processing_service.get_unprocessed_data(db)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+class ProcessingController:
+    @staticmethod
+    def classify_texts(
+        request: ProcessingRequest,
+        db: Session = Depends(get_db)
+    ) -> List[ProcessingResponse]:
+        results = ProcessingService.process_texts(
+            db=db,
+            texts=request.texts,
+            labels=request.labels,
+            id_process_list=request.id_process_list
+        )
+        return [ProcessingResponse(**result) for result in results]
 
-def train_model_from_new_data_controller(db: Session):
-    try:
-        return processing_service.train_from_new_data(db)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    @staticmethod
+    def get_all(db: Session = Depends(get_db)) -> List[ProcessingResponse]:
+        records = ProcessingService.get_all(db)
+        return [ProcessingResponse(
+            id_process=rec.id_process,
+            text=rec.text,
+            probabilities={},  # Probabilities tidak diambil dari database
+            predicted_emotion=rec.automatic_emotion
+        ) for rec in records]
 
+    @staticmethod
+    def get_by_id(id_process: int, db: Session = Depends(get_db)) -> ProcessingResponse:
+        record = ProcessingService.get_by_id(db, id_process)
+        if not record:
+            raise Exception(f"Data with id {id_process} not found")
+        return ProcessingResponse(
+            id_process=record.id_process,
+            text=record.text,
+            probabilities={},  # Probabilities tidak diambil dari database
+            predicted_emotion=record.automatic_emotion
+        )
 
-# Endpoint untuk menghapus model berdasarkan ID
-async def delete_model_endpoint(model_id: int, db: Session):
-    success, message = processing_service.delete_model_by_id(model_id, db)
-    
-    if not success:
-        raise HTTPException(status_code=404, detail=message)
-    
-    return {"message": message}
+    @staticmethod
+    def delete_all(db: Session = Depends(get_db)):
+        ProcessingService.delete_all(db)
+
+    @staticmethod
+    def delete_by_id(id_process: int, db: Session = Depends(get_db)):
+        ProcessingService.delete_by_id(db, id_process)
+
+    @staticmethod
+    def save_by_id(request: SaveRequest, db: Session = Depends(get_db)):
+        ProcessingService.save_by_id(
+            db=db,
+            id_process=request.id_process,
+            automatic_emotion=request.automatic_emotion
+        )
+
+    @staticmethod
+    def save_all(request: SaveAllRequest, db: Session = Depends(get_db)):
+        data = [item.dict() for item in request.data]
+        ProcessingService.save_all(db, data)
