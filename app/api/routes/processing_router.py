@@ -1,30 +1,46 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
-from app.api.services import processing_service
-from app.database.config import get_db
+from fastapi import APIRouter
+from typing import List
+from app.api.controllers.processing_controller import ProcessingController
+from app.database.schemas import (
+    ProcessingRequest,
+    ProcessingResponse,
+    SaveRequest,
+    SaveAllRequest
+)
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/processing",
+    tags=["Processing"],
+)
 
-# Endpoint untuk melatih model
-def get_unprocessed_data_controller(db: Session):
-    try:
-        return processing_service.get_unprocessed_data(db)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+@router.post("/classify", response_model=List[ProcessingResponse])
+def classify_texts(request: ProcessingRequest):
+    return ProcessingController.classify_texts(request)
 
-def train_model_from_new_data_controller(db: Session):
-    try:
-        return processing_service.train_from_new_data(db)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+@router.get("/all", response_model=List[ProcessingResponse])
+def get_all():
+    return ProcessingController.get_all()
 
+@router.get("/{id_process}", response_model=ProcessingResponse)
+def get_by_id(id_process: int):
+    return ProcessingController.get_by_id(id_process)
 
-# Endpoint untuk menghapus model berdasarkan ID
-@router.delete("/delete_model/{model_id}")
-def delete_model_endpoint(model_id: int, db: Session = Depends(get_db)):
-    success, message = processing_service.delete_model_by_id(model_id, db)
-    
-    if not success:
-        raise HTTPException(status_code=404, detail=message)
-    
-    return {"message": message}
+@router.delete("/all")
+def delete_all():
+    ProcessingController.delete_all()
+    return {"message": "All records deleted successfully"}
+
+@router.delete("/{id_process}")
+def delete_by_id(id_process: int):
+    ProcessingController.delete_by_id(id_process)
+    return {"message": f"Record with id {id_process} deleted successfully"}
+
+@router.put("/save")
+def save_by_id(request: SaveRequest):
+    ProcessingController.save_by_id(request)
+    return {"message": "Record updated successfully"}
+
+@router.put("/save_all")
+def save_all(request: SaveAllRequest):
+    ProcessingController.save_all(request)
+    return {"message": "All records updated successfully"}
