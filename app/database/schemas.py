@@ -19,7 +19,7 @@ class LabelEmotion(LabelEmotionBase):
 # ---------- Data Collection ----------
 class DataCollectionBase(BaseModel):
     text_data: str
-    label_id: Optional[int]
+    emotion: Optional[str] = None  # field emotion disesuaikan dengan model database
 
 class DataCollectionCreate(DataCollectionBase):
     pass
@@ -49,6 +49,7 @@ class SaveRequest(BaseModel):
 
 class SaveAllRequest(BaseModel):
     data: List[SaveRequest]
+
 
 # ---------- Model ----------
 class ModelBase(BaseModel):
@@ -113,7 +114,6 @@ class ValidationData(ValidationDataBase):
 
 # ---------- Confusion Matrix ----------
 class ConfusionMatrixBase(BaseModel):
-    matrix_id: int
     label_id: int
     predicted_label_id: int
     total: int
@@ -122,13 +122,14 @@ class ConfusionMatrixCreate(ConfusionMatrixBase):
     pass
 
 class ConfusionMatrix(ConfusionMatrixBase):
+    matrix_id: int
+
     class Config:
         orm_mode = True
 
 
 # ---------- Class Metrics ----------
 class ClassMetricsBase(BaseModel):
-    metrics_id: int
     label_id: int
     precision: Optional[float]
     recall: Optional[float]
@@ -137,6 +138,7 @@ class ClassMetricsCreate(ClassMetricsBase):
     pass
 
 class ClassMetrics(ClassMetricsBase):
+    metrics_id: int
+
     class Config:
         orm_mode = True
-
