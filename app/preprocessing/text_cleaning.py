@@ -11,6 +11,8 @@ import html
 import re
 import time
 import ssl
+import os
+import json
 
 try:
     _create_unverified_https_context = ssl._create_unverified_context
@@ -58,13 +60,28 @@ class TextPreprocessor(Preprocessor):
         # nltk.download('punkt')
         self.stop_words = set(stopwords.words('indonesian'))
 
-    def normalize_custom_words(self, text):
+    def normalize_custom_words(text, filepath="app/utils/slang.json"):
+        # Normalisasi kata umum
         replacements = {
             "rp": "rupiah", "usd": "dolar", "idr": "rupiah",
             "amp": "", "nbsp": "",
         }
+
+        # Tambahkan slang dari file JSON jika tersedia
+        if os.path.exists(filepath):
+            with open(filepath, 'r', encoding='utf-8') as f:
+                try:
+                    slang_dict = json.load(f)
+                    replacements.update(slang_dict)
+                except json.JSONDecodeError:
+                    print(f"File {filepath} bukan JSON yang valid.")
+        else:
+            print(f"File slang.json tidak ditemukan di: {filepath}")
+
+        # Lakukan penggantian
         for word, replacement in replacements.items():
-            text = re.sub(rf"\b{word}\b", replacement, text)
+            text = re.sub(rf"\b{re.escape(word)}\b", replacement, text)
+
         return text
 
     def auto_protect_keywords(self, text):

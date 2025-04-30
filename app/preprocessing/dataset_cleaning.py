@@ -40,7 +40,7 @@ class DatasetPreprocessor(Preprocessor):
 
         return df
 
-    def raw_formatter(self, file_path="./app/dataCollection/komentar.csv"):
+    def raw_formatter(self, file_path="./app/dataCollection/komentar.xlsx"):
         # Baca file Excel
         df = pd.read_excel(file_path)
 

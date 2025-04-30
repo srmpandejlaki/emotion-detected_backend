@@ -11,3 +11,7 @@ nltk
 scikit-learn 
 joblib
 pandas
+
+# preprocessing
+spacy-lockups-data
+openpyxl
