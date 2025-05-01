@@ -9,7 +9,7 @@ from app.database.model_database import ProcessResult
 bert_tokenizer = BertTokenizer.from_pretrained("indobenchmark/indobert-base-p1")
 bert_model = BertModel.from_pretrained("indobenchmark/indobert-base-p1")
 
-def load_lexicon(filepath="app/utils/kamus_lexicon.json"):
+def load_lexicon(filepath="app/utils/json/kamus_lexicon.json"):
     """Memuat kamus leksikon emosi dari file JSON"""
     with open(filepath, "r", encoding="utf-8") as f:
         return json.load(f)
