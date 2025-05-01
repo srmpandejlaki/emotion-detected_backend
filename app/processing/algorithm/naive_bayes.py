@@ -26,9 +26,7 @@ def calculate_label_statistics(
     return prior_probs, word_counts, total_words_per_label
 
 
-def laplace_smoothing(
-    count: int, total: int, vocab_size: int
-) -> float:
+def laplace_smoothing(count: int, total: int, vocab_size: int) -> float:
     return (count + 1) / (total + vocab_size)
 
 
@@ -43,7 +41,7 @@ def calculate_log_probabilities(
     log_probs = {}
 
     for label, prior in prior_probs.items():
-        log_prob = math.log(prior + EPSILON)  # Hindari log(0)
+        log_prob = math.log(prior + EPSILON)
         total_words = total_words_per_label[label]
 
         for word in words:
@@ -63,6 +61,10 @@ def classify_text_naive_bayes(
     id_process_list: List[int]
 ) -> List[Dict[str, Union[str, int, None, Dict[str, float]]]]:
 
+    if not (len(texts) == len(labels) == len(id_process_list)):
+        raise ValueError("Panjang texts, labels, dan id_process_list harus sama")
+
+    # Hitung statistik
     prior_probs, word_counts, total_words_per_label = calculate_label_statistics(texts, labels)
     vocabulary = {word for label in word_counts for word in word_counts[label]}
     vocab_size = len(vocabulary)
@@ -71,10 +73,15 @@ def classify_text_naive_bayes(
     data_dua_emosi = []
 
     for idx, text in enumerate(texts):
-        log_probs = calculate_log_probabilities(text, prior_probs, word_counts, total_words_per_label, vocab_size)
+        log_probs = calculate_log_probabilities(
+            text, prior_probs, word_counts, total_words_per_label, vocab_size
+        )
 
         max_log_prob = max(log_probs.values())
-        predicted_labels = [label for label, lp in log_probs.items() if math.isclose(lp, max_log_prob, abs_tol=1e-5)]
+        predicted_labels = sorted([
+            label for label, lp in log_probs.items() 
+            if math.isclose(lp, max_log_prob, abs_tol=1e-5)
+        ])
 
         predicted_emotion = predicted_labels[0] if len(predicted_labels) == 1 else None
 
@@ -91,18 +98,18 @@ def classify_text_naive_bayes(
             "predicted_emotion": predicted_emotion,
         })
 
+    # Metode alternatif jika ditemukan 2 emosi yang sama besar
     if data_dua_emosi:
         print(f"{len(data_dua_emosi)} data masuk ke metode gabungan BERT + Lexicon...")
         hasil_gabungan = process_with_bert_lexicon(db, data_dua_emosi)
-        
-        # Update hasil prediksi
-        gabungan_map = {item["id_process"]: item["predicted_emotion"] for item in hasil_gabungan}
-        for pred in predictions:
-            if pred["id_process"] in gabungan_map:
-                pred["predicted_emotion"] = gabungan_map[pred["id_process"]]
+
+        if hasil_gabungan:
+            gabungan_map = {item["id_process"]: item["predicted_emotion"] for item in hasil_gabungan}
+            for pred in predictions:
+                if pred["id_process"] in gabungan_map:
+                    pred["predicted_emotion"] = gabungan_map[pred["id_process"]]
 
     save_prediction_results(db, predictions)
-
     return predictions
 
 
@@ -112,10 +119,14 @@ def save_prediction_results(
 ):
     now = datetime.datetime.utcnow()
     for pred in predictions:
-        result = db.query(ProcessResult).filter(ProcessResult.id_process == pred["id_process"]).first()
+        result = db.query(ProcessResult).filter(
+            ProcessResult.id_process == pred["id_process"]
+        ).first()
+
         if result:
             if pred["predicted_emotion"]:
                 result.automatic_emotion = pred["predicted_emotion"]
             result.is_processed = True
             result.processed_at = now
+
     db.commit()
