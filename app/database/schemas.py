@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional, List, Dict, Union
 
 
 # ===== EMOTION LABEL =====
@@ -33,17 +33,15 @@ class DataCollectionResponse(DataCollectionBase):
 
 
 # ===== PROCESS RESULT =====
-# Base schema (untuk input data baru ke database)
+# Base schema (untuk input data baru ke database) - preprocessing
 class ProcessResultBase(BaseModel):
     id_data: int
     text_preprocessing: str
     isProcessed_data: Optional[bool] = False  # default False
 
-
 # Schema untuk pembuatan data baru (request body dari client)
 class ProcessResultCreate(ProcessResultBase):
     pass
-
 
 # Schema untuk response dari backend (output ke client)
 class ProcessResultResponse(ProcessResultBase):
@@ -51,6 +49,39 @@ class ProcessResultResponse(ProcessResultBase):
 
     class Config:
         orm_mode = True
+
+
+# ini masuk bagian processing
+class ProcessInput(BaseModel):
+    texts: List[str]
+    labels: List[str]
+    id_process_list: List[int]
+
+class ProcessSaveInput(BaseModel):
+    id_process: int
+    automatic_emotion: Optional[str]
+
+class ProcessSaveManyInput(BaseModel):
+    items: List[Dict[str, Union[int, Optional[str]]]]
+
+
+class ProcessingRequest(BaseModel):
+    texts: List[str]
+    labels: List[str]
+    id_process_list: List[int]
+
+class ProcessingResponse(BaseModel):
+    id_process: int
+    text: str
+    probabilities: Dict[str, float]
+    predicted_emotion: Optional[str]
+
+class SaveRequest(BaseModel):
+    id_process: int
+    automatic_emotion: Optional[str]
+
+class SaveAllRequest(BaseModel):
+    data: List[SaveRequest]
 
 # ===== MODEL =====
 class ModelBase(BaseModel):
