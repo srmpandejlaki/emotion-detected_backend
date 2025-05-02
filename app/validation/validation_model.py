@@ -1,5 +1,5 @@
 from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score
-from app.database.session import Session
+from sqlalchemy.orm import Session
 from app.database.model_database import (
     ValidationResult,
     ValidationData,
@@ -8,7 +8,14 @@ from app.database.model_database import (
     LabelEmotion,
 )
 
-def validate_model_on_test_data(db: Session, test_texts, test_labels, predicted_labels, id_process_list, model_id: int):
+def validate_model_on_test_data(
+    db: Session,
+    test_texts,
+    test_labels,
+    predicted_labels,
+    id_process_list,
+    model_id: int
+):
     # Hitung metrik evaluasi
     accuracy = accuracy_score(test_labels, predicted_labels)
     precision = precision_score(test_labels, predicted_labels, average=None, zero_division=0)
@@ -17,7 +24,7 @@ def validate_model_on_test_data(db: Session, test_texts, test_labels, predicted_
     all_labels = sorted(set(test_labels + predicted_labels))
     cm = confusion_matrix(test_labels, predicted_labels, labels=all_labels)
 
-    # Simpan ValidationResult (sementara matrix_id dan metrics_id None, nanti di-update)
+    # Simpan ValidationResult
     validation_result = ValidationResult(
         model_id=model_id,
         accuracy=accuracy,
