@@ -1,43 +1,48 @@
-from sqlalchemy import Column, Integer, String, Boolean, Text, Float, ForeignKey, UniqueConstraint, DateTime
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, Integer, String, Boolean, Float, ForeignKey, UniqueConstraint, DateTime, Text
+from sqlalchemy.orm import relationship, declarative_base
 from app.database.config import Base
-from datetime import datetime
 
-# Label Emotions: Labels for emotions used in the system.
-class LabelEmotion(Base):
-    __tablename__ = "label_emotion"
+Base = declarative_base()
+
+# ===== EMOTION LABEL =====
+class EmotionLabel(Base):
+    __tablename__ = 'emotion_label'
+
     id_label = Column(Integer, primary_key=True, index=True)
-    nama_label = Column(String(50), nullable=False)
+    emotion_name = Column(String(50), unique=True, nullable=False)
 
-    # Relationship to DataCollection and ProcessResult
-    data_collection = relationship("DataCollection", back_populates="label")
-    process_results_auto = relationship("ProcessResult", back_populates="auto_label", foreign_keys="[ProcessResult.automatic_label]")
+    # Relasi dengan DataCollection
+    data = relationship("DataCollection", back_populates="emotion")
 
-# Data Collection: Holds the text data and its emotion.
+
+# ===== DATA COLLECTION =====
 class DataCollection(Base):
-    __tablename__ = "data_collection"
+    __tablename__ = 'data_collection'
+
     id_data = Column(Integer, primary_key=True, index=True)
-    text_data = Column(String, nullable=False)
-    emotion = Column(String, nullable=True)
+    text_data = Column(Text, nullable=False)
+    id_label = Column(Integer, ForeignKey('emotion_label.id_label'), nullable=True)
 
-    # Relationships to LabelEmotion and ProcessResult
-    label_emotion = relationship("LabelEmotion", back_populates="data", uselist=False)
-    processing_result = relationship("ProcessResult", back_populates="data", uselist=False)
+    # Kolom hasil preprocessing
+    preprocessing_result = Column(Text, nullable=True)
 
-# Process Result: Stores the results of text preprocessing and automatic label assignment.
+    # Relasi ke label
+    emotion = relationship("EmotionLabel", back_populates="data")
+
+    # Relasi ke hasil preprocessing
+    preprocessing = relationship("ProcessResult", back_populates="data", uselist=False)
+
+
+# ===== PROCESS RESULT (PREPROCESSING) =====
 class ProcessResult(Base):
-    __tablename__ = "process_result"
+    __tablename__ = 'process_result'
+
     id_process = Column(Integer, primary_key=True, index=True)
-    id_data = Column(Integer, ForeignKey("data_collection.id_data"), nullable=False)
-    text_preprocessing = Column(String, nullable=True)
-    automatic_label = Column(Integer, ForeignKey("label_emotion.id_label"), nullable=True)
+    id_data = Column(Integer, ForeignKey('data_collection.id_data'), nullable=False)
+    text_preprocessing = Column(Text, nullable=False)
 
-    # New columns for tracking processed data.
-    is_processed = Column(Boolean, default=False)  # Marks whether this data has been used for training.
-    processed_at = Column(DateTime, nullable=True)  # Stores the date when data was used for training.
-
-    # Relationships to DataCollection
-    data = relationship("DataCollection", back_populates="processing_result")
+    # Relasi balik ke data_collection
+    data = relationship("DataCollection", back_populates="preprocessing")
 
 # Model: Stores information about the model and its evaluation.
 class Model(Base):
