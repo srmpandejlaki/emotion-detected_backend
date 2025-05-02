@@ -1,6 +1,7 @@
-from sqlalchemy import Column, Integer, String, Boolean, Float, ForeignKey, UniqueConstraint, DateTime, Text
+from sqlalchemy import Column, Integer, String, Boolean, Float, ForeignKey, UniqueConstraint, Text, DateTime
 from sqlalchemy.orm import relationship, declarative_base
 from app.database.config import Base
+from datetime import datetime, timezone
 
 Base = declarative_base()
 
@@ -37,7 +38,9 @@ class ProcessResult(Base):
     id_process = Column(Integer, primary_key=True, index=True)
     id_data = Column(Integer, ForeignKey('data_collection.id_data'), nullable=False)
     text_preprocessing = Column(Text, nullable=False)
-    isProcessed_data = Column(Boolean, default=False, nullable=False)
+    is_processed = Column(Boolean, default=False, nullable=False)
+    automatic_emotion = Column(String(50), nullable=False)
+    processed_at = Column(DateTime, default=datetime.now(timezone.utc))
 
     # Relasi balik ke data_collection
     data = relationship("DataCollection", back_populates="preprocessing")
