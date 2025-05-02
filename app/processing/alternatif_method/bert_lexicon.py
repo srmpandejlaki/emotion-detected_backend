@@ -1,7 +1,7 @@
 from transformers import BertTokenizer, BertModel
 import torch
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from sqlalchemy.orm import Session
 from app.database.model_database import ProcessResult
 
@@ -25,7 +25,7 @@ def bert_lexicon_fusion(text: str, lexicon_dict: dict) -> str:
                 lexicon_scores[emotion] = lexicon_scores.get(emotion, 0) + 1
 
     # --- BERT representation (CLS token) ---
-    inputs = bert_tokenizer(text, return_tensors="pt", truncation=True, padding=True)
+    inputs = bert_tokenizer(text, return_tensors="pt", truncation=True, padding="max_length", max_length=128)
     outputs = bert_model(**inputs)
     cls_embedding = outputs.last_hidden_state[0][0]  # [CLS] token vector
 
@@ -51,7 +51,7 @@ def process_with_bert_lexicon(db: Session, items_to_process: list):
         if process:
             process.automatic_emotion = final_emotion
             process.is_processed = True
-            process.processed_at = datetime.now()
+            process.processed_at = datetime.now(timezone.utc)
 
     db.commit()
     return {"processed_with_bert_lexicon": len(items_to_process)}

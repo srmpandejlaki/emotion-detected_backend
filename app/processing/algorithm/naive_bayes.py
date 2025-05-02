@@ -4,7 +4,7 @@ from app.database.model_database import ProcessResult
 from sqlalchemy.orm import Session
 from collections import defaultdict
 import math
-import datetime
+from datetime import datetime, timezone
 
 EPSILON = 1e-10  # Untuk menghindari log(0)
 
@@ -117,7 +117,7 @@ def save_prediction_results(
     db: Session, 
     predictions: List[Dict[str, Union[str, int, None, Dict[str, float]]]]
 ):
-    now = datetime.datetime.utcnow()
+    now = datetime.now(timezone.utc)
     for pred in predictions:
         result = db.query(ProcessResult).filter(
             ProcessResult.id_process == pred["id_process"]
