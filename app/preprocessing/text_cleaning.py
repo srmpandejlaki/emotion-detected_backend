@@ -60,7 +60,7 @@ class TextPreprocessor(Preprocessor):
         # nltk.download('punkt')
         self.stop_words = set(stopwords.words('indonesian'))
 
-    def normalize_custom_words(text, filepath="app/utils/json/slang.json"):
+    def normalize_custom_words(self, text, filepath="app/utils/json/slang.json"):
         # Normalisasi kata umum
         replacements = {
             "rp": "rupiah", "usd": "dolar", "idr": "rupiah",
