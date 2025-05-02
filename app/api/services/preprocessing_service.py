@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from app.database.model_database import DataCollection, ProcessResult
-from app.preprocessing.text_cleaning import TextPreprocessor
+from app.preprocessing.dataset_cleaning import DatasetPreprocessor
 
 
 def get_all_preprocessing_results(db: Session):
@@ -41,9 +41,10 @@ def preprocessing_and_save(db: Session):
 
         count = 0
         for item in unprocessed_data:
-            cleaned_text = TextPreprocessor(item.text_data)
+            preprocessor = DatasetPreprocessor(item.text_data)
+            cleaned_text = preprocessor.process()  # Pastikan kamu punya method `process()`
             add_preprocessing_result(db, id_data=item.id_data, text_preprocessing=cleaned_text)
-            count += 1
+
 
         return f"Berhasil memproses {count} data."
 

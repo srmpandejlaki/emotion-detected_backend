@@ -1,49 +1,26 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from app.api.services.preprocessing_service import (
-    get_all_preprocessing_results,
-    add_preprocessing_result,
-    preprocessing_and_save,
-    get_preprocess_result_by_id,
-    delete_preprocess_result,
-    delete_all_preprocess_result
-)
+from app.api.services import preprocessing_service
 
-def create_preprocessing_result_controller(process_id: int, text_preprocessing: str, db: Session):
-    try:
-        # Memanggil service untuk menambahkan hasil preprocessing
-        return add_preprocessing_result(db, process_id, text_preprocessing)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error adding preprocessing result: {str(e)}")
 
 def get_all_preprocessing_results_controller(db: Session):
-    try:
-        # Memanggil service untuk mendapatkan hasil preprocessing
-        return get_all_preprocessing_results(db)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error fetching preprocessing results: {str(e)}")
+    return preprocessing_service.get_all_preprocessing_results(db)
+
+
+def get_preprocess_result_by_id_controller(db: Session, process_id: int):
+    result = preprocessing_service.get_preprocess_result_by_id(db, process_id)
+    if not result:
+        raise HTTPException(status_code=404, detail="Preprocessing result not found")
+    return result
+
 
 def preprocessing_and_save_controller(db: Session):
-    try:
-        # Memanggil service untuk memproses data yang belum dipreprocessing
-        return preprocessing_and_save(db)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error processing and saving preprocessing data: {str(e)}")
+    return preprocessing_service.preprocessing_and_save(db)
 
-def get_preprocessing_result_by_id_controller(db: Session, process_id: int):
-    try:
-        return get_preprocess_result_by_id(db, process_id)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error get preprocessing data: {str(e)}")
 
-def delete_preprocessing_result_controller(db: Session, process_id: int):
-    try:
-        return delete_preprocess_result(db, process_id)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error delete preprocessing data: {str(e)}")
+def delete_preprocess_result_controller(db: Session, process_id: int):
+    return preprocessing_service.delete_preprocess_result(db, process_id)
 
-def delete_all_preprocessing_result_controller(db: Session):
-    try:
-        return delete_all_preprocess_result(db)
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error delete preprocessing data: {str(e)}")
+
+def delete_all_preprocess_result_controller(db: Session):
+    return preprocessing_service.delete_all_preprocess_result(db)
