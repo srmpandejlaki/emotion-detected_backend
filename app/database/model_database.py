@@ -23,9 +23,6 @@ class DataCollection(Base):
     text_data = Column(Text, nullable=False)
     id_label = Column(Integer, ForeignKey('emotion_label.id_label'), nullable=True)
 
-    # Kolom hasil preprocessing
-    preprocessing_result = Column(Text, nullable=True)
-
     # Relasi ke label
     emotion = relationship("EmotionLabel", back_populates="data")
 
@@ -40,6 +37,7 @@ class ProcessResult(Base):
     id_process = Column(Integer, primary_key=True, index=True)
     id_data = Column(Integer, ForeignKey('data_collection.id_data'), nullable=False)
     text_preprocessing = Column(Text, nullable=False)
+    isProcessed_data = Column(Boolean, default=False, nullable=False)
 
     # Relasi balik ke data_collection
     data = relationship("DataCollection", back_populates="preprocessing")

@@ -1,74 +1,75 @@
 from pydantic import BaseModel
-from typing import Optional, List, Dict
-from datetime import datetime
+from typing import Optional, List
 
-# ---------- Label Emotion ----------
-class LabelEmotionBase(BaseModel):
-    nama_label: str
 
-class LabelEmotionCreate(LabelEmotionBase):
+# ===== EMOTION LABEL =====
+class EmotionLabelBase(BaseModel):
+    emotion_name: str
+
+class EmotionLabelCreate(EmotionLabelBase):
     pass
 
-class LabelEmotion(LabelEmotionBase):
+class EmotionLabelResponse(EmotionLabelBase):
     id_label: int
 
     class Config:
         orm_mode = True
 
 
-# ---------- Data Collection ----------
+# ===== DATA COLLECTION =====
 class DataCollectionBase(BaseModel):
     text_data: str
-    emotion: Optional[str] = None  # field emotion disesuaikan dengan model database
+    id_label: Optional[int] = None
 
 class DataCollectionCreate(DataCollectionBase):
     pass
 
-class DataCollection(DataCollectionBase):
+class DataCollectionResponse(DataCollectionBase):
     id_data: int
+    emotion: Optional[EmotionLabelResponse]
 
     class Config:
         orm_mode = True
 
 
-# ---------- Process Result ----------
-class ProcessingRequest(BaseModel):
-    texts: List[str]
-    labels: List[str]
-    id_process_list: List[int]
+# ===== PROCESS RESULT =====
+# Base schema (untuk input data baru ke database)
+class ProcessResultBase(BaseModel):
+    id_data: int
+    text_preprocessing: str
+    isProcessed_data: Optional[bool] = False  # default False
 
-class ProcessingResponse(BaseModel):
+
+# Schema untuk pembuatan data baru (request body dari client)
+class ProcessResultCreate(ProcessResultBase):
+    pass
+
+
+# Schema untuk response dari backend (output ke client)
+class ProcessResultResponse(ProcessResultBase):
     id_process: int
-    text: str
-    probabilities: Dict[str, float]
-    predicted_emotion: Optional[str]
 
-class SaveRequest(BaseModel):
-    id_process: int
-    automatic_emotion: Optional[str]
+    class Config:
+        orm_mode = True
 
-class SaveAllRequest(BaseModel):
-    data: List[SaveRequest]
-
-
-# ---------- Model ----------
+# ===== MODEL =====
 class ModelBase(BaseModel):
     ratio_data: str
-    accuracy: Optional[float]
-    matrix_id: Optional[int]
-    metrics_id: Optional[int]
+    accuracy: Optional[float] = None
+    matrix_id: Optional[int] = None
+    metrics_id: Optional[int] = None
 
 class ModelCreate(ModelBase):
     pass
 
-class Model(ModelBase):
+class ModelResponse(ModelBase):
     id_model: int
 
     class Config:
         orm_mode = True
 
 
-# ---------- Model Data ----------
+# ===== MODEL DATA =====
 class ModelDataBase(BaseModel):
     id_model: int
     id_process: int
@@ -76,29 +77,32 @@ class ModelDataBase(BaseModel):
 class ModelDataCreate(ModelDataBase):
     pass
 
-class ModelData(ModelDataBase):
+class ModelDataResponse(ModelDataBase):
+    model: Optional[ModelResponse]
+    process_result: Optional[ProcessResultResponse]
+
     class Config:
         orm_mode = True
 
 
-# ---------- Validation Result ----------
+# ===== VALIDATION RESULT =====
 class ValidationResultBase(BaseModel):
     model_id: int
-    accuracy: Optional[float]
-    matrix_id: Optional[int]
-    metrics_id: Optional[int]
+    accuracy: Optional[float] = None
+    matrix_id: Optional[int] = None
+    metrics_id: Optional[int] = None
 
 class ValidationResultCreate(ValidationResultBase):
     pass
 
-class ValidationResult(ValidationResultBase):
+class ValidationResultResponse(ValidationResultBase):
     id_validation: int
 
     class Config:
         orm_mode = True
 
 
-# ---------- Validation Data ----------
+# ===== VALIDATION DATA =====
 class ValidationDataBase(BaseModel):
     id_validation: int
     id_process: int
@@ -107,13 +111,17 @@ class ValidationDataBase(BaseModel):
 class ValidationDataCreate(ValidationDataBase):
     pass
 
-class ValidationData(ValidationDataBase):
+class ValidationDataResponse(ValidationDataBase):
+    validation_result: Optional[ValidationResultResponse]
+    process_result: Optional[ProcessResultResponse]
+
     class Config:
         orm_mode = True
 
 
-# ---------- Confusion Matrix ----------
+# ===== CONFUSION MATRIX =====
 class ConfusionMatrixBase(BaseModel):
+    matrix_id: int
     label_id: int
     predicted_label_id: int
     total: int
@@ -121,24 +129,21 @@ class ConfusionMatrixBase(BaseModel):
 class ConfusionMatrixCreate(ConfusionMatrixBase):
     pass
 
-class ConfusionMatrix(ConfusionMatrixBase):
-    matrix_id: int
-
+class ConfusionMatrixResponse(ConfusionMatrixBase):
     class Config:
         orm_mode = True
 
 
-# ---------- Class Metrics ----------
+# ===== CLASS METRICS =====
 class ClassMetricsBase(BaseModel):
+    metrics_id: int
     label_id: int
-    precision: Optional[float]
-    recall: Optional[float]
+    precision: Optional[float] = None
+    recall: Optional[float] = None
 
 class ClassMetricsCreate(ClassMetricsBase):
     pass
 
-class ClassMetrics(ClassMetricsBase):
-    metrics_id: int
-
+class ClassMetricsResponse(ClassMetricsBase):
     class Config:
         orm_mode = True
