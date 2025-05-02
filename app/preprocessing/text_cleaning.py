@@ -57,8 +57,14 @@ class TextPreprocessor(Preprocessor):
         stopword_factory = StopWordRemoverFactory()
         self.stopwords = set(stopword_factory.get_stop_words())
 
-        # nltk.download('punkt')
+        # nltk.download('punkt')  # pastikan ini hanya dijalankan sekali
         self.stop_words = set(stopwords.words('indonesian'))
+
+        # Daftar kata negatif yang ingin dipertahankan
+        self.negation_words = {'tidak', 'bukan', 'belum', 'jangan', 'tanpa', 'masalah'}
+
+        # Hapus kata negatif dari stopword NLTK
+        self.stop_words = self.stop_words - self.negation_words
 
     def normalize_custom_words(self, text, filepath="app/utils/json/slang.json"):
         # Normalisasi kata umum
