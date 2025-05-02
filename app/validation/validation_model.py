@@ -1,29 +1,40 @@
 from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score
 from app.database.session import Session
-from app.database.model_database import ValidationResult, ValidationData, ConfusionMatrix, ClassMetrics, LabelEmotion
-from collections import defaultdict
+from app.database.model_database import (
+    ValidationResult,
+    ValidationData,
+    ConfusionMatrix,
+    ClassMetrics,
+    LabelEmotion,
+)
 
-
-def validate_model_on_test_data(db: Session, test_texts, test_labels, train_texts, train_labels):
-    # Dummy prediksi: prediksi = label sama seperti data training pertama (ganti dengan model asli)
-    predicted_labels = test_labels  # Ganti dengan hasil model
-
+def validate_model_on_test_data(db: Session, test_texts, test_labels, predicted_labels, id_process_list, model_id: int):
+    # Hitung metrik evaluasi
     accuracy = accuracy_score(test_labels, predicted_labels)
     precision = precision_score(test_labels, predicted_labels, average=None, zero_division=0)
     recall = recall_score(test_labels, predicted_labels, average=None, zero_division=0)
-    cm = confusion_matrix(test_labels, predicted_labels, labels=list(set(test_labels + predicted_labels)))
 
-    # Simpan ValidationResult
-    validation_result = ValidationResult(model_id=1, accuracy=accuracy)
+    all_labels = sorted(set(test_labels + predicted_labels))
+    cm = confusion_matrix(test_labels, predicted_labels, labels=all_labels)
+
+    # Simpan ValidationResult (sementara matrix_id dan metrics_id None, nanti di-update)
+    validation_result = ValidationResult(
+        model_id=model_id,
+        accuracy=accuracy,
+        matrix_id=None,
+        metrics_id=None
+    )
     db.add(validation_result)
     db.commit()
     db.refresh(validation_result)
 
-    # Simpan ConfusionMatrix
+    # Ambil mapping nama label -> id_label
     label_map = {label.nama_label: label.id_label for label in db.query(LabelEmotion).all()}
-    for true_idx, true_label in enumerate(set(test_labels + predicted_labels)):
-        for pred_idx, pred_label in enumerate(set(test_labels + predicted_labels)):
-            total = cm[true_idx][pred_idx]
+
+    # Simpan ConfusionMatrix
+    for i, true_label in enumerate(all_labels):
+        for j, pred_label in enumerate(all_labels):
+            total = cm[i][j]
             db_cm = ConfusionMatrix(
                 matrix_id=validation_result.id_validation,
                 label_id=label_map.get(true_label),
@@ -31,9 +42,10 @@ def validate_model_on_test_data(db: Session, test_texts, test_labels, train_text
                 total=total
             )
             db.add(db_cm)
+    db.commit()
 
     # Simpan ClassMetrics
-    for idx, label in enumerate(set(test_labels + predicted_labels)):
+    for idx, label in enumerate(all_labels):
         db_metric = ClassMetrics(
             metrics_id=validation_result.id_validation,
             label_id=label_map.get(label),
@@ -41,16 +53,21 @@ def validate_model_on_test_data(db: Session, test_texts, test_labels, train_text
             recall=recall[idx] if idx < len(recall) else 0.0
         )
         db.add(db_metric)
+    db.commit()
 
     # Simpan ValidationData
-    for i, text in enumerate(test_texts):
+    for i in range(len(test_texts)):
         is_correct = test_labels[i] == predicted_labels[i]
         val_data = ValidationData(
             id_validation=validation_result.id_validation,
-            id_process=i + 1,  # Placeholder ID
+            id_process=id_process_list[i],
             is_correct=is_correct
         )
         db.add(val_data)
-
     db.commit()
-    return {"accuracy": accuracy, "validation_id": validation_result.id_validation}
+
+    return {
+        "validation_id": validation_result.id_validation,
+        "accuracy": accuracy,
+        "labels": all_labels
+    }

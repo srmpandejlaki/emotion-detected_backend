@@ -1,7 +1,7 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
-from app.validation import validation_service
-from app.validation.model_validation import validate_model_on_test_data
+from app.api.services import validation_service
+from app.validation.validation_model import validate_model_on_test_data
 
 
 def get_unprocessed_data_controller(db: Session):
