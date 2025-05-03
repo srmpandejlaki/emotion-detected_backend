@@ -1,56 +1,27 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from typing import List
-from app.api.services import processing_service
+
 from app.database.config import get_db
-from app.database.schemas import ProcessInput, ProcessSaveInput, ProcessSaveManyInput, ProcessResultSchema
+from app.api.controllers import processing_controller
 
 router = APIRouter(prefix="/processing", tags=["Processing"])
 
-@router.get("/list", response_model=List[ProcessResultSchema])
-def get_all_processing(db: Session = Depends(get_db)):
-    return processing_service.get_all(db)
 
-@router.get("/{id_process}", response_model=ProcessResultSchema)
-def get_processing_by_id(id_process: int, db: Session = Depends(get_db)):
-    result = processing_service.get_by_id(db, id_process)
-    if not result:
-        raise HTTPException(status_code=404, detail="Process not found")
-    return result
+@router.post("/run")
+def run_processing(db: Session = Depends(get_db)):
+    return processing_controller.run_processing(db)
 
-@router.delete("/list", status_code=status.HTTP_204_NO_CONTENT)
-def delete_all_processing(db: Session = Depends(get_db)):
-    processing_service.delete_all(db)
-    return
 
-@router.delete("/{id_process}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_processing_by_id(id_process: int, db: Session = Depends(get_db)):
-    processing_service.delete_by_id(db, id_process)
-    return
+@router.get("/evaluate")
+def evaluate_model(test_size: float = Query(0.3, ge=0.1, le=0.9), db: Session = Depends(get_db)):
+    return processing_controller.evaluate_model(test_size, db)
 
-@router.post("/process-texts")
-def process_texts(data: ProcessInput, db: Session = Depends(get_db)):
-    try:
-        result = processing_service.process_texts(
-            db=db,
-            texts=data.texts,
-            labels=data.labels,
-            id_process_list=data.id_process_list
-        )
-        return {"status": "success", "result": result}
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
 
-@router.put("/save")
-def save_processing_result(data: ProcessSaveInput, db: Session = Depends(get_db)):
-    result = processing_service.save_by_id(
-        db=db,
-        id_process=data.id_process,
-        automatic_emotion=data.automatic_emotion
-    )
-    return result
+@router.put("/update/manual-label/{id_process}")
+def update_manual_label(id_process: int, new_label: str, db: Session = Depends(get_db)):
+    return processing_controller.update_manual_label(id_process, new_label, db)
 
-@router.put("/save-all")
-def save_all_processing_results(data: ProcessSaveManyInput, db: Session = Depends(get_db)):
-    result = processing_service.save_all(db=db, data=data.items)
-    return result
+
+@router.put("/update/automatic-label/{id_process}")
+def update_automatic_label(id_process: int, new_label: str, db: Session = Depends(get_db)):
+    return processing_controller.update_automatic_label(id_process, new_label, db)
