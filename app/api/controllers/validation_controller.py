@@ -1,24 +1,46 @@
-from fastapi import HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
 from app.api.services import validation_service
-from app.validation.validation_model import validate_model_on_test_data
+from app.database.config import get_db
+from app.database.schemas import ValidationResultCreate
 
+router = APIRouter(
+    prefix="/validation",
+    tags=["Validation"]
+)
 
-def get_unprocessed_data_controller(db: Session):
-    return validation_service.get_unprocessed_data(db)
+@router.post("/run")
+def validate_model(payload: ValidationResultCreate, db: Session = Depends(get_db)):
+    try:
+        result = validation_service.perform_validation(payload, db)
+        return {"message": "Validation completed successfully", "result": result}
+    except ValueError as ve:
+        raise HTTPException(status_code=404, detail=str(ve))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
+@router.get("/")
+def get_all_results(db: Session = Depends(get_db)):
+    try:
+        results = validation_service.get_all_validation_results(db)
+        return results
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
-def update_emotion_controller(db: Session, id_process: int, new_emotion: str):
-    return validation_service.update_automatic_emotion(db, id_process, new_emotion)
+@router.get("/{validation_id}")
+def get_validation_by_id(validation_id: int, db: Session = Depends(get_db)):
+    try:
+        result = validation_service.get_validation_result_by_id(validation_id, db)
+        if not result:
+            raise HTTPException(status_code=404, detail="Validation result not found")
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
-
-def run_validation_controller(db: Session, test_texts, test_labels, train_texts, train_labels):
-    if not (test_texts and test_labels and train_texts and train_labels):
-        raise HTTPException(status_code=400, detail="Semua input harus diisi dengan benar.")
-    return validate_model_on_test_data(
-        db=db,
-        test_texts=test_texts,
-        test_labels=test_labels,
-        train_texts=train_texts,
-        train_labels=train_labels
-    )
+@router.delete("/delete-all")
+def delete_all_results(db: Session = Depends(get_db)):
+    try:
+        validation_service.delete_all_validation_results(db)
+        return {"message": "All validation data has been deleted successfully"}
+    except RuntimeError as e:
+        raise HTTPException(status_code=500, detail=str(e))

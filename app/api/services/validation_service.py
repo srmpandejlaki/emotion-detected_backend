@@ -8,7 +8,7 @@ from app.database.model_database import (
     ModelData
 )
 from app.database.schemas import ValidationResultCreate, ValidationResultResponse
-from app.core.classification import naive_bayes_predict
+from app.validation.classification import naive_bayes_predict
 from app.utils.evaluation_model import evaluate_model
 from app.utils.label_utils import get_label_id_map
 
