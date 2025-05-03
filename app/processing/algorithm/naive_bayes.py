@@ -90,6 +90,7 @@ def naive_bayes_classification(
         predictions.append({
             "id_process": id_process_list[idx],
             "text": text,
+            "manual_emotion": labels[idx],  # tambahkan label manual
             "probabilities": log_probs,
             "predicted_emotion": predicted_emotion,
         })
@@ -114,9 +115,6 @@ if __name__ == "__main__":
     labels = df["emotion"].astype(str).tolist()
     id_process_list = df["id_process"].astype(int).tolist()
 
-    # Dummy session karena tidak pakai DB saat ini
-    # dummy_db: Session = MagicMock()
-
     # Jalankan training dan klasifikasi
     predictions, data_dua_emosi = naive_bayes_classification(
         texts=texts,
@@ -124,21 +122,28 @@ if __name__ == "__main__":
         id_process_list=id_process_list
     )
 
+    # Hitung akurasi
+    total_data = len(predictions)
+    benar = sum(1 for p in predictions if p["predicted_emotion"] == p["manual_emotion"])
+    akurasi = benar / total_data if total_data > 0 else 0
+
     # Tampilkan hasil
     for result in predictions:
         print("\n--- Hasil ---")
         print(f"ID        : {result['id_process']}")
         print(f"Teks      : {result['text']}")
-        print(f"Manual      : {result['emotion']}")
+        print(f"Manual    : {result['manual_emotion']}")
         print(f"Prediksi  : {result['predicted_emotion']}")
         print("Probabilitas log:")
         for label, prob in result["probabilities"].items():
             print(f"  {label}: {prob:.4f}")
-        print("\n--- Data dengan dua emosi probabilitas setara ---")
+
+    # Tampilkan data dengan 2 emosi setara
+    print("\n--- Data dengan dua emosi probabilitas setara ---")
     for data in data_dua_emosi:
         print(f"ID: {data['id_process']} | Teks: {data['text']}")
-
 
     # Total waktu proses
     end_time = time.time()
     print(f"\nTotal waktu pelatihan dan prediksi: {end_time - start_time:.2f} detik")
+    print(f"Akurasi: {akurasi * 100:.2f}%")
