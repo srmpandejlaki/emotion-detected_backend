@@ -31,3 +31,6 @@ def delete_all_preprocessing(db: Session = Depends(get_db)):
 def update_label_route(id_data: int, new_label: str, db: Session = Depends(get_db)):
     return preprocessing_service.update_label(db, id_data, new_label)
 
+@router.post("/add")
+def create_emotion_label(emotion_name: str, db: Session = Depends(get_db)):
+    return preprocessing_service.add_emotion_label(db, emotion_name)

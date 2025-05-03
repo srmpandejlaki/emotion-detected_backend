@@ -1,10 +1,12 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from app.database import schemas
 from app.database.config import get_db
 from app.api.services import data_collection_service
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/data-collection", tags=["Data Collection"]
+)
 
 @router.post("/data-collection")
 def create_data(data: schemas.DataCollectionCreate, db: Session = Depends(get_db)):
@@ -16,7 +18,7 @@ def get_all_data(db: Session = Depends(get_db)):
 
 @router.get("/data-collection/{id_data}")
 def get_data_by_id(id_data: int, db: Session = Depends(get_db)):
-    return data_collection_service.get_data_collection_by_id(db, schemas.DataCollectionResponse(id_data=id_data))
+    return data_collection_service.get_data_collection_by_id(db, id_data)
 
 @router.delete("/data-collection/{id_data}")
 def delete_data_by_id(id_data: int, db: Session = Depends(get_db)):

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
-from app.database.model_database import DataCollection, ProcessResult
+from app.database.model_database import EmotionLabel, DataCollection, ProcessResult
 from app.preprocessing.dataset_cleaning import DatasetPreprocessor
 
 def get_all_preprocessing_results(db: Session):
@@ -92,4 +92,31 @@ def update_label(db: Session, id_data: int, new_label: str):
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Error updating label: {str(e)}")
+
+from app.database.model_database import Label
+
+def add_emotion_label(db: Session, emotion_name: str):
+    try:
+        # Cek apakah label emosi sudah ada
+        existing_label = db.query(EmotionLabel).filter(EmotionLabel.emotion_name == emotion_name).first()
+        if existing_label:
+            raise HTTPException(status_code=400, detail="Label emosi sudah ada.")
+
+        # Tambah label baru
+        new_label = EmotionLabel(emotion_name=emotion_name)
+        db.add(new_label)
+        db.commit()
+        db.refresh(new_label)
+
+        return {
+            "message": "Label emosi berhasil ditambahkan.",
+            "data": {
+                "id_label": new_label.id_label,
+                "emotion_name": new_label.emotion_name
+            }
+        }
+
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Gagal menambahkan label emosi: {str(e)}")
 
