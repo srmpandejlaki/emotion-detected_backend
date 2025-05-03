@@ -87,13 +87,11 @@ def update_label(db: Session, id_data: int, new_label: str):
         return {"message": "Label berhasil diperbarui", "data": {
             "id_data": data.id_data,
             "text_data": data.text_data,
-            "label": data.label
+            "label": data.id_label
         }}
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Error updating label: {str(e)}")
-
-from app.database.model_database import Label
 
 def add_emotion_label(db: Session, emotion_name: str):
     try:
