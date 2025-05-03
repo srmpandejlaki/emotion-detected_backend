@@ -80,15 +80,26 @@ def update_label(db: Session, id_data: int, new_label: str):
         data = db.query(DataCollection).filter(DataCollection.id_data == id_data).first()
         if not data:
             raise HTTPException(status_code=404, detail="Data tidak ditemukan")
-        
-        data.label = new_label
+
+        # Cari label emosi berdasarkan nama
+        label = db.query(EmotionLabel).filter(EmotionLabel.emotion_name == new_label).first()
+        if not label:
+            raise HTTPException(status_code=404, detail="Label emosi tidak ditemukan")
+
+        # Update label
+        data.id_label = label.id_label
         db.commit()
         db.refresh(data)
-        return {"message": "Label berhasil diperbarui", "data": {
-            "id_data": data.id_data,
-            "text_data": data.text_data,
-            "label": data.id_label
-        }}
+
+        return {
+            "message": "Label berhasil diperbarui",
+            "data": {
+                "id_data": data.id_data,
+                "text_data": data.text_data,
+                "label": label.emotion_name
+            }
+        }
+
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Error updating label: {str(e)}")

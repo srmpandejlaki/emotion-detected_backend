@@ -1,69 +1,54 @@
-import os
-import pandas as pd
-import shutil
+from fastapi import APIRouter, Depends, UploadFile, File, Form, HTTPException
 from sqlalchemy.orm import Session
-from fastapi import HTTPException
-from app.database import model_database, schemas
+from typing import List, Optional
 
-def get_all_data_collections(db: Session):
-    return db.query(model_database.DataCollection).all()
+from app.api.services import data_collection_service
+from app.database import schemas
+from app.database.config import get_db
 
-def get_data_collection_by_id(db: Session, data_id: int):
-    return db.query(model_database.DataCollection).filter(
-        model_database.DataCollection.id_data == data_id
-    ).first()
+router = APIRouter(
+    prefix="/data-collections",
+    tags=["Data Collection"]
+)
 
-def create_data_collection(db: Session, data: schemas.DataCollectionCreate = None, file: schemas.UploadFile = None):
-    if file:
-        file_location = f"temp/{file.filename}"
-        os.makedirs("temp", exist_ok=True)
-        with open(file_location, "wb") as buffer:
-            shutil.copyfileobj(file.file, buffer)
-        return upload_csv_data(db, file_location)
+# === GET ALL ===
+@router.get("/", response_model=List[schemas.DataCollectionResponse])
+def get_all_data_collections(db: Session = Depends(get_db)):
+    return data_collection_service.get_all_data_collections(db)
 
-    elif data:
-        return [create_single_data(db, data)]
-
-    else:
-        raise HTTPException(status_code=400, detail="Harus mengirimkan file CSV.")
-
-def create_single_data(db: Session, data: schemas.DataCollectionCreate):
-    db_data = model_database.DataCollection(text_data=data.text_data, label_id=data.label_id)
-    db.add(db_data)
-    db.commit()
-    db.refresh(db_data)
-    return db_data
-
-def upload_csv_data(db: Session, file_path: str):
-    try:
-        df = pd.read_csv(file_path)
-        if 'text' not in df.columns or 'emotion' not in df.columns:
-            raise HTTPException(status_code=400, detail="CSV harus memiliki kolom 'text' dan 'emotion'.")
-
-        created_data = []
-        for _, row in df.iterrows():
-            data = schemas.DataCollectionCreate(
-                text_data=row['text'],
-                label_id=row['emotion'] if not pd.isnull(row['emotion']) else None
-            )
-            created_data.append(create_single_data(db, data))
-
-        return created_data
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Gagal memproses file CSV: {str(e)}")
-
-    finally:
-        if os.path.exists(file_path):
-            os.remove(file_path)
-
-def delete_data_collection(db: Session, data_id: int):
-    data = get_data_collection_by_id(db, data_id)
+# === GET BY ID ===
+@router.get("/{data_id}", response_model=schemas.DataCollectionResponse)
+def get_data_collection_by_id(data_id: int, db: Session = Depends(get_db)):
+    data = data_collection_service.get_data_collection_by_id(db, data_id)
     if not data:
-        raise HTTPException(status_code=404, detail="Data Collection not found")
-    db.delete(data)
-    db.commit()
+        raise HTTPException(status_code=404, detail="Data not found")
+    return data
 
-def delete_all_data_collections(db: Session):
-    db.query(model_database.DataCollection).delete()
-    db.commit()
+# === CREATE: INPUT MANUAL & CSV ===
+@router.post("/", response_model=List[schemas.DataCollectionResponse])
+def create_data_collection(
+    db: Session = Depends(get_db),
+    text_data: Optional[str] = Form(None),
+    id_label: Optional[int] = Form(None),
+    file: Optional[UploadFile] = File(None),
+):
+    if file:
+        return data_collection_service.create_data_collection(db, file=file)
+
+    if text_data:
+        data = schemas.DataCollectionCreate(text_data=text_data, id_label=id_label)
+        return data_collection_service.create_data_collection(db, data=data)
+
+    raise HTTPException(status_code=400, detail="Harus mengirimkan file CSV atau input manual")
+
+# === DELETE BY ID ===
+@router.delete("/{data_id}")
+def delete_data_collection(data_id: int, db: Session = Depends(get_db)):
+    data_collection_service.delete_data_collection(db, data_id)
+    return {"message": "Data berhasil dihapus"}
+
+# === DELETE ALL ===
+@router.delete("/")
+def delete_all_data_collections(db: Session = Depends(get_db)):
+    data_collection_service.delete_all_data_collections(db)
+    return {"message": "Semua data berhasil dihapus"}
