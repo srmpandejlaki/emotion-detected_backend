@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 from typing import List, Optional
 
-from app.database import get_db
+from app.database.config import get_db
 from app.api.services import processing_service
 
 
