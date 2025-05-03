@@ -1,80 +1,100 @@
-from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score
 from sqlalchemy.orm import Session
+from datetime import datetime
+
 from app.database.model_database import (
-    ValidationResult,
-    ValidationData,
-    ConfusionMatrix,
-    ClassMetrics,
-    EmotionLabel,
+    ValidationResult, ValidationData, Model,
+    ProcessResult, ConfusionMatrix, ClassMetrics,
+    ModelData
 )
+from app.database.schemas import ValidationResultCreate, ValidationResultResponse
+from app.classification import naive_bayes_predict
+from app.utils.evaluation_model import evaluate_model
+from app.utils.label_utils import get_label_id_map
 
-def validate_model_on_test_data(
-    db: Session,
-    test_texts,
-    test_labels,
-    predicted_labels,
-    id_process_list,
-    model_id: int
-):
-    # Hitung metrik evaluasi
-    accuracy = accuracy_score(test_labels, predicted_labels)
-    precision = precision_score(test_labels, predicted_labels, average=None, zero_division=0)
-    recall = recall_score(test_labels, predicted_labels, average=None, zero_division=0)
 
-    all_labels = sorted(set(test_labels + predicted_labels))
-    cm = confusion_matrix(test_labels, predicted_labels, labels=all_labels)
+def perform_validation(payload: ValidationResultCreate, db: Session) -> ValidationResultResponse:
+    model = db.query(Model).filter_by(id_model=payload.model_id).first()
+    if not model:
+        raise ValueError("Model not found")
 
-    # Simpan ValidationResult
+    trained_process_ids = [md.id_process for md in model.model_data]
+
+    test_data = db.query(ProcessResult).filter(
+        ProcessResult.is_processed == True,
+        ~ProcessResult.id_process.in_(trained_process_ids)
+    ).all()
+
+    if not test_data:
+        raise ValueError("No validation data available")
+
+    true_labels = []
+    predicted_labels = []
+    correct_flags = []
+
+    for data in test_data:
+        predicted = naive_bayes_predict(data.text_preprocessing, db)
+        predicted_labels.append(predicted)
+        true_label = data.automatic_emotion
+        true_labels.append(true_label)
+        correct_flags.append(predicted == true_label)
+
+    evaluation_result = evaluate_model(true_labels, predicted_labels)
+    label_id_map = get_label_id_map(db)
+    new_matrix_id = int(datetime.now().timestamp())
+    new_metrics_id = new_matrix_id
+
+    for actual_row in evaluation_result["confusion_matrix"]["matrix"]:
+        actual_label = actual_row["actual"]
+        actual_id = label_id_map.get(actual_label)
+        for predicted_label, total in actual_row.items():
+            if predicted_label == "actual":
+                continue
+            predicted_id = label_id_map.get(predicted_label)
+            db.add(ConfusionMatrix(
+                matrix_id=new_matrix_id,
+                label_id=actual_id,
+                predicted_label_id=predicted_id,
+                total=total
+            ))
+
+    for label, precision in evaluation_result["precision"].items():
+        recall = evaluation_result["recall"].get(label, 0.0)
+        db.add(ClassMetrics(
+            metrics_id=new_metrics_id,
+            label_id=label_id_map.get(label),
+            precision=precision,
+            recall=recall
+        ))
+
+    db.flush()
+
     validation_result = ValidationResult(
-        model_id=model_id,
-        accuracy=accuracy,
-        matrix_id=None,
-        metrics_id=None
+        model_id=payload.model_id,
+        accuracy=evaluation_result["accuracy"],
+        matrix_id=new_matrix_id,
+        metrics_id=new_metrics_id
     )
     db.add(validation_result)
-    db.commit()
-    db.refresh(validation_result)
+    db.flush()
 
-    # Ambil mapping nama label -> id_label
-    label_map = {label.id_label: label.id_label for label in db.query(EmotionLabel).all()}
-
-    # Simpan ConfusionMatrix
-    for i, true_label in enumerate(all_labels):
-        for j, pred_label in enumerate(all_labels):
-            total = cm[i][j]
-            db_cm = ConfusionMatrix(
-                matrix_id=validation_result.id_validation,
-                label_id=label_map.get(true_label),
-                predicted_label_id=label_map.get(pred_label),
-                total=total
-            )
-            db.add(db_cm)
-    db.commit()
-
-    # Simpan ClassMetrics
-    for idx, label in enumerate(all_labels):
-        db_metric = ClassMetrics(
-            metrics_id=validation_result.id_validation,
-            label_id=label_map.get(label),
-            precision=precision[idx] if idx < len(precision) else 0.0,
-            recall=recall[idx] if idx < len(recall) else 0.0
-        )
-        db.add(db_metric)
-    db.commit()
-
-    # Simpan ValidationData
-    for i in range(len(test_texts)):
-        is_correct = test_labels[i] == predicted_labels[i]
-        val_data = ValidationData(
+    for idx, data in enumerate(test_data):
+        db.add(ValidationData(
             id_validation=validation_result.id_validation,
-            id_process=id_process_list[i],
-            is_correct=is_correct
-        )
-        db.add(val_data)
+            id_process=data.id_process,
+            is_correct=correct_flags[idx]
+        ))
+
+        db.add(ModelData(
+            id_model=payload.model_id,
+            id_process=data.id_process
+        ))
+
     db.commit()
 
-    return {
-        "validation_id": validation_result.id_validation,
-        "accuracy": accuracy,
-        "labels": all_labels
-    }
+    return ValidationResultResponse(
+        id_validation=validation_result.id_validation,
+        model_id=payload.model_id,
+        accuracy=validation_result.accuracy,
+        matrix_id=validation_result.matrix_id,
+        metrics_id=validation_result.metrics_id
+    )
