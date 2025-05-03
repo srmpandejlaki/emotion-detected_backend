@@ -1,69 +1,71 @@
-from typing import List, Dict, Union, Optional
 from sqlalchemy.orm import Session
 from datetime import datetime, timezone
-from app.processing.algorithm.naive_bayes import classify_text_naive_bayes
+from typing import List, Dict, Tuple
 from app.database.model_database import ProcessResult
+from app.processing.algorithm.naive_bayes import naive_bayes_classification
+from app.processing.alternatif_method.bert_lexicon import process_with_bert_lexicon
 
-class ProcessingService:
-    @staticmethod
-    def process_texts(
-        db: Session,
-        texts: List[str],
-        labels: List[str],
-        id_process_list: List[int]
-    ) -> List[Dict[str, Union[str, int, None, Dict[str, float]]]]:
-        if not (len(texts) == len(labels) == len(id_process_list)):
-            raise ValueError("Length of texts, labels, and id_process_list must be equal")
-        
-        return classify_text_naive_bayes(db, texts, labels, id_process_list)
+def get_preprocessed_data(db: Session) -> Tuple[List[str], List[str], List[int]]:
+    results = db.query(ProcessResult).filter(
+        ProcessResult.is_processed == False
+    ).all()
 
-    @staticmethod
-    def get_all(db: Session) -> List[ProcessResult]:
-        return db.query(ProcessResult).all()
+    texts = [r.text_preprocessing for r in results]
+    labels = [r.data.emotion.emotion_name for r in results]  # Ambil dari relasi berantai
+    ids = [r.id_process for r in results]
 
-    @staticmethod
-    def get_by_id(db: Session, id_process: int) -> Optional[ProcessResult]:
-        return db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
+    return texts, labels, ids
 
-    @staticmethod
-    def delete_all(db: Session):
-        db.query(ProcessResult).delete()
-        db.commit()
 
-    @staticmethod
-    def delete_by_id(db: Session, id_process: int):
-        record = db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
-        if record:
-            db.delete(record)
-            db.commit()
+def save_prediction_results(
+    db: Session, 
+    predictions: List[Dict]
+) -> None:
+    """
+    Simpan hasil prediksi ke database berdasarkan id_process.
+    """
+    now = datetime.now(timezone.utc)
+    for pred in predictions:
+        result = db.query(ProcessResult).filter(
+            ProcessResult.id_process == pred["id_process"]
+        ).first()
 
-    @staticmethod
-    def save_by_id(
-        db: Session,
-        id_process: int,
-        automatic_emotion: Optional[str]
-    ):
-        record = db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
-        if record:
-            record.automatic_emotion = automatic_emotion
-            record.is_processed = True
-            record.processed_at = datetime.now(timezone.utc)
-            db.commit()
-            return {"updated": 1}
-        return {"updated": 0}
+        if result:
+            if pred.get("predicted_emotion"):
+                result.automatic_emotion = pred["predicted_emotion"]
+            result.is_processed = True
+            result.processed_at = now
 
-    @staticmethod
-    def save_all(
-        db: Session,
-        data: List[Dict[str, Union[int, Optional[str]]]]
-    ):
-        updated_count = 0
-        for item in data:
-            record = db.query(ProcessResult).filter(ProcessResult.id_process == item["id_process"]).first()
-            if record:
-                record.automatic_emotion = item.get("automatic_emotion")
-                record.is_processed = True
-                record.processed_at = datetime.now(timezone.utc)
-                updated_count += 1
-        db.commit()
-        return {"updated": updated_count}
+    db.commit()
+
+
+def process_and_save_predictions_naive_bayes(
+    db: Session,
+    texts: List[str],
+    labels: List[str],
+    id_process_list: List[int]
+) -> List[Dict]:
+    """
+    Proses klasifikasi menggunakan Naive Bayes dan simpan hasilnya.
+    Bila terdapat dua emosi dengan skor yang sama, lanjutkan ke metode BERT + Lexicon.
+    """
+    # Proses klasifikasi Naive Bayes
+    predictions, data_dua_emosi = naive_bayes_classification(
+        texts, labels, id_process_list
+    )
+
+    # Tangani data ambigu (2 emosi sama kuat) dengan metode gabungan
+    if data_dua_emosi:
+        hasil_gabungan = process_with_bert_lexicon(db, data_dua_emosi)
+        gabungan_map = {
+            item["id_process"]: item["predicted_emotion"]
+            for item in hasil_gabungan
+        }
+        for pred in predictions:
+            if pred["id_process"] in gabungan_map:
+                pred["predicted_emotion"] = gabungan_map[pred["id_process"]]
+
+    # Simpan ke database
+    save_prediction_results(db, predictions)
+
+    return predictions

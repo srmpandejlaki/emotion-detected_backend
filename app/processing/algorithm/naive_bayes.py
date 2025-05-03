@@ -1,17 +1,13 @@
-from typing import List, Dict, Union
-from app.processing.alternatif_method.bert_lexicon import process_with_bert_lexicon
-from app.database.model_database import ProcessResult
-from sqlalchemy.orm import Session
+from typing import List, Dict, Union, Tuple
 from collections import defaultdict
-import math
-from datetime import datetime, timezone
+import math, time
 
-EPSILON = 1e-10  # Untuk menghindari log(0)
+EPSILON = 1e-10
 
 def calculate_label_statistics(
     texts: List[str], 
     labels: List[str]
-) -> tuple[Dict[str, float], Dict[str, Dict[str, int]], Dict[str, int]]:
+) -> Tuple[Dict[str, float], Dict[str, Dict[str, int]], Dict[str, int]]:
     label_counts = defaultdict(int)
     word_counts = defaultdict(lambda: defaultdict(int))
 
@@ -54,17 +50,17 @@ def calculate_log_probabilities(
     return log_probs
 
 
-def classify_text_naive_bayes(
-    db: Session,
+def naive_bayes_classification(
     texts: List[str],
     labels: List[str],
     id_process_list: List[int]
-) -> List[Dict[str, Union[str, int, None, Dict[str, float]]]]:
-
+) -> Tuple[
+    List[Dict[str, Union[int, str, None, Dict[str, float]]]],
+    List[Dict[str, Union[int, str]]]
+]:
     if not (len(texts) == len(labels) == len(id_process_list)):
         raise ValueError("Panjang texts, labels, dan id_process_list harus sama")
 
-    # Hitung statistik
     prior_probs, word_counts, total_words_per_label = calculate_label_statistics(texts, labels)
     vocabulary = {word for label in word_counts for word in word_counts[label]}
     vocab_size = len(vocabulary)
@@ -98,35 +94,48 @@ def classify_text_naive_bayes(
             "predicted_emotion": predicted_emotion,
         })
 
-    # Metode alternatif jika ditemukan 2 emosi yang sama besar
-    if data_dua_emosi:
-        print(f"{len(data_dua_emosi)} data masuk ke metode gabungan BERT + Lexicon...")
-        hasil_gabungan = process_with_bert_lexicon(db, data_dua_emosi)
+    return predictions, data_dua_emosi
 
-        if hasil_gabungan:
-            gabungan_map = {item["id_process"]: item["predicted_emotion"] for item in hasil_gabungan}
-            for pred in predictions:
-                if pred["id_process"] in gabungan_map:
-                    pred["predicted_emotion"] = gabungan_map[pred["id_process"]]
+if __name__ == "__main__":
+    import pandas as pd
+    from sqlalchemy.orm import Session
+    from unittest.mock import MagicMock
 
-    save_prediction_results(db, predictions)
-    return predictions
+    # Mulai waktu
+    start_time = time.time()
 
+    # Baca file dataset hasil preprocessing
+    dataset_path = "./preprocessing_results/new_dataset.csv"
+    df = pd.read_csv(dataset_path)
 
-def save_prediction_results(
-    db: Session, 
-    predictions: List[Dict[str, Union[str, int, None, Dict[str, float]]]]
-):
-    now = datetime.now(timezone.utc)
-    for pred in predictions:
-        result = db.query(ProcessResult).filter(
-            ProcessResult.id_process == pred["id_process"]
-        ).first()
+    # Validasi kolom wajib
+    if not {"id_process", "text", "emotion", "preprocessed_result"}.issubset(df.columns):
+        raise ValueError("CSV harus memiliki kolom: text, emotion, dan preprocessed_result")
 
-        if result:
-            if pred["predicted_emotion"]:
-                result.automatic_emotion = pred["predicted_emotion"]
-            result.is_processed = True
-            result.processed_at = now
+    texts = df["preprocessed_result"].astype(str).tolist()
+    labels = df["emotion"].astype(str).tolist()
+    id_process_list = df["id_process"].astype(int).tolist()
 
-    db.commit()
+    # Dummy session karena tidak pakai DB saat ini
+    # dummy_db: Session = MagicMock()
+
+    # Jalankan training dan klasifikasi
+    results = naive_bayes_classification(
+        texts=texts,
+        labels=labels,
+        id_process_list=id_process_list
+    )
+
+    # Tampilkan hasil
+    for result in results:
+        print("\n--- Hasil ---")
+        print(f"ID        : {result['id_process']}")
+        print(f"Teks      : {result['text']}")
+        print(f"Prediksi  : {result['predicted_emotion']}")
+        print("Probabilitas log:")
+        for label, prob in result["probabilities"].items():
+            print(f"  {label}: {prob:.4f}")
+
+    # Total waktu proses
+    end_time = time.time()
+    print(f"\nTotal waktu pelatihan dan prediksi: {end_time - start_time:.2f} detik")

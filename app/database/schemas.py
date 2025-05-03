@@ -78,6 +78,13 @@ class ProcessingRequest(BaseModel):
     labels: List[str]
     id_process_list: List[int]
 
+class ProcessResultResponse(ProcessResultBase):
+    id_process: int
+    data: Optional[DataCollectionResponse]  # ← Tambahkan ini untuk akses ke data → emotion
+
+    class Config:
+        orm_mode = True
+
 class SaveRequest(BaseModel):
     id_process: int
     automatic_emotion: Optional[str]
