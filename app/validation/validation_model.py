@@ -5,7 +5,7 @@ from app.database.model_database import (
     ValidationData,
     ConfusionMatrix,
     ClassMetrics,
-    LabelEmotion,
+    EmotionLabel,
 )
 
 def validate_model_on_test_data(
@@ -36,7 +36,7 @@ def validate_model_on_test_data(
     db.refresh(validation_result)
 
     # Ambil mapping nama label -> id_label
-    label_map = {label.nama_label: label.id_label for label in db.query(LabelEmotion).all()}
+    label_map = {label.id_label: label.id_label for label in db.query(EmotionLabel).all()}
 
     # Simpan ConfusionMatrix
     for i, true_label in enumerate(all_labels):
