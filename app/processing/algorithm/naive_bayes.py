@@ -98,8 +98,6 @@ def naive_bayes_classification(
 
 if __name__ == "__main__":
     import pandas as pd
-    from sqlalchemy.orm import Session
-    from unittest.mock import MagicMock
 
     # Mulai waktu
     start_time = time.time()
@@ -120,21 +118,26 @@ if __name__ == "__main__":
     # dummy_db: Session = MagicMock()
 
     # Jalankan training dan klasifikasi
-    results = naive_bayes_classification(
+    predictions, data_dua_emosi = naive_bayes_classification(
         texts=texts,
         labels=labels,
         id_process_list=id_process_list
     )
 
     # Tampilkan hasil
-    for result in results:
+    for result in predictions:
         print("\n--- Hasil ---")
         print(f"ID        : {result['id_process']}")
         print(f"Teks      : {result['text']}")
+        print(f"Manual      : {result['emotion']}")
         print(f"Prediksi  : {result['predicted_emotion']}")
         print("Probabilitas log:")
         for label, prob in result["probabilities"].items():
             print(f"  {label}: {prob:.4f}")
+        print("\n--- Data dengan dua emosi probabilitas setara ---")
+    for data in data_dua_emosi:
+        print(f"ID: {data['id_process']} | Teks: {data['text']}")
+
 
     # Total waktu proses
     end_time = time.time()
