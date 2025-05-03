@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional, List, Dict, Union
+from datetime import datetime
 
 
 # ===== EMOTION LABEL =====
@@ -92,6 +93,7 @@ class SaveRequest(BaseModel):
 class SaveAllRequest(BaseModel):
     data: List[SaveRequest]
 
+
 # ===== MODEL =====
 class ModelBase(BaseModel):
     ratio_data: str
@@ -125,35 +127,29 @@ class ModelDataResponse(ModelDataBase):
         orm_mode = True
 
 
-# ===== VALIDATION RESULT =====
-class ValidationResultBase(BaseModel):
-    model_id: int
-    accuracy: Optional[float] = None
-    matrix_id: Optional[int] = None
-    metrics_id: Optional[int] = None
-
-class ValidationResultCreate(ValidationResultBase):
-    pass
-
-class ValidationResultResponse(ValidationResultBase):
-    id_validation: int
+# === VALIDATION DATA ===
+class ValidationDataSchema(BaseModel):
+    id_process: int
+    is_correct: bool
 
     class Config:
         orm_mode = True
 
 
-# ===== VALIDATION DATA =====
-class ValidationDataBase(BaseModel):
+# === VALIDATION RESULT ===
+class ValidationResultBase(BaseModel):
+    model_id: int
+    accuracy: float
+    matrix_id: int
+    metrics_id: int
+
+class ValidationResultCreate(ValidationResultBase):
+    validation_data: List[ValidationDataSchema]
+
+class ValidationResultResponse(ValidationResultBase):
     id_validation: int
-    id_process: int
-    is_correct: bool
-
-class ValidationDataCreate(ValidationDataBase):
-    pass
-
-class ValidationDataResponse(ValidationDataBase):
-    validation_result: Optional[ValidationResultResponse]
-    process_result: Optional[ProcessResultResponse]
+    created_at: Optional[datetime] = None
+    validation_data: List[ValidationDataSchema]
 
     class Config:
         orm_mode = True
