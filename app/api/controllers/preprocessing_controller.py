@@ -24,3 +24,11 @@ def delete_preprocess_result_controller(db: Session, process_id: int):
 
 def delete_all_preprocess_result_controller(db: Session):
     return preprocessing_service.delete_all_preprocess_result(db)
+
+
+def add_emotion_label_controller(db: Session, emotion_name: str):
+    return preprocessing_service.add_emotion_label(db, emotion_name)
+
+
+def update_label_controller(db: Session, id_data: int, new_label: str):
+    return preprocessing_service.update_label(db, id_data, new_label)

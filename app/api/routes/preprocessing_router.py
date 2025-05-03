@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
-from app.api.services import preprocessing_service
+from app.api.controllers import preprocessing_controller
 from app.database.config import get_db
 
 router = APIRouter(
@@ -9,28 +9,28 @@ router = APIRouter(
 
 @router.get("/{process_id}/preprocess", summary="Ambil semua hasil preprocessing")
 def get_all_preprocessing(db: Session = Depends(get_db)):
-    return preprocessing_service.get_all_preprocessing_results(db)
+    return preprocessing_controller.get_all_preprocessing_results_controller(db)
 
 @router.get("/{process_id}", summary="Ambil hasil preprocessing berdasarkan ID")
 def get_preprocessing_by_id(process_id: int, db: Session = Depends(get_db)):
-    return preprocessing_service.get_preprocess_result_by_id(db, process_id)
+    return preprocessing_controller.get_preprocess_result_by_id_controller(db, process_id)
 
 @router.post("/preprocess", summary="Lakukan preprocessing pada data yang belum diproses")
 def process_unprocessed_data(db: Session = Depends(get_db)):
-    return preprocessing_service.preprocessing_and_save(db)
+    return preprocessing_controller.preprocessing_and_save_controller(db)
 
 @router.delete("/{process_id}", summary="Hapus hasil preprocessing berdasarkan ID")
 def delete_preprocessing(process_id: int, db: Session = Depends(get_db)):
-    return preprocessing_service.delete_preprocess_result(db, process_id)
+    return preprocessing_controller.delete_preprocess_result_controller(db, process_id)
 
 @router.delete("/preprocess", summary="Hapus semua hasil preprocessing")
 def delete_all_preprocessing(db: Session = Depends(get_db)):
-    return preprocessing_service.delete_all_preprocess_result(db)
-
-@router.put("/update-label/{id_data}")
-def update_label_route(id_data: int, new_label: str, db: Session = Depends(get_db)):
-    return preprocessing_service.update_label(db, id_data, new_label)
+    return preprocessing_controller.delete_all_preprocess_result_controller(db)
 
 @router.post("/add-label")
 def create_emotion_label(emotion_name: str, db: Session = Depends(get_db)):
-    return preprocessing_service.add_emotion_label(db, emotion_name)
+    return preprocessing_controller.add_emotion_label_controller(db, emotion_name)
+
+@router.put("/update-label/{id_data}")
+def update_label_route(id_data: int, new_label: str, db: Session = Depends(get_db)):
+    return preprocessing_controller.update_label_controller(db, id_data, new_label)
