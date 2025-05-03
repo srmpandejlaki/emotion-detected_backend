@@ -13,6 +13,6 @@ app = FastAPI()
 Base.metadata.create_all(bind=engine)
 
 # Register routers
-app.include_router(data_collection_router, prefix="/data-collection", tags=["Data Collection"])
+app.include_router(data_collection_router, prefix="/dataset", tags=["Data Collection"])
 app.include_router(preprocessing_router, prefix="/preprocessing", tags=["Preprocessing"])
 app.include_router(processing_router, prefix="/processing", tags=["Processing"])

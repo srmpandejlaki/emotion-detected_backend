@@ -1,30 +1,29 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
 from app.api.services.processing_service import ProcessingService
 from app.database.config import get_db
-from app.database.schemas import ProcessInput, ProcessSaveInput, ProcessSaveManyInput
-from app.database.model_database import ProcessResult
+from app.database.schemas import ProcessInput, ProcessSaveInput, ProcessSaveManyInput, ProcessResultSchema
 
 router = APIRouter(prefix="/processing", tags=["Processing"])
 
-@router.get("/", response_model=List[ProcessResult])
+@router.get("/list", response_model=List[ProcessResultSchema])
 def get_all_processing(db: Session = Depends(get_db)):
     return ProcessingService.get_all(db)
 
-@router.get("/{id_process}", response_model=ProcessResult)
+@router.get("/{id_process}", response_model=ProcessResultSchema)
 def get_processing_by_id(id_process: int, db: Session = Depends(get_db)):
     result = ProcessingService.get_by_id(db, id_process)
     if not result:
         raise HTTPException(status_code=404, detail="Process not found")
     return result
 
-@router.delete("/", status_code=204)
+@router.delete("/list", status_code=status.HTTP_204_NO_CONTENT)
 def delete_all_processing(db: Session = Depends(get_db)):
     ProcessingService.delete_all(db)
     return
 
-@router.delete("/{id_process}", status_code=204)
+@router.delete("/{id_process}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_processing_by_id(id_process: int, db: Session = Depends(get_db)):
     ProcessingService.delete_by_id(db, id_process)
     return

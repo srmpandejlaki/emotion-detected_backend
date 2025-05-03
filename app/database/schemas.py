@@ -64,17 +64,19 @@ class ProcessSaveInput(BaseModel):
 class ProcessSaveManyInput(BaseModel):
     items: List[Dict[str, Union[int, Optional[str]]]]
 
+class ProcessResultSchema(BaseModel):
+    id_process: int
+    id_data: int
+    text_preprocessing: str
+    automatic_emotion: Optional[str]
+
+    class Config:
+        orm_mode = True
 
 class ProcessingRequest(BaseModel):
     texts: List[str]
     labels: List[str]
     id_process_list: List[int]
-
-class ProcessingResponse(BaseModel):
-    id_process: int
-    text: str
-    probabilities: Dict[str, float]
-    predicted_emotion: Optional[str]
 
 class SaveRequest(BaseModel):
     id_process: int

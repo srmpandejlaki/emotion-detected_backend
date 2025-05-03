@@ -5,25 +5,25 @@ from app.database.config import get_db
 from app.api.services import data_collection_service
 
 router = APIRouter(
-    prefix="/data-collection", tags=["Data Collection"]
+    prefix="/dataset", tags=["Data Collection"]
 )
 
-@router.post("/data-collection")
+@router.post("/upload")
 def create_data(data: schemas.DataCollectionCreate, db: Session = Depends(get_db)):
     return data_collection_service.upload_csv_data(db, data)
 
-@router.get("/data-collection")
+@router.get("/list")
 def get_all_data(db: Session = Depends(get_db)):
     return data_collection_service.get_all_data_collections(db)
 
-@router.get("/data-collection/{id_data}")
+@router.get("/{id_data}")
 def get_data_by_id(id_data: int, db: Session = Depends(get_db)):
     return data_collection_service.get_data_collection_by_id(db, id_data)
 
-@router.delete("/data-collection/{id_data}")
+@router.delete("/{id_data}")
 def delete_data_by_id(id_data: int, db: Session = Depends(get_db)):
     return data_collection_service.delete_data_collection(db, id_data)
 
-@router.delete("/data-collection")
+@router.delete("/list")
 def delete_all_data(db: Session = Depends(get_db)):
     return data_collection_service.delete_all_data_collections(db)
