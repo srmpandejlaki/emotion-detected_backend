@@ -3,13 +3,11 @@ from fastapi import HTTPException
 from app.database.model_database import DataCollection, ProcessResult
 from app.preprocessing.dataset_cleaning import DatasetPreprocessor
 
-
 def get_all_preprocessing_results(db: Session):
     try:
         return db.query(ProcessResult).all()
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error fetching preprocessing results: {str(e)}")
-
 
 def add_preprocessing_result(db: Session, id_data: int, text_preprocessing: str):
     try:
@@ -25,7 +23,6 @@ def add_preprocessing_result(db: Session, id_data: int, text_preprocessing: str)
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Error adding preprocessing result: {str(e)}")
-
 
 def preprocessing_and_save(db: Session):
     try:
@@ -45,20 +42,17 @@ def preprocessing_and_save(db: Session):
             cleaned_text = preprocessor.process()  # Pastikan kamu punya method `process()`
             add_preprocessing_result(db, id_data=item.id_data, text_preprocessing=cleaned_text)
 
-
         return f"Berhasil memproses {count} data."
 
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Error processing and saving preprocessing data: {str(e)}")
 
-
 def get_preprocess_result_by_id(db: Session, process_id: int):
     try:
         return db.query(ProcessResult).filter(ProcessResult.id_process == process_id).first()
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error getting preprocessing result by ID: {str(e)}")
-
 
 def delete_preprocess_result(db: Session, process_id: int):
     try:
@@ -80,3 +74,22 @@ def delete_all_preprocess_result(db: Session):
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Error deleting all preprocessing results: {str(e)}")
+
+def update_label(db: Session, id_data: int, new_label: str):
+    try:
+        data = db.query(DataCollection).filter(DataCollection.id_data == id_data).first()
+        if not data:
+            raise HTTPException(status_code=404, detail="Data tidak ditemukan")
+        
+        data.label = new_label
+        db.commit()
+        db.refresh(data)
+        return {"message": "Label berhasil diperbarui", "data": {
+            "id_data": data.id_data,
+            "text_data": data.text_data,
+            "label": data.label
+        }}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail=f"Error updating label: {str(e)}")
+

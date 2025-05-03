@@ -4,8 +4,7 @@ from app.api.services import preprocessing_service
 from app.database.config import get_db
 
 router = APIRouter(
-    prefix="/preprocessing",
-    tags=["Preprocessing"]
+    prefix="/preprocessing", tags=["Preprocessing"]
 )
 
 @router.get("/", summary="Ambil semua hasil preprocessing")
@@ -27,3 +26,8 @@ def delete_preprocessing(process_id: int, db: Session = Depends(get_db)):
 @router.delete("/", summary="Hapus semua hasil preprocessing")
 def delete_all_preprocessing(db: Session = Depends(get_db)):
     return preprocessing_service.delete_all_preprocess_result(db)
+
+@router.put("/update-label/{id_data}")
+def update_label_route(id_data: int, new_label: str, db: Session = Depends(get_db)):
+    return preprocessing_service.update_label(db, id_data, new_label)
+

@@ -6,15 +6,6 @@ from fastapi import HTTPException
 from app.database import model_database
 from app.database import schemas
 
-# ---------------- Label Emotion ----------------
-def get_all_labels(db: Session):
-    return db.query(model_database.LabelEmotion).all()
-
-def get_label_by_id(db: Session, label_id: int):
-    return db.query(model_database.LabelEmotion).filter(model_database.LabelEmotion.id_label == label_id).first()
-
-
-# ---------------- Data Collection ----------------
 def get_all_data_collections(db: Session):
     return db.query(model_database.DataCollection).all()
 
