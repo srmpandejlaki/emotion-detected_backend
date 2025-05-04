@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
-from typing import List, Dict
+from typing import List, Dict, Tuple
 
 from app.api.services import processing_service
 from app.database.config import get_db
@@ -9,11 +9,21 @@ router = APIRouter(prefix="/processing", tags=["Processing"])
 
 
 @router.get("/all", response_model=List[Dict])
-def get_all_processing_data(db: Session = Depends(get_db)):
-    """
-    Mendapatkan semua data proses yang ada di database.
-    """
-    return processing_service.get_all_processing_data(db)
+def get_all_processing_data(
+    db: Session = Depends(get_db), 
+    page: int = Query(1, ge=1), 
+    limit: int = Query(10, le=100)
+):
+    return processing_service.get_all_processing_data(db, page, limit)
+
+
+@router.get("/preprocessed-data", response_model=Tuple[List[str], List[str], List[int]])
+def get_preprocessed_data(
+    db: Session = Depends(get_db), 
+    page: int = Query(1, ge=1), 
+    limit: int = Query(10, le=100)
+):
+    return processing_service.get_preprocessed_data(db, page, limit)
 
 
 @router.get("/split-dataset", response_model=Dict)

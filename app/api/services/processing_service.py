@@ -17,20 +17,22 @@ MODEL_PATH = os.path.join("app", "model", "naive_bayes_model.pkl")
 
 
 # Get Process Data from DB
-def get_all_processing_data(db: Session) -> List[Dict]:
-    return db.query(ProcessResult).all()
+def get_all_processing_data(db: Session, page: int = 1, limit: int = 10) -> List[Dict]:
+    offset = (page - 1) * limit
+    results = db.query(ProcessResult).offset(offset).limit(limit).all()
+    return results
 
 
-def get_preprocessed_data(db: Session) -> Tuple[List[str], List[str], List[int]]:
-    results = db.query(ProcessResult).filter(
-        ProcessResult.is_processed == False
-    ).all()
+def get_preprocessed_data(db: Session, page: int = 1, limit: int = 10) -> Tuple[List[str], List[str], List[int]]:
+    offset = (page - 1) * limit
+    results = db.query(ProcessResult).filter(ProcessResult.is_processed == False).offset(offset).limit(limit).all()
 
     texts = [r.text_preprocessing for r in results]
     labels = [r.data.id_label for r in results]
     ids = [r.id_process for r in results]
 
     return texts, labels, ids
+
 
 
 # Dataset Splitting
