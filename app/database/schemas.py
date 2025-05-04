@@ -18,16 +18,18 @@ class EmotionLabelResponse(EmotionLabelBase):
 
 
 # ===== DATA COLLECTION =====
-class DataCollectionBase(BaseModel):
+class DataCollectionCreate(BaseModel):
     text_data: str
-    id_label: Optional[int] = None
+    id_label: Optional[int]  # id label boleh kosong
 
-class DataCollectionCreate(DataCollectionBase):
-    pass
+    class Config:
+        orm_mode = True
 
-class DataCollectionResponse(DataCollectionBase):
+
+class DataCollection(BaseModel):
     id_data: int
-    emotion: Optional[EmotionLabelResponse]
+    text_data: str
+    id_label: Optional[int]
 
     class Config:
         orm_mode = True
@@ -37,7 +39,7 @@ class PaginatedDataCollectionResponse(BaseModel):
     total_data: int
     current_page: int
     total_pages: int
-    data: List[DataCollectionResponse]
+    data: List[DataCollection]
 
 
 # ===== PROCESS RESULT =====
@@ -60,7 +62,7 @@ class ProcessResultSchema(BaseModel):
 
 class ProcessResultResponse(ProcessResultBase):
     id_process: int
-    data: Optional[DataCollectionResponse]
+    data: Optional[DataCollectionCreate]
 
     class Config:
         orm_mode = True

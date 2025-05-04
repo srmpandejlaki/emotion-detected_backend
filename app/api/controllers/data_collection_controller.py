@@ -1,59 +1,34 @@
-from fastapi import APIRouter, Depends, UploadFile, File, Form, HTTPException, Query
+from fastapi import HTTPException, UploadFile
 from sqlalchemy.orm import Session
-from typing import List, Optional, Dict
-
 from app.api.services import data_collection_service
 from app.database import schemas
-from app.database.config import get_db
+from typing import List
 
-router = APIRouter(
-    prefix="/dataset",
-    tags=["Data Collection"]
-)
 
-# === GET ALL ===
-@router.get("/", response_model=Dict)
-def get_all_data_collections(
-    db: Session = Depends(get_db),
-    page: int = Query(1, ge=1),
-    limit: int = Query(10, le=100)
-):
+def get_all_data_collections_controller(db: Session, page: int = 1, limit: int = 10):
     return data_collection_service.get_all_data_collections(db, page, limit)
 
 
-# === GET BY ID ===
-@router.get("/{data_id}", response_model=schemas.DataCollectionResponse)
-def get_data_collection_by_id(data_id: int, db: Session = Depends(get_db)):
+def get_data_collection_by_id_controller(db: Session, data_id: int):
     data = data_collection_service.get_data_collection_by_id(db, data_id)
     if not data:
         raise HTTPException(status_code=404, detail="Data not found")
     return data
 
-# === CREATE: INPUT MANUAL & CSV ===
-@router.post("/", response_model=List[schemas.DataCollectionResponse])
-def create_data_collection(
-    db: Session = Depends(get_db),
-    text_data: Optional[str] = Form(None),
-    id_label: Optional[int] = Form(None),
-    file: Optional[UploadFile] = File(None),
-):
-    if file:
-        return data_collection_service.create_data_collection(db, file=file)
 
-    if text_data:
-        data = schemas.DataCollectionCreate(text_data=text_data, id_label=id_label)
-        return data_collection_service.create_data_collection(db, data=data)
+def create_data_collection_manual_controller(db: Session, data: schemas.DataCollectionCreate) -> List[schemas.DataCollection]:
+    return data_collection_service.create_data_collection(db=db, data=data)
 
-    raise HTTPException(status_code=400, detail="Harus mengirimkan file CSV atau input manual")
 
-# === DELETE BY ID ===
-@router.delete("/{data_id}")
-def delete_data_collection(data_id: int, db: Session = Depends(get_db)):
+def upload_csv_file_controller(db: Session, file: UploadFile) -> List[schemas.DataCollection]:
+    return data_collection_service.create_data_collection(db=db, file=file)
+
+
+def delete_data_collection_controller(db: Session, data_id: int):
     data_collection_service.delete_data_collection(db, data_id)
     return {"message": "Data berhasil dihapus"}
 
-# === DELETE ALL ===
-@router.delete("/")
-def delete_all_data_collections(db: Session = Depends(get_db)):
+
+def delete_all_data_collections_controller(db: Session):
     data_collection_service.delete_all_data_collections(db)
     return {"message": "Semua data berhasil dihapus"}
