@@ -1,20 +1,25 @@
-from fastapi import APIRouter, Depends, UploadFile, File, Form, HTTPException
+from fastapi import APIRouter, Depends, UploadFile, File, Form, HTTPException, Query
 from sqlalchemy.orm import Session
-from typing import List, Optional
+from typing import List, Optional, Dict
 
 from app.api.services import data_collection_service
 from app.database import schemas
 from app.database.config import get_db
 
 router = APIRouter(
-    prefix="/data-collections",
+    prefix="/dataset",
     tags=["Data Collection"]
 )
 
 # === GET ALL ===
-@router.get("/", response_model=List[schemas.DataCollectionResponse])
-def get_all_data_collections(db: Session = Depends(get_db)):
-    return data_collection_service.get_all_data_collections(db)
+@router.get("/", response_model=Dict)
+def get_all_data_collections(
+    db: Session = Depends(get_db),
+    page: int = Query(1, ge=1),
+    limit: int = Query(10, le=100)
+):
+    return data_collection_service.get_all_data_collections(db, page, limit)
+
 
 # === GET BY ID ===
 @router.get("/{data_id}", response_model=schemas.DataCollectionResponse)

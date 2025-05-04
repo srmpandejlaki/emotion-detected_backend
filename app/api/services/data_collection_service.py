@@ -1,15 +1,33 @@
 import os
-import pandas as pd
+import math
 import shutil
-from sqlalchemy.orm import Session
-from fastapi import HTTPException, UploadFile
-from app.database import model_database
+import pandas as pd
 from app.database import schemas
+from sqlalchemy.orm import Session
+from app.database import model_database
+from fastapi import HTTPException, UploadFile
 
 
-# ===== DATA COLLECTION =====
-def get_all_data_collections(db: Session):
-    return db.query(model_database.DataCollection).all()
+def get_all_data_collections(db: Session, page: int = 1, limit: int = 10):
+    total_data = db.query(model_database.DataCollection).count()
+    total_pages = math.ceil(total_data / limit) if limit > 0 else 1
+    offset = (page - 1) * limit
+
+    data_query = (
+        db.query(model_database.DataCollection)
+        .order_by(model_database.DataCollection.id_data.desc())
+        .offset(offset)
+        .limit(limit)
+        .all()
+    )
+
+    return {
+        "total_data": total_data,
+        "current_page": page,
+        "total_pages": total_pages,
+        "data": data_query
+    }
+
 
 def get_data_collection_by_id(db: Session, data_id: int):
     return db.query(model_database.DataCollection).filter(
