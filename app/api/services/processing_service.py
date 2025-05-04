@@ -1,3 +1,5 @@
+import os
+import joblib
 from sqlalchemy.orm import Session
 from datetime import datetime, timezone
 from typing import List, Dict, Tuple
@@ -6,10 +8,25 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, accuracy_score
 
 from app.database.model_database import ProcessResult
-from app.processing.algorithm.naive_bayes import naive_bayes_classification
+from app.processing.algorithm.naive_bayes import NaiveBayesClassifier
 from app.processing.alternatif_method.bert_lexicon import process_with_bert_lexicon
 
 
+MODEL_PATH = os.path.join("app", "processing", "model", "naive_bayes_model.pkl")
+
+
+# Model Save and Load
+def save_model(model):
+    joblib.dump(model, MODEL_PATH)
+
+
+def load_model():
+    if not os.path.exists(MODEL_PATH):
+        return None
+    return joblib.load(MODEL_PATH)
+
+
+# Get Process Data from DB
 def get_all_processing_data(db: Session) -> List[Dict]:
     return db.query(ProcessResult).all()
 
@@ -20,30 +37,25 @@ def get_preprocessed_data(db: Session) -> Tuple[List[str], List[str], List[int]]
     ).all()
 
     texts = [r.text_preprocessing for r in results]
-    labels = [r.data.id_label for r in results]  # relasi ke label
+    labels = [r.data.id_label for r in results]
     ids = [r.id_process for r in results]
 
     return texts, labels, ids
 
 
+# Dataset Splitting
 def _split_dataset(
     texts: List[str],
     labels: List[str],
     ids: List[int],
     test_size: float
 ) -> Tuple[List[str], List[str], List[int], List[str], List[str], List[int]]:
-    """
-    Membagi dataset berdasarkan test_size dari user.
-    """
     return train_test_split(
         texts, labels, ids, test_size=test_size, random_state=42
     )
 
 
 def split_dataset(db: Session, test_size: float) -> Dict[str, int]:
-    """
-    Split dataset dan kembalikan info jumlah data.
-    """
     texts, labels, ids = get_preprocessed_data(db)
     if not texts:
         return {"message": "Tidak ada data tersedia untuk split."}
@@ -57,6 +69,7 @@ def split_dataset(db: Session, test_size: float) -> Dict[str, int]:
     }
 
 
+# Model Evaluation
 def evaluate_model(db: Session, test_size: float) -> Dict:
     texts, labels, ids = get_preprocessed_data(db)
     if not texts:
@@ -64,25 +77,19 @@ def evaluate_model(db: Session, test_size: float) -> Dict:
 
     X_train, X_test, y_train, y_test, id_train, id_test = _split_dataset(texts, labels, ids, test_size)
 
-    # Gabungkan untuk simulasi pelatihan + prediksi uji
-    predictions, _ = naive_bayes_classification(
-        texts=X_train + X_test,
-        labels=y_train + y_test,
-        id_process_list=id_train + id_test
-    )
+    # Latih model
+    model = NaiveBayesClassifier()
+    model.train(X_train, y_train)
+    save_model(model)
 
-    predicted = [
-        pred["predicted_emotion"]
-        for pred in predictions
-        if pred["id_process"] in id_test
-    ]
-    actual = y_test
+    # Prediksi
+    predicted = model.predict(X_test)
 
     all_labels = sorted(set(labels))
-    cm = confusion_matrix(actual, predicted, labels=all_labels)
-    precision = precision_score(actual, predicted, labels=all_labels, average=None, zero_division=0)
-    recall = recall_score(actual, predicted, labels=all_labels, average=None, zero_division=0)
-    accuracy = accuracy_score(actual, predicted)
+    cm = confusion_matrix(y_test, predicted, labels=all_labels)
+    precision = precision_score(y_test, predicted, labels=all_labels, average=None, zero_division=0)
+    recall = recall_score(y_test, predicted, labels=all_labels, average=None, zero_division=0)
+    accuracy = accuracy_score(y_test, predicted)
 
     return {
         "confusion_matrix": cm.tolist(),
@@ -93,16 +100,32 @@ def evaluate_model(db: Session, test_size: float) -> Dict:
     }
 
 
+# Naive Bayes Prediction and Save Results
 def process_and_save_predictions_naive_bayes(
     db: Session,
     texts: List[str],
     labels: List[str],
     id_process_list: List[int]
 ) -> List[Dict]:
-    predictions, data_dua_emosi = naive_bayes_classification(
-        texts, labels, id_process_list
-    )
+    model = load_model()
+    if model is None:
+        model = NaiveBayesClassifier()
+        model.train(texts, labels)
+        save_model(model)
 
+    predicted_emotions = model.predict(texts)
+
+    # Hitung probabilitas jika ingin memeriksa emosi ganda (opsional tergantung implementasi)
+    data_dua_emosi = model.get_ambiguous_predictions(texts, labels, id_process_list)  # jika ada
+
+    predictions = []
+    for idx, id_process in enumerate(id_process_list):
+        predictions.append({
+            "id_process": id_process,
+            "predicted_emotion": predicted_emotions[idx]
+        })
+
+    # Menggunakan BERT dan Lexicon untuk menyelesaikan ambiguitas
     if data_dua_emosi:
         hasil_gabungan = process_with_bert_lexicon(db, data_dua_emosi)
         gabungan_map = {
@@ -113,10 +136,12 @@ def process_and_save_predictions_naive_bayes(
             if pred["id_process"] in gabungan_map:
                 pred["predicted_emotion"] = gabungan_map[pred["id_process"]]
 
+    # Simpan hasil prediksi
     save_prediction_results(db, predictions)
     return predictions
 
 
+# Save Prediction Results to DB
 def save_prediction_results(db: Session, predictions: List[Dict]) -> None:
     now = datetime.now(timezone.utc)
     for pred in predictions:
@@ -131,6 +156,7 @@ def save_prediction_results(db: Session, predictions: List[Dict]) -> None:
     db.commit()
 
 
+# Update Manual Emotion
 def update_manual_emotion(db: Session, id_process: int, new_label: str) -> Dict:
     result = db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
     if not result:
@@ -140,6 +166,7 @@ def update_manual_emotion(db: Session, id_process: int, new_label: str) -> Dict:
     return {"success": True, "message": "Label manual diperbarui"}
 
 
+# Update Predicted Emotion
 def update_predicted_emotion(db: Session, id_process: int, new_label: str) -> Dict:
     result = db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
     if not result:
