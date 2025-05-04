@@ -1,9 +1,12 @@
-import pickle
+import os
+import joblib
 
-def load_latest_model():
-    try:
-        with open("saved_model.pkl", "rb") as f:
-            model = pickle.load(f)
-        return model
-    except FileNotFoundError:
+MODEL_PATH = "app/models/model.pkl"
+
+def load_model():
+    if not os.path.exists(MODEL_PATH):
         return None
+    return joblib.load(MODEL_PATH)
+
+def save_model(model):
+    joblib.dump(model, MODEL_PATH)

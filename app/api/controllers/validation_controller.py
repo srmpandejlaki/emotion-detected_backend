@@ -1,66 +1,31 @@
-from fastapi import APIRouter, Depends, HTTPException, UploadFile
-from sqlalchemy.orm import Session
+from fastapi import APIRouter, HTTPException, Body
+from typing import List, Dict
+from app.api.services.validation_service import classify_text, classify_texts
 
-from app.database.schemas import ValidationResultCreate, ValidationResultResponse
-from app.database.connection import get_db
-from app.models.validation_model import perform_validation
-from app.services.validation_service import (
-    get_all_validation_results,
-    get_validation_result_by_id,
-    delete_all_validation_results,
-    get_single_validation_result,
-    get_validation_from_csv,
-)
-
-router = APIRouter(
-    prefix="/validation",
-    tags=["Validation"]
-)
+router = APIRouter(prefix="/validation", tags=["Validation"])
 
 
-@router.post("/", response_model=ValidationResultResponse)
-def validate_model(payload: ValidationResultCreate, db: Session = Depends(get_db)):
-    try:
-        return perform_validation(payload, db)
-    except ValueError as ve:
-        raise HTTPException(status_code=400, detail=str(ve))
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+@router.post("/classify")
+def classify_single_text_controller(data: Dict[str, str] = Body(...)):
+    text = data.get("text")
+    if not text:
+        raise HTTPException(status_code=400, detail="Teks tidak boleh kosong.")
+
+    result = classify_text(text)
+    if result == "Model belum tersedia":
+        raise HTTPException(status_code=400, detail=result)
+
+    return {"predicted_emotion": result}
 
 
-@router.get("/")
-def read_all_validation_results(db: Session = Depends(get_db)):
-    return get_all_validation_results(db)
+@router.post("/classify-dataset")
+def classify_dataset_controller(data: Dict[str, List[str]] = Body(...)):
+    texts = data.get("text")
+    if not texts or not isinstance(texts, list):
+        raise HTTPException(status_code=400, detail="Input harus berupa list teks.")
 
+    results = classify_texts(texts)
+    if results == "Model belum tersedia":
+        raise HTTPException(status_code=400, detail=results)
 
-@router.get("/{validation_id}")
-def read_validation_result_by_id(validation_id: int, db: Session = Depends(get_db)):
-    result = get_validation_result_by_id(validation_id, db)
-    if not result:
-        raise HTTPException(status_code=404, detail="Validation result not found")
-    return result
-
-
-@router.delete("/")
-def delete_all_validations(db: Session = Depends(get_db)):
-    try:
-        delete_all_validation_results(db)
-        return {"message": "All validation results deleted successfully"}
-    except RuntimeError as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
-@router.get("/single/{data_id}")
-def validate_single_data(data_id: int, db: Session = Depends(get_db)):
-    try:
-        return get_single_validation_result(data_id, db)
-    except ValueError as e:
-        raise HTTPException(status_code=404, detail=str(e))
-
-
-@router.post("/csv")
-def validate_from_csv(file: UploadFile, db: Session = Depends(get_db)):
-    try:
-        return get_validation_from_csv(file, db)
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=f"CSV validation failed: {str(e)}")
+    return {"results": results}

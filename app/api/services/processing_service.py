@@ -10,20 +10,10 @@ from sklearn.metrics import confusion_matrix, precision_score, recall_score, acc
 from app.database.model_database import ProcessResult
 from app.processing.algorithm.naive_bayes import NaiveBayesClassifier
 from app.processing.alternatif_method.bert_lexicon import process_with_bert_lexicon
+from app.utils.model_loader import load_model, save_model
 
 
-MODEL_PATH = os.path.join("app", "processing", "model", "naive_bayes_model.pkl")
-
-
-# Model Save and Load
-def save_model(model):
-    joblib.dump(model, MODEL_PATH)
-
-
-def load_model():
-    if not os.path.exists(MODEL_PATH):
-        return None
-    return joblib.load(MODEL_PATH)
+MODEL_PATH = os.path.join("app", "model", "naive_bayes_model.pkl")
 
 
 # Get Process Data from DB

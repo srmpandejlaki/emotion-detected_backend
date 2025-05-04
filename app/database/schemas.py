@@ -138,12 +138,14 @@ class ValidationDataSchema(BaseModel):
 
 # === VALIDATION RESULT ===
 class ValidationResultBase(BaseModel):
+    id_process: int
+    is_correct: bool
+
+class ValidationResultCreate(ValidationResultBase):
     model_id: int
     accuracy: float
     matrix_id: int
     metrics_id: int
-
-class ValidationResultCreate(ValidationResultBase):
     validation_data: List[ValidationDataSchema]
 
 class ValidationResultResponse(ValidationResultBase):
@@ -153,6 +155,18 @@ class ValidationResultResponse(ValidationResultBase):
 
     class Config:
         orm_mode = True
+
+
+# ===== VALIDATION REQUEST & RESPONSE =====
+class ValidationSingleInput(BaseModel):
+    text: str
+
+class ValidationBatchInput(BaseModel):
+    texts: List[str]
+
+class ValidationResponse(BaseModel):
+    text: str
+    predicted_emotion: str
 
 
 # ===== CONFUSION MATRIX =====
