@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 
 from app.database.model_database import ValidationResult, ValidationData, ProcessResult
-from app.classification import naive_bayes_predict
+from app.processing.classification import naive_bayes_predict
 import pandas as pd
 from fastapi import UploadFile
 
