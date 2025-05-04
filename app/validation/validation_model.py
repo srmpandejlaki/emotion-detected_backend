@@ -1,29 +1,28 @@
 from sqlalchemy.orm import Session
-from datetime import datetime
 
-from app.database.model_database import (
-    ValidationResult, ValidationData, Model,
-    ProcessResult, ConfusionMatrix, ClassMetrics,
-    ModelData
-)
 from app.database.schemas import ValidationResultCreate, ValidationResultResponse
-from app.classification import naive_bayes_predict
+from app.processing.algorithm.classification import naive_bayes_predict
 from app.utils.evaluation_model import evaluate_model
 from app.utils.label_utils import get_label_id_map
+from app.api.services.validation_service import (
+    get_model_by_id,
+    get_untrained_process_results,
+    save_confusion_matrix_entries,
+    save_class_metrics_entries,
+    create_validation_result,
+    add_validation_data_entries,
+    add_model_data_entries,
+)
 
 
 def perform_validation(payload: ValidationResultCreate, db: Session) -> ValidationResultResponse:
-    model = db.query(Model).filter_by(id_model=payload.model_id).first()
+    model = get_model_by_id(payload.model_id, db)
     if not model:
         raise ValueError("Model not found")
 
     trained_process_ids = [md.id_process for md in model.model_data]
 
-    test_data = db.query(ProcessResult).filter(
-        ProcessResult.is_processed == True,
-        ~ProcessResult.id_process.in_(trained_process_ids)
-    ).all()
-
+    test_data = get_untrained_process_results(trained_process_ids, db)
     if not test_data:
         raise ValueError("No validation data available")
 
@@ -33,6 +32,8 @@ def perform_validation(payload: ValidationResultCreate, db: Session) -> Validati
 
     for data in test_data:
         predicted = naive_bayes_predict(data.text_preprocessing, db)
+        if predicted is None:
+            raise ValueError(f"Prediction failed for process ID {data.id_process}")
         predicted_labels.append(predicted)
         true_label = data.automatic_emotion
         true_labels.append(true_label)
@@ -40,54 +41,20 @@ def perform_validation(payload: ValidationResultCreate, db: Session) -> Validati
 
     evaluation_result = evaluate_model(true_labels, predicted_labels)
     label_id_map = get_label_id_map(db)
-    new_matrix_id = int(datetime.now().timestamp())
-    new_metrics_id = new_matrix_id
 
-    for actual_row in evaluation_result["confusion_matrix"]["matrix"]:
-        actual_label = actual_row["actual"]
-        actual_id = label_id_map.get(actual_label)
-        for predicted_label, total in actual_row.items():
-            if predicted_label == "actual":
-                continue
-            predicted_id = label_id_map.get(predicted_label)
-            db.add(ConfusionMatrix(
-                matrix_id=new_matrix_id,
-                label_id=actual_id,
-                predicted_label_id=predicted_id,
-                total=total
-            ))
+    matrix_id = save_confusion_matrix_entries(evaluation_result, label_id_map, db)
+    metrics_id = save_class_metrics_entries(evaluation_result, label_id_map, db)
 
-    for label, precision in evaluation_result["precision"].items():
-        recall = evaluation_result["recall"].get(label, 0.0)
-        db.add(ClassMetrics(
-            metrics_id=new_metrics_id,
-            label_id=label_id_map.get(label),
-            precision=precision,
-            recall=recall
-        ))
-
-    db.flush()
-
-    validation_result = ValidationResult(
+    validation_result = create_validation_result(
         model_id=payload.model_id,
         accuracy=evaluation_result["accuracy"],
-        matrix_id=new_matrix_id,
-        metrics_id=new_metrics_id
+        matrix_id=matrix_id,
+        metrics_id=metrics_id,
+        db=db
     )
-    db.add(validation_result)
-    db.flush()
 
-    for idx, data in enumerate(test_data):
-        db.add(ValidationData(
-            id_validation=validation_result.id_validation,
-            id_process=data.id_process,
-            is_correct=correct_flags[idx]
-        ))
-
-        db.add(ModelData(
-            id_model=payload.model_id,
-            id_process=data.id_process
-        ))
+    add_validation_data_entries(validation_result.id_validation, test_data, correct_flags, db)
+    add_model_data_entries(payload.model_id, test_data, db)
 
     db.commit()
 
