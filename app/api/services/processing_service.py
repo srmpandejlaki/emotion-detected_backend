@@ -164,3 +164,15 @@ def update_predicted_emotion(db: Session, id_process: int, new_label: str) -> Di
     result.automatic_emotion = new_label
     db.commit()
     return {"success": True, "message": "Label prediksi diperbarui"}
+
+
+# 🔁 Train Ulang Model Secara Manual
+def retrain_model(db: Session) -> Dict:
+    texts, labels, _ = get_preprocessed_data(db)
+    if not texts:
+        return {"success": False, "message": "Tidak ada data untuk pelatihan ulang."}
+
+    model = NaiveBayesClassifier()
+    model.train(texts, labels)
+    save_model(model)
+    return {"success": True, "message": "Model berhasil dilatih ulang dan disimpan."}
