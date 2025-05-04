@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional, List, Dict, Union
+from typing import Optional, List
 from datetime import datetime
 
 
@@ -34,36 +34,13 @@ class DataCollectionResponse(DataCollectionBase):
 
 
 # ===== PROCESS RESULT =====
-# Base schema (untuk input data baru ke database) - preprocessing
 class ProcessResultBase(BaseModel):
     id_data: int
     text_preprocessing: str
-    isProcessed_data: Optional[bool] = False  # default False
+    isProcessed_data: Optional[bool] = False
 
-# Schema untuk pembuatan data baru (request body dari client)
 class ProcessResultCreate(ProcessResultBase):
     pass
-
-# Schema untuk response dari backend (output ke client)
-class ProcessResultResponse(ProcessResultBase):
-    id_process: int
-
-    class Config:
-        orm_mode = True
-
-
-# ini masuk bagian processing
-class ProcessInput(BaseModel):
-    texts: List[str]
-    labels: List[str]
-    id_process_list: List[int]
-
-class ProcessSaveInput(BaseModel):
-    id_process: int
-    automatic_emotion: Optional[str]
-
-class ProcessSaveManyInput(BaseModel):
-    items: List[Dict[str, Union[int, Optional[str]]]]
 
 class ProcessResultSchema(BaseModel):
     id_process: int
@@ -74,17 +51,19 @@ class ProcessResultSchema(BaseModel):
     class Config:
         orm_mode = True
 
-class ProcessingRequest(BaseModel):
-    texts: List[str]
-    labels: List[str]
-    id_process_list: List[int]
-
 class ProcessResultResponse(ProcessResultBase):
     id_process: int
-    data: Optional[DataCollectionResponse]  # ← Tambahkan ini untuk akses ke data → emotion
+    data: Optional[DataCollectionResponse]
 
     class Config:
         orm_mode = True
+
+
+# ===== PROCESSING =====
+class ProcessInput(BaseModel):
+    texts: List[str]
+    labels: List[str]
+    id_process_list: List[int]
 
 class SaveRequest(BaseModel):
     id_process: int
@@ -127,7 +106,7 @@ class ModelDataResponse(ModelDataBase):
         orm_mode = True
 
 
-# === VALIDATION DATA ===
+# ===== VALIDATION DATA =====
 class ValidationDataSchema(BaseModel):
     id_process: int
     is_correct: bool
@@ -136,7 +115,7 @@ class ValidationDataSchema(BaseModel):
         orm_mode = True
 
 
-# === VALIDATION RESULT ===
+# ===== VALIDATION RESULT =====
 class ValidationResultBase(BaseModel):
     id_process: int
     is_correct: bool
