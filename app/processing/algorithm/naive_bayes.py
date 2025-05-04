@@ -3,14 +3,20 @@ import time
 from typing import List, Dict, Union, Tuple
 from collections import defaultdict
 import math
+import os
+import pickle
+from sklearn.model_selection import train_test_split
 
 EPSILON = 1e-10
 
+# ✅ Fungsi pengganti lambda (agar bisa di-pickle)
+def nested_defaultdict():
+    return defaultdict(int)
+
 class NaiveBayesClassifier:
     def __init__(self):
-        # Atribut untuk menyimpan statistik pelatihan
         self.prior_probs = {}
-        self.word_counts = defaultdict(lambda: defaultdict(int))
+        self.word_counts = defaultdict(nested_defaultdict)
         self.total_words_per_label = {}
         self.vocabulary = set()
         self.vocab_size = 0
@@ -19,30 +25,29 @@ class NaiveBayesClassifier:
         self, texts: List[str], labels: List[str]
     ) -> Tuple[Dict[str, float], Dict[str, Dict[str, int]], Dict[str, int]]:
         label_counts = defaultdict(int)
-        word_counts = defaultdict(lambda: defaultdict(int))
+        word_counts = defaultdict(nested_defaultdict)
 
-        # Menghitung frekuensi label dan kata untuk setiap label
         for text, label in zip(texts, labels):
             label_counts[label] += 1
             for word in text.split():
                 word_counts[label][word] += 1
 
-        # Total kata per label dan prior probabilities
-        total_words_per_label = {label: sum(words.values()) for label, words in word_counts.items()}
-        prior_probs = {label: count / len(labels) for label, count in label_counts.items()}
+        total_words_per_label = {
+            label: sum(words.values()) for label, words in word_counts.items()
+        }
+        prior_probs = {
+            label: count / len(labels) for label, count in label_counts.items()
+        }
 
         return prior_probs, word_counts, total_words_per_label
 
     def laplace_smoothing(self, count: int, total: int, vocab_size: int) -> float:
         return (count + 1) / (total + vocab_size)
 
-    def calculate_log_probabilities(
-        self, text: str
-    ) -> Dict[str, float]:
+    def calculate_log_probabilities(self, text: str) -> Dict[str, float]:
         words = text.split()
         log_probs = {}
 
-        # Menghitung log-probabilitas untuk setiap label
         for label, prior in self.prior_probs.items():
             log_prob = math.log(prior + EPSILON)
             total_words = self.total_words_per_label[label]
@@ -57,7 +62,6 @@ class NaiveBayesClassifier:
         return log_probs
 
     def train(self, texts: List[str], labels: List[str]):
-        # Melatih model dengan menghitung statistik label dan kata
         self.prior_probs, self.word_counts, self.total_words_per_label = self.calculate_label_statistics(texts, labels)
         self.vocabulary = {word for label in self.word_counts for word in self.word_counts[label]}
         self.vocab_size = len(self.vocabulary)
@@ -77,7 +81,6 @@ class NaiveBayesClassifier:
         data_dua_emosi = []
         benar = 0
 
-        # Melakukan prediksi dengan mengidentifikasi data dengan dua emosi yang memiliki probabilitas sama
         for idx, text in enumerate(texts):
             log_probs = self.calculate_log_probabilities(text)
             max_log_prob = max(log_probs.values())
@@ -102,43 +105,47 @@ class NaiveBayesClassifier:
             })
 
         akurasi = benar / len(texts) if texts else 0
-
         return predictions, data_dua_emosi, akurasi
 
 
 if __name__ == "__main__":
-    # Mulai waktu
     start_time = time.time()
 
-    # Baca file dataset hasil preprocessing
     dataset_path = "./data/preprocessing_results/new_dataset.csv"
     df = pd.read_csv(dataset_path)
 
-    # Validasi kolom wajib
-    if not {"id_process", "text", "emotion", "preprocessed_result"}.issubset(df.columns):
-        raise ValueError("CSV harus memiliki kolom: id_process, text, emotion, dan preprocessed_result")
+    required_cols = {"id_process", "text", "emotion", "preprocessed_result"}
+    if not required_cols.issubset(df.columns):
+        raise ValueError(f"CSV harus memiliki kolom: {', '.join(required_cols)}")
 
     texts = df["preprocessed_result"].astype(str).tolist()
     labels = df["emotion"].astype(str).tolist()
     id_process_list = df["id_process"].astype(int).tolist()
 
-    # Instansiasi NaiveBayesClassifier dan latih model
-    model = NaiveBayesClassifier()
-    model.train(texts, labels)
-
-    # Jalankan prediksi
-    predictions, data_dua_emosi, akurasi = model.get_ambiguous_predictions(
-        texts=texts,
-        labels=labels,
-        id_process_list=id_process_list
+    X_train, X_test, y_train, y_test, id_train, id_test = train_test_split(
+        texts, labels, id_process_list, test_size=0.2, random_state=42
     )
 
-    # Hitung akurasi
+    model = NaiveBayesClassifier()
+    model.train(X_train, y_train)
+
+    model_dir = "./app/models"
+    os.makedirs(model_dir, exist_ok=True)
+    model_path = os.path.join(model_dir, "naive_bayes_model.pkl")
+    with open(model_path, "wb") as f:
+        pickle.dump(model, f)
+    print(f"✅ Model disimpan di: {model_path}")
+
+    predictions, data_dua_emosi, _ = model.get_ambiguous_predictions(
+        texts=X_test,
+        labels=y_test,
+        id_process_list=id_test
+    )
+
     total_data = len(predictions)
     benar = sum(1 for p in predictions if p["predicted_emotion"] == p["manual_emotion"])
     akurasi = benar / total_data if total_data > 0 else 0
 
-    # Tampilkan hasil
     for result in predictions:
         print("\n--- Hasil ---")
         print(f"ID        : {result['id_process']}")
@@ -149,12 +156,10 @@ if __name__ == "__main__":
         for label, prob in result["probabilities"].items():
             print(f"  {label}: {prob:.4f}")
 
-    # Tampilkan data dengan 2 emosi setara
     print("\n--- Data dengan dua emosi probabilitas setara ---")
     for data in data_dua_emosi:
         print(f"ID: {data['id_process']} | Teks: {data['text']}")
 
-    # Total waktu proses
     end_time = time.time()
     print(f"\nTotal waktu pelatihan dan prediksi: {end_time - start_time:.2f} detik")
     print(f"Akurasi: {akurasi * 100:.2f}%")
