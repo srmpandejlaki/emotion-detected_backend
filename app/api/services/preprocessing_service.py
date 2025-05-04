@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException
-from app.database.model_database import EmotionLabel, DataCollection, ProcessResult
+from app.database.models.model_database import EmotionLabel, DataCollection, ProcessResult
 from app.preprocessing.dataset_cleaning import DatasetPreprocessor
 
 def get_all_preprocessing_results(db: Session):

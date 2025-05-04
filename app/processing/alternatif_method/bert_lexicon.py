@@ -3,7 +3,7 @@ import torch
 import json
 from datetime import datetime, timezone
 from sqlalchemy.orm import Session
-from app.database.model_database import ProcessResult
+from app.database.models.model_database import ProcessResult
 
 # Load tokenizer dan model hanya sekali
 bert_tokenizer = BertTokenizer.from_pretrained("indobenchmark/indobert-base-p1")

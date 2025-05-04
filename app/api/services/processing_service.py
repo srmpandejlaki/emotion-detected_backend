@@ -7,7 +7,7 @@ from collections import Counter
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, precision_score, recall_score, accuracy_score
 
-from app.database.model_database import ProcessResult
+from app.database.models.model_database import ProcessResult
 from app.processing.algorithm.naive_bayes import NaiveBayesClassifier
 from app.processing.alternatif_method.bert_lexicon import process_with_bert_lexicon
 from app.utils.model_loader import load_model, save_model

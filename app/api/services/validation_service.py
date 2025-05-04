@@ -1,5 +1,5 @@
 from typing import List, Union
-from app.database.model_database import ValidationResult, ValidationData, ConfusionMatrix, ClassMetrics
+from app.database.models.model_database import ValidationResult, ValidationData, ConfusionMatrix, ClassMetrics
 from app.database.config import SessionLocal
 from app.database.schemas import ValidationResultCreate
 from sqlalchemy.orm import Session

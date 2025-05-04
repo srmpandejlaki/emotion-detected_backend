@@ -4,7 +4,7 @@ import shutil
 import pandas as pd
 from app.database import schemas
 from sqlalchemy.orm import Session
-from app.database import model_database
+from app.database.models import model_database
 from fastapi import HTTPException, UploadFile
 
 

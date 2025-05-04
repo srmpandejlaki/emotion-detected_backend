@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.database.model_database import EmotionLabel
+from app.database.models.model_database import EmotionLabel
 
 def get_label_id_map(db: Session) -> dict:
     """

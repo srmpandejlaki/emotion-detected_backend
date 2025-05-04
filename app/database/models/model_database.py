@@ -1,9 +1,7 @@
 from sqlalchemy import Column, Integer, String, Boolean, Float, ForeignKey, UniqueConstraint, Text, DateTime
-from sqlalchemy.orm import relationship, declarative_base
+from sqlalchemy.orm import relationship
 from app.database.config import Base
 from datetime import datetime, timezone
-
-Base = declarative_base()
 
 # ===== EMOTION LABEL =====
 class EmotionLabel(Base):
@@ -44,6 +42,8 @@ class ProcessResult(Base):
 
     # Relasi balik ke data_collection
     data = relationship("DataCollection", back_populates="preprocessing")
+    model_data = relationship("ModelData", back_populates="process_result")
+    validation_data = relationship("ValidationData", back_populates="process_result")
 
 # Model: Stores information about the model and its evaluation.
 class Model(Base):
@@ -92,8 +92,8 @@ class ValidationData(Base):
 class ConfusionMatrix(Base):
     __tablename__ = "confusion_matrix"
     matrix_id = Column(Integer, primary_key=True)
-    label_id = Column(Integer, ForeignKey("label_emotion.id_label"), primary_key=True)
-    predicted_label_id = Column(Integer, ForeignKey("label_emotion.id_label"), primary_key=True)
+    label_id = Column(Integer, ForeignKey("emotion_label.id_label"), primary_key=True)
+    predicted_label_id = Column(Integer, ForeignKey("emotion_label.id_label"), primary_key=True)
     total = Column(Integer, nullable=False)
 
     __table_args__ = (
@@ -104,7 +104,7 @@ class ConfusionMatrix(Base):
 class ClassMetrics(Base):
     __tablename__ = "class_metrics"
     metrics_id = Column(Integer, primary_key=True)
-    label_id = Column(Integer, ForeignKey("label_emotion.id_label"), primary_key=True)
+    label_id = Column(Integer, ForeignKey("emotion_label.id_label"), primary_key=True)
     precision = Column(Float)
     recall = Column(Float)
 
