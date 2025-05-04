@@ -32,6 +32,13 @@ class DataCollectionResponse(DataCollectionBase):
     class Config:
         orm_mode = True
 
+# ===== PAGINATION =====
+class PaginatedDataCollectionResponse(BaseModel):
+    total_data: int
+    current_page: int
+    total_pages: int
+    data: List[DataCollectionResponse]
+
 
 # ===== PROCESS RESULT =====
 class ProcessResultBase(BaseModel):
