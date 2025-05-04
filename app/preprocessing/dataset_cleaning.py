@@ -58,4 +58,4 @@ class DatasetPreprocessor(Preprocessor):
 
 if __name__ == "__main__":
     preprocessor = DatasetPreprocessor()
-    preprocessor.raw_formatter("./data/dataCollection/komentar.xlsx")
+    preprocessor.raw_formatter("./data/dataCollection/komentarNew.xlsx")
