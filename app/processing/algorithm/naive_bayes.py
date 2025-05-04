@@ -104,7 +104,7 @@ if __name__ == "__main__":
     start_time = time.time()
 
     # Baca file dataset hasil preprocessing
-    dataset_path = "./preprocessing_results/new_dataset.csv"
+    dataset_path = "./data/preprocessing_results/new_dataset.csv"
     df = pd.read_csv(dataset_path)
 
     # Validasi kolom wajib

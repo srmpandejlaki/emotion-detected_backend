@@ -37,7 +37,7 @@ def predict_naive_bayes(text: str, label_counts, word_counts, vocabulary):
     return max(scores, key=scores.get)
 
 if __name__ == "__main__":
-    csv_file = "./preprocessing_results/new_dataset.csv"
+    csv_file = "./data/preprocessing_results/new_dataset.csv"
     data = []
 
     # Baca CSV
