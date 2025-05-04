@@ -1,23 +1,19 @@
+import os
 from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from pydantic_settings import BaseSettings
+from sqlalchemy.orm import sessionmaker, declarative_base
 from dotenv import load_dotenv
-from pydantic import Field
 
+# Load .env file
 load_dotenv()
 
-# Settings class
-class Settings(BaseSettings):
-    DATABASE_URL: str = Field(..., env="DB_URL")
-    SECRET_KEY: str = Field(..., env="SECRET_KEY")
-    ALGORITHM: str = Field(..., env="ALGORITHM")
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = Field(..., env="ACCESS_TOKEN_EXPIRE_MINUTES")
-
-settings = Settings()
+# Get environment variables
+DATABASE_URL = os.getenv("DB_URL")
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM")
+ACCESS_TOKEN_EXPIRE_MINUTES = os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES")
 
 # Create database engine
-engine = create_engine(settings.DATABASE_URL)
+engine = create_engine(DATABASE_URL)
 
 # Create a session factory
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
