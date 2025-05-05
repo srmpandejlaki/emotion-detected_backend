@@ -69,8 +69,7 @@ class TextPreprocessor(Preprocessor):
     def normalize_custom_words(self, text, filepath="app/utils/json/slang.json"):
         # Normalisasi kata umum
         replacements = {
-            "rp": "rupiah", "usd": "dolar", "idr": "rupiah",
-            "amp": "", "nbsp": "",
+            "ga": "tidak", "ha": "kaget",
         }
 
         # Tambahkan slang dari file JSON jika tersedia
@@ -144,6 +143,7 @@ class TextPreprocessor(Preprocessor):
         # Tokenisasi
         # tokens = [t for t in nltk.word_tokenize(
         #     text) if len(t) > 1]
+
         # Menghapus Stopwords lagi
         tokens = [t for t in nltk.word_tokenize(
             text) if t not in self.stop_words if len(t) > 1]
@@ -162,7 +162,6 @@ class TextPreprocessor(Preprocessor):
         text = self.restore_keywords(text, protected_map)
 
         # Stemming
-        # text = self.stemmer.stem(text)
         text = self.stemmerMP.stem_kalimat(text)
 
         tokens = [t for t in nltk.word_tokenize(

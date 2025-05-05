@@ -13,15 +13,15 @@ router = APIRouter(
 
 
 # ✅ Get all data collections (dengan pagination)
-@router.get("/", response_model=dict)
-def get_all_data_collections(page: int = 1, limit: int = 10, db: Session = Depends(get_db)):
-    return data_collection_service.get_all_data_collections(db, page, limit)
+@router.get("/list", response_model=dict)
+def get_all_data_collections(db: Session = Depends(get_db)):
+    return data_collection_service.get_all_data_collections(db)
 
 
 # ✅ Get one by ID
 @router.get("/{data_id}", response_model=schemas.DataCollection)
-def get_data_collection_by_id(data_id: int, db: Session = Depends(get_db)):
-    data = data_collection_service.get_data_collection_by_id(db, data_id)
+def get_data_collection_by_id(data_id: int, page: int = 1, limit: int = 10, db: Session = Depends(get_db)):
+    data = data_collection_service.get_data_collection_by_id(db, data_id, page, limit)
     if not data:
         raise HTTPException(status_code=404, detail="Data not found")
     return data
