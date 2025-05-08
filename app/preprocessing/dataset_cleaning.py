@@ -34,6 +34,26 @@ class DatasetPreprocessor(Preprocessor):
         return df
 
     def raw_formatter(self, file_path):
+        """Baca file (Excel atau CSV) dan simpan sebagai CSV tanpa proses preprocessing"""
+        try:
+            df = self.read_file(file_path)
+
+            if "text" not in df.columns:
+                raise ValueError("Kolom 'text' harus ada di file")
+
+            df['text'] = df['text'].astype(str).str.replace('"', "'")
+
+            os.makedirs("./data/preprocessing_results", exist_ok=True)
+            final_path = "./data/preprocessing_results/new_dataset.csv"
+            df.to_csv(final_path, index=False,
+                    quoting=csv.QUOTE_NONNUMERIC, encoding="utf-8")
+
+            print(f"File berhasil dikonversi dan disimpan ke: {final_path}")
+
+        except Exception as e:
+            print(f"Terjadi kesalahan: {e}")
+
+    def raw_formatter_with_preprocessing(self, file_path):
         """Baca file (Excel atau CSV), proses, dan simpan hasil akhir"""
         try:
             df = self.read_file(file_path)
@@ -46,7 +66,7 @@ class DatasetPreprocessor(Preprocessor):
             df_processed = self.process(df)
 
             os.makedirs("./data/preprocessing_results", exist_ok=True)
-            final_path = "./data/preprocessing_results/new_dataset.csv"
+            final_path = "./data/preprocessing_results/new_dataset_preprocessed.csv"
             df_processed.to_csv(final_path, index=False,
                                 quoting=csv.QUOTE_NONNUMERIC, encoding="utf-8")
 

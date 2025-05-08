@@ -7,7 +7,6 @@ from sqlalchemy.orm import Session
 from app.database import schemas
 from app.database.models import model_database
 
-
 # Get all data collections with pagination
 def get_all_data_collections(db: Session, page: int = 1, limit: int = 10):
     total_data = db.query(model_database.DataCollection).count()
@@ -51,7 +50,6 @@ def create_single_data(db: Session, data: schemas.DataCollectionCreate):
     db.refresh(db_data)
     return db_data
 
-
 # Upload CSV
 def upload_csv_data(db: Session, file_path: str):
     try:
@@ -64,14 +62,22 @@ def upload_csv_data(db: Session, file_path: str):
             raise HTTPException(status_code=400, detail="CSV harus memiliki kolom 'text' dan 'emotion'.")
 
         created_data = []
+
+        # Ambil semua label emosi dari database dan buat dictionary {emotion_name: id_label}
+        label_lookup = {label.emotion_name.lower(): label.id_label for label in db.query(model_database.EmotionLabel).all()}
+
         for _, row in df.iterrows():
             if pd.isna(row['text']):
                 continue  # skip baris kosong
 
+            emotion_name = str(row['emotion']).strip().lower() if not pd.isna(row['emotion']) else None
+            id_label = label_lookup.get(emotion_name) if emotion_name else None
+
             data = schemas.DataCollectionCreate(
                 text_data=str(row['text']).strip(),
-                id_label=row['emotion'] if not pd.isnull(row['emotion']) else None
+                id_label=id_label
             )
+
             created = create_single_data(db, data)
             created_data.append(created)
 
@@ -83,7 +89,6 @@ def upload_csv_data(db: Session, file_path: str):
     finally:
         if os.path.exists(file_path):
             os.remove(file_path)
-
 
 # Entry point for creating (manual or file)
 def create_data_collection(
