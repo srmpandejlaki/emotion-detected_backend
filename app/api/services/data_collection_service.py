@@ -116,16 +116,15 @@ def create_data_collection(
         raise HTTPException(status_code=400, detail="Harus mengirimkan file CSV atau data manual.")
 
 
+# Delete all
+def delete_all_data_collections(db: Session):
+    db.query(model_database.DataCollection).delete()
+    db.commit()
+
 # Delete by ID
 def delete_data_collection(db: Session, data_id: int):
     data = get_data_collection_by_id(db, data_id)
     if not data:
         raise HTTPException(status_code=404, detail="Data Collection tidak ditemukan")
     db.delete(data)
-    db.commit()
-
-
-# Delete all
-def delete_all_data_collections(db: Session):
-    db.query(model_database.DataCollection).delete()
     db.commit()

@@ -34,12 +34,12 @@ def create_data_manual(data: schemas.DataCollectionCreate, db: Session = Depends
 def upload_csv_file(file: UploadFile = File(...), db: Session = Depends(get_db)):
     return data_collection_controller.upload_csv_file_controller(db=db, file=file)
 
+# Delete all data
+@router.delete("/all")
+def delete_all_data(db: Session = Depends(get_db)):
+    return data_collection_controller.delete_all_data_collections_controller(db=db)
+
 # Delete single data
 @router.delete("/{data_id}")
 def delete_data(data_id: int, db: Session = Depends(get_db)):
     return data_collection_controller.delete_data_collection_controller(db=db, data_id=data_id)
-
-# Delete all data
-@router.delete("/delete-all")
-def delete_all_data(db: Session = Depends(get_db)):
-    return data_collection_controller.delete_all_data_collections_controller(db=db)

@@ -21,10 +21,10 @@ def create_data_collection_manual_controller(db: Session, data: schemas.DataColl
 def upload_csv_file_controller(db: Session, file: UploadFile) -> List[schemas.DataCollection]:
     return data_collection_service.create_data_collection(db=db, file=file)
 
-def delete_data_collection_controller(db: Session, data_id: int):
-    data_collection_service.delete_data_collection(db, data_id)
-    return {"message": "Data berhasil dihapus"}
-
 def delete_all_data_collections_controller(db: Session):
     data_collection_service.delete_all_data_collections(db)
     return {"message": "Semua data berhasil dihapus"}
+
+def delete_data_collection_controller(db: Session, data_id: int):
+    data_collection_service.delete_data_collection(db, data_id)
+    return {"message": "Data berhasil dihapus"}
