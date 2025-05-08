@@ -8,6 +8,10 @@ from app.database import schemas
 from app.database.models import model_database
 
 # Get all data collections with pagination
+from fastapi.encoders import jsonable_encoder
+import logging
+
+
 def get_all_data_collections(db: Session, page: int = 1, limit: int = 10):
     total_data = db.query(model_database.DataCollection).count()
     total_pages = math.ceil(total_data / limit) if limit > 0 else 1
@@ -27,6 +31,7 @@ def get_all_data_collections(db: Session, page: int = 1, limit: int = 10):
         "total_pages": total_pages,
         "data": data_query
     }
+    logging.warning(jsonable_encoder(data_query))  # Ini akan print isi data_query dalam bentuk serializable
 
 
 # Get single data collection by ID
