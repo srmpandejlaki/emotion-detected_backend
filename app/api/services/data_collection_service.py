@@ -46,6 +46,15 @@ def create_single_data(db: Session, data: schemas.DataCollectionCreate):
     if not data.text_data or data.id_label is None:
         raise HTTPException(status_code=400, detail="Field 'text_data' dan 'id_label' tidak boleh kosong.")
     
+    # Cek duplikasi
+    existing = db.query(model_database.DataCollection).filter(
+        model_database.DataCollection.text_data == data.text_data.strip(),
+        model_database.DataCollection.id_label == data.id_label
+    ).first()
+
+    if existing:
+        raise HTTPException(status_code=409, detail="Data dengan teks dan label yang sama sudah ada.")
+
     db_data = model_database.DataCollection(
         text_data=data.text_data.strip(),
         id_label=data.id_label
