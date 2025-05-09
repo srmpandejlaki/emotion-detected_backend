@@ -1,7 +1,7 @@
 import os
 import joblib
 
-MODEL_PATH = "app/models/model.pkl"
+MODEL_PATH = "app/models/naive_bayes_model.pkl"
 
 def load_model():
     if not os.path.exists(MODEL_PATH):

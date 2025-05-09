@@ -65,7 +65,6 @@ def delete_preprocess_result(db: Session, process_id: int):
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Error deleting preprocessing result: {str(e)}")
 
-
 def delete_all_preprocess_result(db: Session):
     try:
         # Kosongkan ProcessResult
@@ -128,4 +127,3 @@ def add_emotion_label(db: Session, emotion_name: str):
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail=f"Gagal menambahkan label emosi: {str(e)}")
-
