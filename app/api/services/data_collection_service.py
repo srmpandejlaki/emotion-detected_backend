@@ -11,7 +11,6 @@ from app.database.models import model_database
 from fastapi.encoders import jsonable_encoder
 import logging
 
-
 def get_all_data_collections(db: Session, page: int = 1, limit: int = 10):
     total_data = db.query(model_database.DataCollection).count()
     total_pages = math.ceil(total_data / limit) if limit > 0 else 1
@@ -33,13 +32,11 @@ def get_all_data_collections(db: Session, page: int = 1, limit: int = 10):
     }
     logging.warning(jsonable_encoder(data_query))  # Ini akan print isi data_query dalam bentuk serializable
 
-
 # Get single data collection by ID
 def get_data_collection_by_id(db: Session, data_id: int):
     return db.query(model_database.DataCollection).filter(
         model_database.DataCollection.id_data == data_id
     ).first()
-
 
 # Create single data collection (manual)
 def create_single_data(db: Session, data: schemas.DataCollectionCreate):
