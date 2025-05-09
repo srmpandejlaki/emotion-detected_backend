@@ -16,6 +16,10 @@ router = APIRouter(
 def get_all_emotion_labels(db: Session = Depends(get_db)):
     return db.query(model_database.EmotionLabel).all()
 
+@router.dalete("/label")
+def delete_all_emotion_labels(db: Session = Depends(get_db)):
+    return db.query(model_database.EmotionLabel).all()
+
 @router.get("/list", response_model=schemas.PaginatedDataCollectionResponse)
 def get_all_data_collections(
     db: Session = Depends(get_db),
