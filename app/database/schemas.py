@@ -30,6 +30,7 @@ class DataCollection(BaseModel):
     id_data: int
     text_data: str
     id_label: Optional[int]
+    emotion: Optional[EmotionLabelResponse]
 
     class Config:
         orm_mode = True

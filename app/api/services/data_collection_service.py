@@ -24,13 +24,13 @@ def get_all_data_collections(db: Session, page: int = 1, limit: int = 10):
         .all()
     )
 
+    logging.warning(jsonable_encoder(data_query))  # Ini akan print isi data_query dalam bentuk serializable
     return {
         "total_data": total_data,
         "current_page": page,
         "total_pages": total_pages,
         "data": data_query
     }
-    logging.warning(jsonable_encoder(data_query))  # Ini akan print isi data_query dalam bentuk serializable
 
 # Get single data collection by ID
 def get_data_collection_by_id(db: Session, data_id: int):
@@ -48,6 +48,9 @@ def create_single_data(db: Session, data: schemas.DataCollectionCreate):
         model_database.DataCollection.text_data == data.text_data.strip(),
         model_database.DataCollection.id_label == data.id_label
     ).first()
+
+    if not db.query(model_database.EmotionLabel).filter_by(id_label=data.id_label).first():
+        raise HTTPException(status_code=400, detail="Label emosi tidak ditemukan.")
 
     if existing:
         raise HTTPException(status_code=409, detail="Data dengan teks dan label yang sama sudah ada.")

@@ -5,11 +5,16 @@ from typing import List
 from app.api.controllers import data_collection_controller
 from app.database import schemas
 from app.database.config import get_db
+from app.database.models import model_database
 
 router = APIRouter(
     prefix="/dataset",
     tags=["Data Collection"]
 )
+
+@router.get("/label", response_model=List[schemas.EmotionLabelResponse])
+def get_all_emotion_labels(db: Session = Depends(get_db)):
+    return db.query(model_database.EmotionLabel).all()
 
 @router.get("/list", response_model=schemas.PaginatedDataCollectionResponse)
 def get_all_data_collections(
