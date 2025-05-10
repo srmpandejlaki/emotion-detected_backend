@@ -54,7 +54,7 @@ def get_all_preprocessing_results(db: Session, page: int = 1, limit: int = 10):
         "total_data": total_data,
         "current_page": page,
         "total_pages": total_pages,
-        "data": data_query
+        "preprocessing": data_query
     }
 
 def get_preprocessing_result_by_id(db: Session, id_process: int):

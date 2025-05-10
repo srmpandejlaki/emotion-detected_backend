@@ -13,7 +13,7 @@ router = APIRouter(
 def create_preprocessing(request: PreprocessingCreate, db: Session = Depends(get_db)):
     return preprocessing_controller.create_preprocessing_controller(request, db)
 
-@router.get("/list", response_model=list[PaginatedPreprocessingResponse])
+@router.get("/list", response_model=PaginatedPreprocessingResponse)
 def get_all_preprocessing(
     db: Session = Depends(get_db),
     page: int = Query(1, ge=1),
