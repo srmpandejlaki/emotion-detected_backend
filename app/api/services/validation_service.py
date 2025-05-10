@@ -13,15 +13,21 @@ from app.processing.alternatif_method.bert_lexicon import process_with_bert_lexi
 
 def classify_text(text: str) -> ValidationResponse:
     model = load_model()
+    print("Model loaded:", type(model))  # debug
+
     if model is None:
         raise ValueError("Model belum tersedia")
 
-    result = model.predict([text])[0]
+    try:
+        result = model.predict([text])[0]
+    except Exception as e:
+        print("Prediction error:", str(e))  # debug
+        raise ValueError("Gagal melakukan prediksi. Format model tidak sesuai.")
+
     if isinstance(result, list):  # Ambiguitas
         result = process_with_bert_lexicon([text])[0]
 
     return ValidationResponse(text=text, predicted_emotion=result)
-
 
 def classify_texts(texts: List[str]) -> List[ValidationResponse]:
     model = load_model()
