@@ -1,6 +1,6 @@
 import pandas as pd
 from joblib import dump
-import Session
+from sqlalchemy.orm import Session
 from app.api.services.preprocessing_service import get_all_preprocessing_results
 from app.processing.algorithm.naive_bayes import NaiveBayesClassifier
 from sklearn.model_selection import train_test_split

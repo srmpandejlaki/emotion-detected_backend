@@ -1,35 +1,32 @@
-from fastapi import HTTPException
+from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
+from app.database.config import get_db
 from app.api.services import preprocessing_service
+from app.database.schemas import PreprocessingCreate, PreprocessingUpdate
 
-def get_all_preprocessing_results_controller(db: Session):
-    results = preprocessing_service.get_all_preprocessing_results(db)
-    return {
-        "message": "Data preprocessing berhasil diambil",
-        "data": results
-    }
+def create_preprocessing_controller(request: PreprocessingCreate, db: Session = Depends(get_db)):
+    result = preprocessing_service.create_preprocessing_result(db, request)
+    if not result:
+        raise HTTPException(status_code=404, detail="DataCollection not found")
+    return result
 
-def get_preprocess_result_by_id_controller(db: Session, process_id: int):
-    result = preprocessing_service.get_preprocess_result_by_id(db, process_id)
+def get_all_preprocessing_controller(db: Session = Depends(get_db)):
+    return preprocessing_service.get_all_preprocessing_results(db)
+
+def get_preprocessing_by_id_controller(id_process: int, db: Session = Depends(get_db)):
+    result = preprocessing_service.get_preprocessing_result_by_id(db, id_process)
     if not result:
         raise HTTPException(status_code=404, detail="Preprocessing result not found")
     return result
 
-def preprocessing_and_save_controller(db: Session):
-    return preprocessing_service.preprocessing_and_save(db)
+def update_preprocessing_controller(id_process: int, update_data: PreprocessingUpdate, db: Session = Depends(get_db)):
+    updated = preprocessing_service.update_preprocessing_result(db, id_process, update_data)
+    if not updated:
+        raise HTTPException(status_code=404, detail="Data not found")
+    return updated
 
-def delete_preprocess_result_controller(db: Session, process_id: int):
-    return preprocessing_service.delete_preprocess_result(db, process_id)
-
-def delete_all_preprocess_result_controller(db: Session):
-    return preprocessing_service.delete_all_preprocess_result(db)
-
-def add_emotion_label_controller(db: Session, emotion_name: str):
-    return preprocessing_service.add_emotion_label(db, emotion_name)
-
-def update_label_controller(db: Session, id_data: int, new_label: str):
-    response = preprocessing_service.update_label(db, id_data, new_label)
-    return {
-        "message": response["message"],
-        "data": response["data"]
-    }
+def delete_preprocessing_controller(id_process: int, db: Session = Depends(get_db)):
+    deleted = preprocessing_service.delete_preprocessing_result(db, id_process)
+    if not deleted:
+        raise HTTPException(status_code=404, detail="Data not found")
+    return {"message": f"Data with id_process {id_process} has been deleted"}

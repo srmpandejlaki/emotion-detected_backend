@@ -43,7 +43,27 @@ class PaginatedDataCollectionResponse(BaseModel):
     data: List[DataCollection]
 
 
-# ===== PROCESS RESULT =====
+# ===== PREPROCESS RESULT =====
+class PreprocessingCreate(BaseModel):
+    id_data: int
+    text_preprocessing: str
+
+class PreprocessingResponse(BaseModel):
+    id_process: int
+    id_data: int
+    text_preprocessing: str
+    is_processed: bool
+    automatic_emotion: Optional[str]
+    processed_at: datetime
+
+    class Config:
+        orm_mode = True
+
+class PreprocessingUpdate(BaseModel):
+    text_preprocessing: Optional[str] = None
+    automatic_emotion: Optional[str] = None
+
+
 class ProcessResultBase(BaseModel):
     id_data: int
     text_preprocessing: str

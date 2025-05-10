@@ -37,7 +37,7 @@ class ProcessResult(Base):
     id_data = Column(Integer, ForeignKey('data_collection.id_data'), nullable=False)
     text_preprocessing = Column(Text, nullable=False)
     is_processed = Column(Boolean, default=False, nullable=False)
-    automatic_emotion = Column(String(50), nullable=False)
+    automatic_emotion = Column(String(50), nullable=True)
     processed_at = Column(DateTime, default=datetime.now(timezone.utc))
 
     # Relasi balik ke data_collection

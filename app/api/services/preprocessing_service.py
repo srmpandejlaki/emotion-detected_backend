@@ -1,129 +1,47 @@
 from sqlalchemy.orm import Session
-from fastapi import HTTPException
-from app.database.models.model_database import EmotionLabel, DataCollection, ProcessResult
-from app.preprocessing.dataset_cleaning import DatasetPreprocessor
+from datetime import datetime, timezone
+from app.database.models.model_database import DataCollection, ProcessResult
+from app.database.schemas import PreprocessingCreate, PreprocessingUpdate
+from app.preprocessing import dataset_cleaning  # fungsi preprocessing
+
+def create_preprocessing_result(db: Session, request: PreprocessingCreate):
+    data = db.query(DataCollection).filter(DataCollection.id_data == request.id_data).first()
+    if not data:
+        return None
+    cleaned_text = dataset_cleaning(data.text)  # panggil fungsi preprocessing
+    new_result = ProcessResult(
+        id_data=request.id_data,
+        text_preprocessing=cleaned_text,
+        automatic_emotion=request.automatic_emotion,
+        processed_at=datetime.now(timezone.utc)
+    )
+    db.add(new_result)
+    db.commit()
+    db.refresh(new_result)
+    return new_result
 
 def get_all_preprocessing_results(db: Session):
-    try:
-        return db.query(ProcessResult).all()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error fetching preprocessing results: {str(e)}")
+    return db.query(ProcessResult).order_by(ProcessResult.id_process.desc()).all()
 
-def add_preprocessing_result(db: Session, id_data: int, text_preprocessing: str):
-    try:
-        # Tambahkan hasil ke ProcessResult
-        result = ProcessResult(
-            id_data=id_data,
-            text_preprocessing=text_preprocessing
-        )
-        db.add(result)
-        db.commit()
-        db.refresh(result)
-        return result
-    except Exception as e:
-        db.rollback()
-        raise HTTPException(status_code=500, detail=f"Error adding preprocessing result: {str(e)}")
+def get_preprocessing_result_by_id(db: Session, id_process: int):
+    return db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
 
-def preprocessing_and_save(db: Session):
-    try:
-        # Ambil semua id_data yang sudah diproses
-        processed_ids = db.query(ProcessResult.id_data).all()
-        processed_ids = [pid[0] for pid in processed_ids]
+def update_preprocessing_result(db: Session, id_process: int, update_data: PreprocessingUpdate):
+    result = db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
+    if not result:
+        return None
+    if update_data.text_preprocessing is not None:
+        result.text_preprocessing = update_data.text_preprocessing
+    if update_data.automatic_emotion is not None:
+        result.automatic_emotion = update_data.automatic_emotion
+    db.commit()
+    db.refresh(result)
+    return result
 
-        # Ambil data yang belum diproses
-        unprocessed_data = db.query(DataCollection).filter(~DataCollection.id_data.in_(processed_ids)).all()
-
-        if not unprocessed_data:
-            return "Semua data sudah dipreprocessing."
-
-        count = 0
-        for item in unprocessed_data:
-            preprocessor = DatasetPreprocessor(item.text_data)
-            cleaned_text = preprocessor.process()  # Pastikan kamu punya method `process()`
-            add_preprocessing_result(db, id_data=item.id_data, text_preprocessing=cleaned_text)
-
-        return f"Berhasil memproses {count} data."
-
-    except Exception as e:
-        db.rollback()
-        raise HTTPException(status_code=500, detail=f"Error processing and saving preprocessing data: {str(e)}")
-
-def get_preprocess_result_by_id(db: Session, process_id: int):
-    try:
-        return db.query(ProcessResult).filter(ProcessResult.id_process == process_id).first()
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error getting preprocessing result by ID: {str(e)}")
-
-def delete_preprocess_result(db: Session, process_id: int):
-    try:
-        process = get_preprocess_result_by_id(db, process_id)
-        if not process:
-            raise HTTPException(status_code=404, detail="Process Result not found")
-        db.delete(process)
-        db.commit()
-    except Exception as e:
-        db.rollback()
-        raise HTTPException(status_code=500, detail=f"Error deleting preprocessing result: {str(e)}")
-
-def delete_all_preprocess_result(db: Session):
-    try:
-        # Kosongkan ProcessResult
-        db.query(ProcessResult).delete()
-        db.commit()
-    except Exception as e:
-        db.rollback()
-        raise HTTPException(status_code=500, detail=f"Error deleting all preprocessing results: {str(e)}")
-
-def update_label(db: Session, id_data: int, new_label: str):
-    try:
-        data = db.query(DataCollection).filter(DataCollection.id_data == id_data).first()
-        if not data:
-            raise HTTPException(status_code=404, detail="Data tidak ditemukan")
-
-        # Cari label emosi berdasarkan nama
-        label = db.query(EmotionLabel).filter(EmotionLabel.emotion_name == new_label).first()
-        if not label:
-            raise HTTPException(status_code=404, detail="Label emosi tidak ditemukan")
-
-        # Update label
-        data.id_label = label.id_label
-        db.commit()
-        db.refresh(data)
-
-        return {
-            "message": "Label berhasil diperbarui",
-            "data": {
-                "id_data": data.id_data,
-                "text_data": data.text_data,
-                "label": label.emotion_name
-            }
-        }
-
-    except Exception as e:
-        db.rollback()
-        raise HTTPException(status_code=500, detail=f"Error updating label: {str(e)}")
-
-def add_emotion_label(db: Session, emotion_name: str):
-    try:
-        # Cek apakah label emosi sudah ada
-        existing_label = db.query(EmotionLabel).filter(EmotionLabel.emotion_name == emotion_name).first()
-        if existing_label:
-            raise HTTPException(status_code=400, detail="Label emosi sudah ada.")
-
-        # Tambah label baru
-        new_label = EmotionLabel(emotion_name=emotion_name)
-        db.add(new_label)
-        db.commit()
-        db.refresh(new_label)
-
-        return {
-            "message": "Label emosi berhasil ditambahkan.",
-            "data": {
-                "id_label": new_label.id_label,
-                "emotion_name": new_label.emotion_name
-            }
-        }
-
-    except Exception as e:
-        db.rollback()
-        raise HTTPException(status_code=500, detail=f"Gagal menambahkan label emosi: {str(e)}")
+def delete_preprocessing_result(db: Session, id_process: int):
+    result = db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
+    if not result:
+        return None
+    db.delete(result)
+    db.commit()
+    return result
