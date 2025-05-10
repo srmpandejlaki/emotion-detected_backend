@@ -49,13 +49,31 @@ def get_all_preprocessing_results(db: Session, page: int = 1, limit: int = 10):
         .all()
     )
 
-    logging.warning(jsonable_encoder(data_query))  # Ini akan print isi data_query dalam bentuk serializable
+    result = []
+    for item in data_query:
+        result.append({
+            "id_process": item.id_process,
+            "id_data": item.id_data,
+            "text_preprocessing": item.text_preprocessing,
+            "is_processed": item.is_processed,
+            "automatic_emotion": item.automatic_emotion,
+            "processed_at": item.processed_at,
+            "data": {
+                "text": item.data.text if item.data else "-",
+                "emotion": {
+                    "emotion_name": item.data.emotion_name if item.data else "-",
+                    "id_label": item.data.id_label if item.data else "-"
+                }
+            }
+        })
+
     return {
         "total_data": total_data,
         "current_page": page,
         "total_pages": total_pages,
-        "preprocessing": data_query
+        "preprocessing": result
     }
+
 
 def get_preprocessing_result_by_id(db: Session, id_process: int):
     return db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
