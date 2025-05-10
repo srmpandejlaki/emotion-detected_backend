@@ -10,8 +10,8 @@ def create_preprocessing_controller(request: PreprocessingCreate, db: Session = 
         raise HTTPException(status_code=404, detail="DataCollection not found")
     return result
 
-def get_all_preprocessing_controller(db: Session = Depends(get_db)):
-    return preprocessing_service.get_all_preprocessing_results(db)
+def get_all_preprocessing_controller(db: Session, page: int = 1, limit: int = 10):
+    return preprocessing_service.get_all_preprocessing_results(db, page, limit)
 
 def get_preprocessing_by_id_controller(id_process: int, db: Session = Depends(get_db)):
     result = preprocessing_service.get_preprocessing_result_by_id(db, id_process)

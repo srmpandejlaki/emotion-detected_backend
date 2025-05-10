@@ -51,6 +51,7 @@ class PreprocessingCreate(BaseModel):
 class PreprocessingResponse(BaseModel):
     id_process: int
     id_data: int
+    data: Optional[DataCollection]
     text_preprocessing: str
     is_processed: bool
     automatic_emotion: Optional[str]
@@ -62,6 +63,12 @@ class PreprocessingResponse(BaseModel):
 class PreprocessingUpdate(BaseModel):
     text_preprocessing: Optional[str] = None
     automatic_emotion: Optional[str] = None
+
+class PaginatedPreprocessingResponse(BaseModel):
+    total_data: int
+    current_page: int
+    total_pages: int
+    preprocessing: List[PreprocessingResponse]
 
 
 class ProcessResultBase(BaseModel):

@@ -1,7 +1,7 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from app.api.controllers import preprocessing_controller
-from app.database.schemas import PreprocessingCreate, PreprocessingUpdate, PreprocessingResponse
+from app.database.schemas import PreprocessingCreate, PreprocessingUpdate, PreprocessingResponse, PaginatedPreprocessingResponse
 from app.database.config import get_db
 
 router = APIRouter(
@@ -13,9 +13,13 @@ router = APIRouter(
 def create_preprocessing(request: PreprocessingCreate, db: Session = Depends(get_db)):
     return preprocessing_controller.create_preprocessing_controller(request, db)
 
-@router.get("/", response_model=list[PreprocessingResponse])
-def get_all_preprocessing(db: Session = Depends(get_db)):
-    return preprocessing_controller.get_all_preprocessing_controller(db)
+@router.get("/list", response_model=list[PaginatedPreprocessingResponse])
+def get_all_preprocessing(
+    db: Session = Depends(get_db),
+    page: int = Query(1, ge=1),
+    limit: int = Query(10, ge=1)
+):
+    return preprocessing_controller.get_all_preprocessing_controller(db=db, page=page, limit=limit)
 
 @router.get("/{id_process}", response_model=PreprocessingResponse)
 def get_preprocessing_by_id(id_process: int, db: Session = Depends(get_db)):

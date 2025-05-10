@@ -1,9 +1,13 @@
 import pandas as pd
+import math
 from sqlalchemy.orm import Session
 from datetime import datetime, timezone
 from app.database.models.model_database import DataCollection, ProcessResult
 from app.database.schemas import PreprocessingCreate, PreprocessingUpdate
 from app.preprocessing.dataset_cleaning import DatasetPreprocessor  # fungsi preprocessing
+
+from fastapi.encoders import jsonable_encoder
+import logging
 
 def create_preprocessing_result(db: Session, request: PreprocessingCreate):
     data = db.query(DataCollection).filter(DataCollection.id_data == request.id_data).first()
@@ -32,8 +36,26 @@ def create_preprocessing_result(db: Session, request: PreprocessingCreate):
     db.refresh(new_result)
     return new_result
 
-def get_all_preprocessing_results(db: Session):
-    return db.query(ProcessResult).order_by(ProcessResult.id_process.desc()).all()
+def get_all_preprocessing_results(db: Session, page: int = 1, limit: int = 10):
+    total_data = db.query(ProcessResult).count()
+    total_pages = math.ceil(total_data / limit) if limit > 0 else 1
+    offset = (page - 1) * limit
+
+    data_query = (
+        db.query(ProcessResult)
+        .order_by(ProcessResult.id_process.desc())
+        .offset(offset)
+        .limit(limit)
+        .all()
+    )
+
+    logging.warning(jsonable_encoder(data_query))  # Ini akan print isi data_query dalam bentuk serializable
+    return {
+        "total_data": total_data,
+        "current_page": page,
+        "total_pages": total_pages,
+        "data": data_query
+    }
 
 def get_preprocessing_result_by_id(db: Session, id_process: int):
     return db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
