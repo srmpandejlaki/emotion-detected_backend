@@ -1,50 +1,90 @@
-from joblib import dump
-from sqlalchemy.orm import Session
-from app.database.config import SessionLocal
-from app.api.services.preprocessing_service import get_all_preprocessing_results
-from app.processing.algorithm.naive_bayes import NaiveBayesClassifier
-from sklearn.model_selection import train_test_split
-import time, os
-import pandas as pd
+import math
+from collections import defaultdict
+from typing import List, Tuple, Dict, Any
 
-MODEL_PATH = "./app/models/naive_bayes_model.pkl"
 
-def load_data_from_csv(dataset_path: str):
-    df = pd.read_csv(dataset_path)
-    texts = df["preprocessed_result"].tolist()
-    labels = df["emotion"].tolist()
-    ids = df["id_process"].tolist()
-    return texts, labels, ids
+class NaiveBayesClassifier:
+    def __init__(self):
+        self.class_probs = {}
+        self.word_probs = {}
+        self.vocab = set()
+        self.classes = set()
+        self.total_words_per_class = defaultdict(int)
+        self.word_counts_per_class = defaultdict(lambda: defaultdict(int))
 
-def train_and_save_model(texts, labels, ids):
-    X_train, X_test, y_train, y_test, id_train, id_test = train_test_split(
-        texts, labels, ids, test_size=0.2, random_state=42
-    )
+    def train(self, texts: List[str], labels: List[str]):
+        class_counts = defaultdict(int)
+        total_texts = len(texts)
 
-    model = NaiveBayesClassifier()
-    model.train(X_train, y_train)
+        for text, label in zip(texts, labels):
+            class_counts[label] += 1
+            words = text.split()
+            self.total_words_per_class[label] += len(words)
+            for word in words:
+                self.word_counts_per_class[label][word] += 1
+                self.vocab.add(word)
 
-    os.makedirs(os.path.dirname(MODEL_PATH), exist_ok=True)
-    dump(model, MODEL_PATH)
-    print(f"✅ Model disimpan di: {MODEL_PATH}")
+        self.classes = set(class_counts.keys())
 
-    return model, X_test, y_test, id_test
+        # Hitung probabilitas kelas
+        self.class_probs = {
+            label: math.log(count / total_texts)
+            for label, count in class_counts.items()
+        }
 
-def evaluate_model(model, X_test, y_test, id_test):
-    predictions, ambiguous, _ = model.get_ambiguous_predictions(X_test, y_test, id_test)
-    benar = sum(1 for p in predictions if p["predicted_emotion"] == p["manual_emotion"])
-    total = len(predictions)
-    akurasi = benar / total if total > 0 else 0
+        # Hitung probabilitas kata (Laplace smoothing)
+        self.word_probs = {}
+        vocab_size = len(self.vocab)
+        for label in self.classes:
+            self.word_probs[label] = {}
+            for word in self.vocab:
+                count = self.word_counts_per_class[label][word]
+                total = self.total_words_per_class[label]
+                self.word_probs[label][word] = math.log(
+                    (count + 1) / (total + vocab_size)
+                )
 
-    print(f"\nAkurasi: {akurasi * 100:.2f}%")
-    print(f"Data dengan dua emosi probabilitas sama: {len(ambiguous)}")
+    def predict(self, text: str) -> Tuple[str, Dict[str, float]]:
+        words = text.split()
+        log_probs = {}
 
-if __name__ == "__main__":
-    start = time.time()
+        for label in self.classes:
+            log_prob = self.class_probs[label]
+            for word in words:
+                if word in self.vocab:
+                    log_prob += self.word_probs[label].get(word, 0)
+            log_probs[label] = log_prob
 
-    dataset_path = "./preprocessing_results/new_dataset.csv"
-    texts, labels, ids = load_data_from_csv(dataset_path)
-    model, X_test, y_test, id_test = train_and_save_model(texts, labels, ids)
-    evaluate_model(model, X_test, y_test, id_test)
+        predicted = max(log_probs, key=log_probs.get)
+        return predicted, log_probs
 
-    print(f"\nSelesai dalam {time.time() - start:.2f} detik")
+    def get_ambiguous_predictions(
+        self, X_test: List[str], y_test: List[str], id_test: List[int]
+    ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], List[str]]:
+        results = []
+        ambiguous_data = []
+        ambiguous_ids = []
+
+        for i, text in enumerate(X_test):
+            predicted, probs = self.predict(text)
+
+            # Cek dua emosi tertinggi apakah memiliki nilai yang sama
+            sorted_probs = sorted(probs.items(), key=lambda item: item[1], reverse=True)
+            if len(sorted_probs) >= 2 and sorted_probs[0][1] == sorted_probs[1][1]:
+                ambiguous_data.append({
+                    "id_process": id_test[i],
+                    "text": text,
+                    "manual_emotion": y_test[i],
+                    "probabilities": probs
+                })
+                ambiguous_ids.append(id_test[i])
+
+            results.append({
+                "id_process": id_test[i],
+                "text": text,
+                "manual_emotion": y_test[i],
+                "predicted_emotion": predicted,
+                "probabilities": probs
+            })
+
+        return results, ambiguous_data, ambiguous_ids

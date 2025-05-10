@@ -1,6 +1,6 @@
 import os
 import joblib
-from app.processing.algorithm.naive_bayes import NaiveBayesClassifier
+from app.processing import train_model
 
 MODEL_PATH = "app/models/naive_bayes_model.pkl"
 
