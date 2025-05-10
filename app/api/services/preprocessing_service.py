@@ -59,13 +59,16 @@ def get_all_preprocessing_results(db: Session, page: int = 1, limit: int = 10):
             "automatic_emotion": item.automatic_emotion,
             "processed_at": item.processed_at,
             "data": {
-                "text": item.data.text if item.data else "-",
+                "id_data": item.data.id_data if item.data else None,
+                "text_data": item.data.text_data if item.data else "-",
+                "id_label": item.data.id_label if item.data else None,
                 "emotion": {
-                    "emotion_name": item.data.emotion_name if item.data else "-",
-                    "id_label": item.data.id_label if item.data else "-"
-                }
+                    "id_label": item.data.emotion.id_label,
+                    "emotion_name": item.data.emotion.emotion_name,
+                } if item.data and item.data.emotion else None
             }
         })
+
 
     return {
         "total_data": total_data,
