@@ -1,14 +1,25 @@
+import pandas as pd
 from sqlalchemy.orm import Session
 from datetime import datetime, timezone
 from app.database.models.model_database import DataCollection, ProcessResult
 from app.database.schemas import PreprocessingCreate, PreprocessingUpdate
-from app.preprocessing import dataset_cleaning  # fungsi preprocessing
+from app.preprocessing.dataset_cleaning import DatasetPreprocessor  # fungsi preprocessing
 
 def create_preprocessing_result(db: Session, request: PreprocessingCreate):
     data = db.query(DataCollection).filter(DataCollection.id_data == request.id_data).first()
     if not data:
         return None
-    cleaned_text = dataset_cleaning(data.text_data)  # panggil fungsi preprocessing
+
+    # Bungkus string ke dalam DataFrame agar cocok dengan input process()
+    df_input = pd.DataFrame([{"text": data.text_data}])
+
+    # Proses preprocessing
+    preprocessor = DatasetPreprocessor()
+    df_processed = preprocessor.process(df_input)
+
+    # Ambil hasil preprocessed pertama (karena hanya 1 baris)
+    cleaned_text = df_processed["preprocessed_result"].iloc[0]
+
     new_result = ProcessResult(
         id_data=request.id_data,
         text_preprocessing=cleaned_text,
