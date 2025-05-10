@@ -1,65 +1,61 @@
 from typing import List, Union
-from app.database.models.model_database import ValidationResult, ValidationData, ConfusionMatrix, ClassMetrics
+from app.database.models.model_database import ValidationResult, ValidationData
 from app.database.config import SessionLocal
-from app.database.schemas import ValidationResultCreate
+from app.database.schemas import (
+    ValidationResultCreate,
+    ValidationDataSchema,
+    ValidationResponse
+)
 from sqlalchemy.orm import Session
 from app.utils.model_loader import load_model
 from app.processing.alternatif_method.bert_lexicon import process_with_bert_lexicon
 
 
-def classify_text(text: str) -> str:
-    """
-    Mengklasifikasikan satu teks menggunakan model Naive Bayes.
-    Jika hasil ambigu (dua emosi dengan skor sama), maka diproses dengan BERT+Lexicon.
-    """
+def classify_text(text: str) -> ValidationResponse:
     model = load_model()
     if model is None:
-        return "Model belum tersedia"
+        raise ValueError("Model belum tersedia")
 
     result = model.predict([text])[0]
-
     if isinstance(result, list):  # Ambiguitas
         result = process_with_bert_lexicon([text])[0]
 
-    return result
+    return ValidationResponse(text=text, predicted_emotion=result)
 
 
-def classify_texts(texts: List[str]) -> Union[str, List[str]]:
-    """
-    Mengklasifikasikan banyak teks.
-    Menyelesaikan ambiguitas jika ditemukan.
-    """
+def classify_texts(texts: List[str]) -> List[ValidationResponse]:
     model = load_model()
     if model is None:
-        return "Model belum tersedia"
+        raise ValueError("Model belum tersedia")
 
     results = model.predict(texts)
     final_results = []
 
     for i, res in enumerate(results):
-        if isinstance(res, list):  # Ambigu
+        if isinstance(res, list):
             resolved = process_with_bert_lexicon([texts[i]])[0]
-            final_results.append(resolved)
+            final_results.append(ValidationResponse(text=texts[i], predicted_emotion=resolved))
         else:
-            final_results.append(res)
+            final_results.append(ValidationResponse(text=texts[i], predicted_emotion=res))
 
     return final_results
 
-def save_validation_data(data: list[dict]):
+
+def save_validation_correctness(data: List[ValidationDataSchema]):
     db: Session = SessionLocal()
     for item in data:
         validation = ValidationData(
-            id_process=item["id_process"],
-            is_correct=item["is_correct"]
+            id_process=item.id_process,
+            is_correct=item.is_correct
         )
         db.add(validation)
     db.commit()
     db.close()
 
-def save_validation_result(payload: ValidationResultCreate):
+
+def save_validation_result(payload: ValidationResultCreate) -> ValidationResult:
     db: Session = SessionLocal()
 
-    # Simpan hasil utama
     result = ValidationResult(
         model_id=payload.model_id,
         accuracy=payload.accuracy,
@@ -70,7 +66,6 @@ def save_validation_result(payload: ValidationResultCreate):
     db.commit()
     db.refresh(result)
 
-    # Simpan data validasi
     for val in payload.validation_data:
         data = ValidationData(
             id_validation=result.id_validation,

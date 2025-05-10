@@ -1,31 +1,35 @@
-from fastapi import APIRouter, HTTPException, Body
-from typing import List, Dict
-from app.api.services.validation_service import classify_text, classify_texts
-
-router = APIRouter(prefix="/validation", tags=["Validation"])
-
-
-@router.post("/classify")
-def classify_single_text_controller(data: Dict[str, str] = Body(...)):
-    text = data.get("text")
-    if not text:
-        raise HTTPException(status_code=400, detail="Teks tidak boleh kosong.")
-
-    result = classify_text(text)
-    if result == "Model belum tersedia":
-        raise HTTPException(status_code=400, detail=result)
-
-    return {"predicted_emotion": result}
+from typing import List
+from fastapi import HTTPException
+from app.database.schemas import (
+    ValidationResultCreate,
+    ValidationDataSchema,
+    ValidationResponse
+)
+from app.api.services import validation_service
 
 
-@router.post("/classify-dataset")
-def classify_dataset_controller(data: Dict[str, List[str]] = Body(...)):
-    texts = data.get("text")
-    if not texts or not isinstance(texts, list):
-        raise HTTPException(status_code=400, detail="Input harus berupa list teks.")
+def handle_single_classification(text: str) -> ValidationResponse:
+    try:
+        return validation_service.classify_text(text)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
 
-    results = classify_texts(texts)
-    if results == "Model belum tersedia":
-        raise HTTPException(status_code=400, detail=results)
 
-    return {"results": results}
+def handle_bulk_classification(texts: List[str]) -> List[ValidationResponse]:
+    try:
+        return validation_service.classify_texts(texts)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+
+def handle_save_correctness(data: List[ValidationDataSchema]):
+    validation_service.save_validation_correctness(data)
+    return {"message": "Data validasi berhasil disimpan."}
+
+
+def handle_save_validation_result(payload: ValidationResultCreate):
+    result = validation_service.save_validation_result(payload)
+    return {
+        "message": "Hasil validasi berhasil disimpan.",
+        "id_validation": result.id_validation
+    }
