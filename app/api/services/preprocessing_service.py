@@ -8,12 +8,13 @@ def create_preprocessing_result(db: Session, request: PreprocessingCreate):
     data = db.query(DataCollection).filter(DataCollection.id_data == request.id_data).first()
     if not data:
         return None
-    cleaned_text = dataset_cleaning(data.text)  # panggil fungsi preprocessing
+    cleaned_text = dataset_cleaning(data.text_data)  # panggil fungsi preprocessing
     new_result = ProcessResult(
         id_data=request.id_data,
         text_preprocessing=cleaned_text,
-        automatic_emotion=request.automatic_emotion,
-        processed_at=datetime.now(timezone.utc)
+        is_processed=None,
+        automatic_emotion=None,
+        processed_at=None
     )
     db.add(new_result)
     db.commit()
