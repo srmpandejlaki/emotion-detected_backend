@@ -7,8 +7,10 @@ from datetime import datetime
 class EmotionLabelBase(BaseModel):
     emotion_name: str
 
+
 class EmotionLabelCreate(EmotionLabelBase):
     pass
+
 
 class EmotionLabelResponse(EmotionLabelBase):
     id_label: int
@@ -25,6 +27,7 @@ class DataCollectionCreate(BaseModel):
     class Config:
         orm_mode = True
 
+
 class DataCollection(BaseModel):
     id_data: int
     text_data: str
@@ -33,6 +36,7 @@ class DataCollection(BaseModel):
 
     class Config:
         orm_mode = True
+
 
 class PaginatedDataCollectionResponse(BaseModel):
     total_data: int
@@ -45,8 +49,10 @@ class PaginatedDataCollectionResponse(BaseModel):
 class PreprocessingCreate(BaseModel):
     id_data: int
 
+
 class PreprocessingManyRequest(BaseModel):
     id_data_list: List[int]
+
 
 class PreprocessingResponse(BaseModel):
     id_process: int
@@ -60,15 +66,27 @@ class PreprocessingResponse(BaseModel):
     class Config:
         orm_mode = True
 
+
 class PreprocessingUpdate(BaseModel):
     text_preprocessing: Optional[str] = None
     automatic_emotion: Optional[str] = None
+
 
 class PaginatedPreprocessingResponse(BaseModel):
     total_data: int
     current_page: int
     total_pages: int
     preprocessing: List[PreprocessingResponse]
+
+
+class ProcessResultBase(BaseModel):
+    id_data: int
+    text_preprocessing: str
+    isProcessed_data: Optional[bool] = False
+
+
+class ProcessResultCreate(ProcessResultBase):
+    pass
 
 
 class ProcessResultSchema(BaseModel):
@@ -110,12 +128,14 @@ class ValidationResultBase(BaseModel):
     id_process: int
     is_correct: bool
 
+
 class ValidationResultCreate(ValidationResultBase):
     model_id: int
     accuracy: float
     matrix_id: int
     metrics_id: int
     validation_data: List[ValidationDataSchema]
+
 
 class ValidationResultResponse(ValidationResultBase):
     id_validation: int
@@ -130,8 +150,10 @@ class ValidationResultResponse(ValidationResultBase):
 class ValidationSingleInput(BaseModel):
     text: str
 
+
 class ValidationBatchInput(BaseModel):
     texts: List[str]
+
 
 class ValidationResponse(BaseModel):
     text: str
@@ -145,8 +167,10 @@ class ConfusionMatrixBase(BaseModel):
     predicted_label_id: int
     total: int
 
+
 class ConfusionMatrixCreate(ConfusionMatrixBase):
     pass
+
 
 class ConfusionMatrixResponse(ConfusionMatrixBase):
     class Config:
@@ -160,8 +184,10 @@ class ClassMetricsBase(BaseModel):
     precision: Optional[float] = None
     recall: Optional[float] = None
 
+
 class ClassMetricsCreate(ClassMetricsBase):
     pass
+
 
 class ClassMetricsResponse(ClassMetricsBase):
     class Config:

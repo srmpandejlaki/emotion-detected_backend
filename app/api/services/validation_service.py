@@ -10,6 +10,8 @@ from sqlalchemy.orm import Session
 from app.utils.model_loader import load_model
 from app.processing.alternatif_method.bert_lexicon import process_with_bert_lexicon
 
+from app.preprocessing.text_cleaning import TextPreprocessor
+
 
 def classify_text(text: str) -> ValidationResponse:
     model = load_model()
@@ -19,15 +21,19 @@ def classify_text(text: str) -> ValidationResponse:
         raise ValueError("Model belum tersedia")
 
     try:
-        result = model.predict([text])[0]
+        text_preprocessor = TextPreprocessor()
+        text = text_preprocessor.preprocess(text)
+        result = model.predict(text)[0]
     except Exception as e:
         print("Prediction error:", str(e))  # debug
-        raise ValueError("Gagal melakukan prediksi. Format model tidak sesuai.")
+        raise ValueError(
+            "Gagal melakukan prediksi. Format model tidak sesuai.")
 
     if isinstance(result, list):  # Ambiguitas
         result = process_with_bert_lexicon([text])[0]
 
     return ValidationResponse(text=text, predicted_emotion=result)
+
 
 def classify_texts(texts: List[str]) -> List[ValidationResponse]:
     model = load_model()
@@ -40,9 +46,11 @@ def classify_texts(texts: List[str]) -> List[ValidationResponse]:
     for i, res in enumerate(results):
         if isinstance(res, list):
             resolved = process_with_bert_lexicon([texts[i]])[0]
-            final_results.append(ValidationResponse(text=texts[i], predicted_emotion=resolved))
+            final_results.append(ValidationResponse(
+                text=texts[i], predicted_emotion=resolved))
         else:
-            final_results.append(ValidationResponse(text=texts[i], predicted_emotion=res))
+            final_results.append(ValidationResponse(
+                text=texts[i], predicted_emotion=res))
 
     return final_results
 
