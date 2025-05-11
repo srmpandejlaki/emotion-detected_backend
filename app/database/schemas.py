@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional, List, Dict
 from datetime import datetime
 
 
@@ -71,77 +71,30 @@ class PaginatedPreprocessingResponse(BaseModel):
     preprocessing: List[PreprocessingResponse]
 
 
-class ProcessResultBase(BaseModel):
-    id_data: int
-    text_preprocessing: str
-    isProcessed_data: Optional[bool] = False
-
-class ProcessResultCreate(ProcessResultBase):
-    pass
-
 class ProcessResultSchema(BaseModel):
     id_process: int
-    id_data: int
     text_preprocessing: str
-    automatic_emotion: Optional[str]
+    id_data: int
+    emotion_name: Optional[str] = None
+    automatic_emotion: Optional[str] = None
+    processed_at: datetime
 
     class Config:
         orm_mode = True
 
-class ProcessResultResponse(ProcessResultBase):
-    id_process: int
-    data: Optional[DataCollectionCreate]
+class RatioOptionSchema(BaseModel):
+    ratio_data: str  # e.g., "70:30"
+
+class TrainResultSchema(BaseModel):
+    model_id: int
+    accuracy: float
+    total_data: int
+    ambiguous_count: int
+    ratio_used: str
 
     class Config:
         orm_mode = True
-
-
-# ===== PROCESSING =====
-class ProcessInput(BaseModel):
-    texts: List[str]
-    labels: List[str]
-    id_process_list: List[int]
-
-class SaveRequest(BaseModel):
-    id_process: int
-    automatic_emotion: Optional[str]
-
-class SaveAllRequest(BaseModel):
-    data: List[SaveRequest]
-
-
-# ===== MODEL =====
-class ModelBase(BaseModel):
-    ratio_data: str
-    accuracy: Optional[float] = None
-    matrix_id: Optional[int] = None
-    metrics_id: Optional[int] = None
-
-class ModelCreate(ModelBase):
-    pass
-
-class ModelResponse(ModelBase):
-    id_model: int
-
-    class Config:
-        orm_mode = True
-
-
-# ===== MODEL DATA =====
-class ModelDataBase(BaseModel):
-    id_model: int
-    id_process: int
-
-class ModelDataCreate(ModelDataBase):
-    pass
-
-class ModelDataResponse(ModelDataBase):
-    model: Optional[ModelResponse]
-    process_result: Optional[ProcessResultResponse]
-
-    class Config:
-        orm_mode = True
-
+        
 
 # ===== VALIDATION DATA =====
 class ValidationDataSchema(BaseModel):

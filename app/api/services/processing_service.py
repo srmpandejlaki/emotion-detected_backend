@@ -1,180 +1,75 @@
-import os
-import joblib
 from sqlalchemy.orm import Session
-from datetime import datetime, timezone
-from typing import List, Dict, Tuple
-from collections import Counter
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import confusion_matrix, precision_score, recall_score, accuracy_score
+from app.processing.train_model import load_data_from_db, train_and_save_model, evaluate_model
+from app.database.models.model_database import Model, ModelData, ProcessResult, ConfusionMatrix, ClassMetrics
+from app.database.schemas import TrainResultSchema
+from datetime import datetime
 
-from app.database.models.model_database import ProcessResult
-from app.processing.algorithm.naive_bayes import NaiveBayesClassifier
-from app.processing.alternatif_method.bert_lexicon import process_with_bert_lexicon
-from app.utils.model_loader import load_model, save_model
+def process_training(db: Session, ratio: str) -> TrainResultSchema:
+    # 1. Load data dari DB
+    texts, labels, ids = load_data_from_db(db)
 
+    # 2. Update rasio jika frontend memberi input selain default
+    test_size = 0.2  # default
+    if ratio == "70:30":
+        test_size = 0.3
+    elif ratio == "60:40":
+        test_size = 0.4
 
-MODEL_PATH = os.path.join("app", "model", "naive_bayes_model.pkl")
+    # 3. Training model
+    model, X_test, y_test, id_test = train_and_save_model(texts, labels, ids, test_size=test_size)
 
+    # 4. Evaluasi model
+    predictions, ambiguous, metrics = evaluate_model(model, X_test, y_test, id_test)
 
-# Get Process Data from DB
-def get_all_processing_data(db: Session, page: int = 1, limit: int = 10) -> List[Dict]:
-    offset = (page - 1) * limit
-    results = db.query(ProcessResult).offset(offset).limit(limit).all()
-    return results
-
-
-def get_preprocessed_data(db: Session, page: int = 1, limit: int = 10) -> Tuple[List[str], List[str], List[int]]:
-    offset = (page - 1) * limit
-    results = db.query(ProcessResult).filter(ProcessResult.is_processed == False).offset(offset).limit(limit).all()
-
-    texts = [r.text_preprocessing for r in results]
-    labels = [r.data.id_label for r in results]
-    ids = [r.id_process for r in results]
-
-    return texts, labels, ids
-
-
-
-# Dataset Splitting
-def _split_dataset(
-    texts: List[str],
-    labels: List[str],
-    ids: List[int],
-    test_size: float
-) -> Tuple[List[str], List[str], List[int], List[str], List[str], List[int]]:
-    return train_test_split(
-        texts, labels, ids, test_size=test_size, random_state=42
+    # 5. Simpan ke tabel Model
+    new_model = Model(
+        ratio_data=ratio,
+        accuracy=metrics["accuracy"],
     )
+    db.add(new_model)
+    db.commit()
+    db.refresh(new_model)
 
+    # 6. Simpan ke tabel ModelData
+    for pid in ids:
+        db.add(ModelData(id_model=new_model.id_model, id_process=pid))
+    db.commit()
 
-def split_dataset(db: Session, test_size: float) -> Dict[str, int]:
-    texts, labels, ids = get_preprocessed_data(db)
-    if not texts:
-        return {"message": "Tidak ada data tersedia untuk split."}
+    # 7. Simpan confusion matrix
+    for item in metrics["confusion_matrix"]:
+        db.add(ConfusionMatrix(
+            matrix_id=new_model.id_model,  # misalnya gunakan ID model sebagai matrix_id
+            label_id=item["label_id"],
+            predicted_label_id=item["predicted_id"],
+            total=item["total"]
+        ))
+    db.commit()
 
-    X_train, X_test, y_train, y_test, id_train, id_test = _split_dataset(texts, labels, ids, test_size)
+    # 8. Simpan class metrics (precision/recall)
+    for item in metrics["class_metrics"]:
+        db.add(ClassMetrics(
+            metrics_id=new_model.id_model,
+            label_id=item["label_id"],
+            precision=item["precision"],
+            recall=item["recall"]
+        ))
+    db.commit()
 
-    return {
-        "train_count": len(X_train),
-        "test_count": len(X_test),
-        "total": len(texts)
-    }
-
-
-# Model Evaluation
-def evaluate_model(db: Session, test_size: float) -> Dict:
-    texts, labels, ids = get_preprocessed_data(db)
-    if not texts:
-        return {"message": "Tidak ada data yang tersedia untuk evaluasi."}
-
-    X_train, X_test, y_train, y_test, id_train, id_test = _split_dataset(texts, labels, ids, test_size)
-
-    # Latih model
-    model = NaiveBayesClassifier()
-    model.train(X_train, y_train)
-    save_model(model)
-
-    # Prediksi
-    predicted = model.predict(X_test)
-
-    all_labels = sorted(set(labels))
-    cm = confusion_matrix(y_test, predicted, labels=all_labels)
-    precision = precision_score(y_test, predicted, labels=all_labels, average=None, zero_division=0)
-    recall = recall_score(y_test, predicted, labels=all_labels, average=None, zero_division=0)
-    accuracy = accuracy_score(y_test, predicted)
-
-    return {
-        "confusion_matrix": cm.tolist(),
-        "accuracy": round(accuracy, 4),
-        "precision": {label: round(p, 4) for label, p in zip(all_labels, precision)},
-        "recall": {label: round(r, 4) for label, r in zip(all_labels, recall)},
-        "labels": all_labels
-    }
-
-
-# Naive Bayes Prediction and Save Results
-def process_and_save_predictions_naive_bayes(
-    db: Session,
-    texts: List[str],
-    labels: List[str],
-    id_process_list: List[int]
-) -> List[Dict]:
-    model = load_model()
-    if model is None:
-        model = NaiveBayesClassifier()
-        model.train(texts, labels)
-        save_model(model)
-
-    predicted_emotions = model.predict(texts)
-
-    # Hitung probabilitas jika ingin memeriksa emosi ganda (opsional tergantung implementasi)
-    data_dua_emosi = model.get_ambiguous_predictions(texts, labels, id_process_list)  # jika ada
-
-    predictions = []
-    for idx, id_process in enumerate(id_process_list):
-        predictions.append({
-            "id_process": id_process,
-            "predicted_emotion": predicted_emotions[idx]
-        })
-
-    # Menggunakan BERT dan Lexicon untuk menyelesaikan ambiguitas
-    if data_dua_emosi:
-        hasil_gabungan = process_with_bert_lexicon(db, data_dua_emosi)
-        gabungan_map = {
-            item["id_process"]: item["predicted_emotion"]
-            for item in hasil_gabungan
-        }
-        for pred in predictions:
-            if pred["id_process"] in gabungan_map:
-                pred["predicted_emotion"] = gabungan_map[pred["id_process"]]
-
-    # Simpan hasil prediksi
-    save_prediction_results(db, predictions)
-    return predictions
-
-
-# Save Prediction Results to DB
-def save_prediction_results(db: Session, predictions: List[Dict]) -> None:
-    now = datetime.now(timezone.utc)
+    # 9. Update automatic_emotion ke tabel ProcessResult
     for pred in predictions:
-        result = db.query(ProcessResult).filter(
-            ProcessResult.id_process == pred["id_process"]
-        ).first()
-        if result:
-            if pred.get("predicted_emotion"):
-                result.automatic_emotion = pred["predicted_emotion"]
-            result.is_processed = True
-            result.processed_at = now
+        db.query(ProcessResult).filter(ProcessResult.id_process == pred["id"]).update({
+            "automatic_emotion": pred["predicted_emotion"],
+            "is_processed": True
+        })
     db.commit()
 
+    # 10. Untuk data ambigu → kirim ke metode BERT & leksikon (panggil modul lain)
+    # ... (nanti kamu tinggal buat `run_bert_lexicon_prediction(ambiguous, db)`)
 
-# Update Manual Emotion
-def update_manual_emotion(db: Session, id_process: int, new_label: str) -> Dict:
-    result = db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
-    if not result:
-        return {"success": False, "message": "Data tidak ditemukan"}
-    result.data.id_label = new_label
-    db.commit()
-    return {"success": True, "message": "Label manual diperbarui"}
-
-
-# Update Predicted Emotion
-def update_predicted_emotion(db: Session, id_process: int, new_label: str) -> Dict:
-    result = db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
-    if not result:
-        return {"success": False, "message": "Data tidak ditemukan"}
-    result.automatic_emotion = new_label
-    db.commit()
-    return {"success": True, "message": "Label prediksi diperbarui"}
-
-
-# 🔁 Train Ulang Model Secara Manual
-def retrain_model(db: Session) -> Dict:
-    texts, labels, _ = get_preprocessed_data(db)
-    if not texts:
-        return {"success": False, "message": "Tidak ada data untuk pelatihan ulang."}
-
-    model = NaiveBayesClassifier()
-    model.train(texts, labels)
-    save_model(model)
-    return {"success": True, "message": "Model berhasil dilatih ulang dan disimpan."}
+    return TrainResultSchema(
+        model_id=new_model.id_model,
+        accuracy=metrics["accuracy"],
+        total_data=len(texts),
+        ambiguous_count=len(ambiguous),
+        ratio_used=ratio
+    )
