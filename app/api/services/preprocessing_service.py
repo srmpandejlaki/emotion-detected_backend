@@ -4,6 +4,9 @@ from datetime import datetime
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 
+# httpexception
+from fastapi import HTTPException
+
 from app.database.config import SessionLocal
 from app.database.models.model_database import DataCollection, ProcessResult
 from app.database.schemas import PreprocessingCreate, PreprocessingUpdate
@@ -18,7 +21,8 @@ def run_preprocessing_for_id(id_data: int):
     """
     db = SessionLocal()
     try:
-        data_entry = db.query(DataCollection).filter(DataCollection.id_data == id_data).first()
+        data_entry = db.query(DataCollection).filter(
+            DataCollection.id_data == id_data).first()
 
         if not data_entry:
             raise ValueError(f"Data dengan id_data {id_data} tidak ditemukan.")
@@ -29,7 +33,8 @@ def run_preprocessing_for_id(id_data: int):
         df_processed = preprocessor.process(df_input)
         preprocessed_text = df_processed["preprocessed_result"].iloc[0]
 
-        existing = db.query(ProcessResult).filter(ProcessResult.id_data == id_data).first()
+        existing = db.query(ProcessResult).filter(
+            ProcessResult.id_data == id_data).first()
         if existing:
             existing.text_preprocessing = preprocessed_text
             existing.processed_at = datetime.now()
@@ -60,7 +65,8 @@ def create_preprocessing_result(db: Session, request: PreprocessingCreate):
     """
     Buat hasil preprocessing berdasarkan permintaan dengan id_data.
     """
-    data = db.query(DataCollection).filter(DataCollection.id_data == request.id_data).first()
+    data = db.query(DataCollection).filter(
+        DataCollection.id_data == request.id_data).first()
     if not data:
         return None
 
@@ -135,29 +141,75 @@ def get_preprocessing_result_by_id(db: Session, id_process: int):
 
 def update_preprocessing_result(db: Session, id_process: int, update_data: PreprocessingUpdate):
     """
-    Update hasil preprocessing berdasarkan id_process.
+    Update hasil preprocessing berdasarkan id_process dan update juga data aslinya di data_collection.
     """
-    result = db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
-    if not result:
-        return None
-    if update_data.text_preprocessing is not None:
-        result.text_preprocessing = update_data.text_preprocessing
-    if update_data.automatic_emotion is not None:
-        result.automatic_emotion = update_data.automatic_emotion
+    # Cari hasil preprocessing
+    process_result = db.query(ProcessResult).filter(
+        ProcessResult.id_process == id_process).first()
 
-    result.processed_at = datetime.now()
-    db.commit()
-    db.refresh(result)
-    return result
+    if not process_result:
+        return None
+
+    # Cari data asli yang terkait
+    data_collection = db.query(DataCollection).filter(
+        DataCollection.id_data == process_result.id_data).first()
+
+    if not data_collection:
+        return None
+
+    try:
+        # Update data preprocessing
+        if update_data.text_preprocessing is not None:
+            process_result.text_preprocessing = update_data.text_preprocessing
+
+        if update_data.automatic_emotion is not None:
+            process_result.automatic_emotion = update_data.automatic_emotion
+            # Update juga label di data_collection jika diperlukan
+            # asumsi automatic_emotion adalah id_label
+            data_collection.id_label = update_data.automatic_emotion
+
+        process_result.processed_at = datetime.now()
+        db.commit()
+        db.refresh(process_result)
+        return process_result
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=500,
+            detail=f"Gagal mengupdate data: {str(e)}"
+        )
 
 
 def delete_preprocessing_result(db: Session, id_process: int):
     """
-    Hapus hasil preprocessing berdasarkan id_process.
+    Hapus hasil preprocessing berdasarkan id_process beserta data aslinya di data_collection.
     """
-    result = db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
-    if not result:
+    # Cari hasil preprocessing
+    process_result = db.query(ProcessResult).filter(
+        ProcessResult.id_process == id_process).first()
+
+    if not process_result:
         return None
-    db.delete(result)
-    db.commit()
-    return result
+
+    # Cari data asli yang terkait
+    data_collection = db.query(DataCollection).filter(
+        DataCollection.id_data == process_result.id_data).first()
+
+    if not data_collection:
+        return None
+
+    try:
+        # Hapus data preprocessing terlebih dahulu
+        db.delete(process_result)
+
+        # Hapus data asli
+        db.delete(data_collection)
+
+        db.commit()
+        return {"message": "Data berhasil dihapus dari kedua tabel"}
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(
+            status_code=500,
+            detail=f"Gagal menghapus data: {str(e)}"
+        )
