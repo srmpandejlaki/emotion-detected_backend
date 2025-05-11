@@ -3,7 +3,8 @@ from fastapi import HTTPException
 from app.database.schemas import PreprocessingCreate, PreprocessingUpdate
 from app.api.services import preprocessing_service
 from app.database.models import DataCollection, ProcessResult
-from app.preprocessing.dataset_cleaning import DatasetPreprocessor  
+from app.preprocessing.dataset_cleaning import DatasetPreprocessor
+
 
 def run_preprocessing_by_id_controller(id_data: int, db: Session):
     try:
@@ -11,16 +12,19 @@ def run_preprocessing_by_id_controller(id_data: int, db: Session):
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
+
 def run_preprocessing_many_controller(db: Session, id_data_list: list[int]):
     if not id_data_list:
         raise HTTPException(status_code=400, detail="List ID kosong.")
 
     # Ambil semua id_data yang sudah pernah dipreprocessing
-    existing_ids = db.query(ProcessResult.id_data).filter(ProcessResult.id_data.in_(id_data_list)).all()
+    existing_ids = db.query(ProcessResult.id_data).filter(
+        ProcessResult.id_data.in_(id_data_list)).all()
     existing_ids_set = {id_tuple[0] for id_tuple in existing_ids}
 
     # Filter hanya data yang belum pernah dipreprocessing
-    new_ids = [id_data for id_data in id_data_list if id_data not in existing_ids_set]
+    new_ids = [
+        id_data for id_data in id_data_list if id_data not in existing_ids_set]
 
     if not new_ids:
         return {"message": "Semua data sudah dipreprocessing.", "processed_count": 0}
@@ -31,11 +35,13 @@ def run_preprocessing_many_controller(db: Session, id_data_list: list[int]):
 
     processed_count = 0
     for id_data in new_ids:
-        data_obj = db.query(DataCollection).filter(DataCollection.id_data == id_data).first()
+        data_obj = db.query(DataCollection).filter(
+            DataCollection.id_data == id_data).first()
         if not data_obj:
             continue
 
-        hasil = text_cleaner.preprocess(data_obj.text)  # Pakai preprocess dari TextPreprocessor
+        # Pakai preprocess dari TextPreprocessor
+        hasil = text_cleaner.preprocess(data_obj.text_data)
         new_result = ProcessResult(
             id_data=id_data,
             text_preprocessing=hasil,
@@ -53,6 +59,7 @@ def run_preprocessing_many_controller(db: Session, id_data_list: list[int]):
         "skipped_ids": list(existing_ids_set),
     }
 
+
 def create_preprocessing_controller(db: Session, request: PreprocessingCreate):
     result = preprocessing_service.create_preprocessing_result(db, request)
     if not result:
@@ -61,25 +68,46 @@ def create_preprocessing_controller(db: Session, request: PreprocessingCreate):
 
 
 def get_all_preprocessing_controller(db: Session, page: int = 1, limit: int = 10):
+    # Step 1: Ambil semua ID data
+    all_data_ids = [row.id_data for row in db.query(
+        DataCollection.id_data).all()]
+
+    # Step 2: Ambil ID yang sudah dipreprocessing
+    processed_ids = [row.id_data for row in db.query(
+        ProcessResult.id_data).distinct().all()]
+
+    # Step 3: Cari ID yang belum diproses
+    unprocessed_ids = [id_ for id_ in all_data_ids if id_ not in processed_ids]
+
+    # Step 4: Jalankan auto preprocessing jika ada yang belum diproses
+    if unprocessed_ids:
+        run_preprocessing_many_controller(db, unprocessed_ids)
+
+    # Step 5: Ambil hasil dari service seperti biasa
     return preprocessing_service.get_all_preprocessing_results(db, page, limit)
 
 
 def get_preprocessing_by_id_controller(db: Session, id_process: int):
-    result = preprocessing_service.get_preprocessing_result_by_id(db, id_process)
+    result = preprocessing_service.get_preprocessing_result_by_id(
+        db, id_process)
     if not result:
-        raise HTTPException(status_code=404, detail="Preprocessing tidak ditemukan.")
+        raise HTTPException(
+            status_code=404, detail="Preprocessing tidak ditemukan.")
     return result
 
 
 def update_preprocessing_controller(db: Session, id_process: int, update_data: PreprocessingUpdate):
-    result = preprocessing_service.update_preprocessing_result(db, id_process, update_data)
+    result = preprocessing_service.update_preprocessing_result(
+        db, id_process, update_data)
     if not result:
-        raise HTTPException(status_code=404, detail="Preprocessing tidak ditemukan.")
+        raise HTTPException(
+            status_code=404, detail="Preprocessing tidak ditemukan.")
     return result
 
 
 def delete_preprocessing_controller(db: Session, id_process: int):
     result = preprocessing_service.delete_preprocessing_result(db, id_process)
     if not result:
-        raise HTTPException(status_code=404, detail="Preprocessing tidak ditemukan.")
+        raise HTTPException(
+            status_code=404, detail="Preprocessing tidak ditemukan.")
     return {"message": "Preprocessing berhasil dihapus."}
