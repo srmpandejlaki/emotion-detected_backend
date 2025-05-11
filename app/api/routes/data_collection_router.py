@@ -18,7 +18,9 @@ def get_all_emotion_labels(db: Session = Depends(get_db)):
 
 @router.delete("/label")
 def delete_all_emotion_labels(db: Session = Depends(get_db)):
-    return db.query(model_database.EmotionLabel).all()
+    db.query(model_database.EmotionLabel).delete()
+    db.commit()
+    return {"message": "Semua label berhasil dihapus"}
 
 @router.get("/list", response_model=schemas.PaginatedDataCollectionResponse)
 def get_all_data_collections(

@@ -4,8 +4,6 @@ from typing import List
 
 from app.api.services import data_collection_service
 from app.database import schemas
-
-
 def get_all_data_collections_controller(db: Session, page: int = 1, limit: int = 10):
     return data_collection_service.get_all_data_collections(db, page, limit)
 
