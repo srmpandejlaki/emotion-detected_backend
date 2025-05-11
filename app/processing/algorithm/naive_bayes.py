@@ -2,6 +2,11 @@ import math
 from collections import defaultdict
 from typing import List, Tuple, Dict, Any
 
+def simple_tokenizer(text):
+    return text.split()
+
+def nested_defaultdict():
+    return defaultdict(int)
 
 class NaiveBayesClassifier:
     def __init__(self):
@@ -10,7 +15,7 @@ class NaiveBayesClassifier:
         self.vocab = set()
         self.classes = set()
         self.total_words_per_class = defaultdict(int)
-        self.word_counts_per_class = defaultdict(lambda: defaultdict(int))
+        self.word_counts_per_class = defaultdict(nested_defaultdict)  # ✅ BISA DIPICKLE
 
     def train(self, texts: List[str], labels: List[str]):
         class_counts = defaultdict(int)
@@ -26,13 +31,11 @@ class NaiveBayesClassifier:
 
         self.classes = set(class_counts.keys())
 
-        # Hitung probabilitas kelas
         self.class_probs = {
             label: math.log(count / total_texts)
             for label, count in class_counts.items()
         }
 
-        # Hitung probabilitas kata (Laplace smoothing)
         self.word_probs = {}
         vocab_size = len(self.vocab)
         for label in self.classes:
@@ -68,7 +71,6 @@ class NaiveBayesClassifier:
         for i, text in enumerate(X_test):
             predicted, probs = self.predict(text)
 
-            # Cek dua emosi tertinggi apakah memiliki nilai yang sama
             sorted_probs = sorted(probs.items(), key=lambda item: item[1], reverse=True)
             if len(sorted_probs) >= 2 and sorted_probs[0][1] == sorted_probs[1][1]:
                 ambiguous_data.append({

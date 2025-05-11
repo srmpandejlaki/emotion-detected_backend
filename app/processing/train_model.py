@@ -44,7 +44,7 @@ if __name__ == "__main__":
         df = pd.read_csv(dataset_path)
         texts = df["preprocessed_result"].tolist()
         labels = df["emotion"].tolist()
-        ids = df["id_process"].tolist()
+        ids = list(range(len(df)))  # Gunakan ID dummy jika tidak ada kolom id_process
         return texts, labels, ids
         
     start = time.time()

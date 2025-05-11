@@ -25,7 +25,6 @@ class DataCollectionCreate(BaseModel):
     class Config:
         orm_mode = True
 
-
 class DataCollection(BaseModel):
     id_data: int
     text_data: str
@@ -35,7 +34,6 @@ class DataCollection(BaseModel):
     class Config:
         orm_mode = True
 
-# ===== PAGINATION =====
 class PaginatedDataCollectionResponse(BaseModel):
     total_data: int
     current_page: int
