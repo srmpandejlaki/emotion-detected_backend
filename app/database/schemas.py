@@ -69,7 +69,7 @@ class PreprocessingResponse(BaseModel):
 
 class PreprocessingUpdate(BaseModel):
     text_preprocessing: Optional[str] = None
-    automatic_emotion: Optional[int] = None
+    automatic_emotion: Optional[str] = None
 
 
 class PaginatedPreprocessingResponse(BaseModel):
