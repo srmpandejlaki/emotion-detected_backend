@@ -1,27 +1,72 @@
-import pandas as pd
 import math
+import pandas as pd
+from datetime import datetime
 from sqlalchemy.orm import Session
-from datetime import datetime, timezone
+from sqlalchemy.exc import SQLAlchemyError
+
+from app.database.config import SessionLocal
 from app.database.models.model_database import DataCollection, ProcessResult
 from app.database.schemas import PreprocessingCreate, PreprocessingUpdate
-from app.preprocessing.dataset_cleaning import DatasetPreprocessor  # fungsi preprocessing
+from app.preprocessing.dataset_cleaning import DatasetPreprocessor
 
-from fastapi.encoders import jsonable_encoder
-import logging
+
+def run_preprocessing_for_id(id_data: int):
+    """
+    Jalankan preprocessing untuk 1 data berdasarkan ID.
+    Jika data sudah ada di tabel ProcessResult, maka diupdate.
+    Jika belum ada, akan ditambahkan.
+    """
+    db = SessionLocal()
+    try:
+        data_entry = db.query(DataCollection).filter(DataCollection.id_data == id_data).first()
+
+        if not data_entry:
+            raise ValueError(f"Data dengan id_data {id_data} tidak ditemukan.")
+
+        # Persiapkan DataFrame untuk preprocessing
+        df_input = pd.DataFrame([{"text": data_entry.text_data}])
+        preprocessor = DatasetPreprocessor()
+        df_processed = preprocessor.process(df_input)
+        preprocessed_text = df_processed["preprocessed_result"].iloc[0]
+
+        existing = db.query(ProcessResult).filter(ProcessResult.id_data == id_data).first()
+        if existing:
+            existing.text_preprocessing = preprocessed_text
+            existing.processed_at = datetime.now()
+        else:
+            new_preprocessing = ProcessResult(
+                id_data=id_data,
+                text_preprocessing=preprocessed_text,
+                is_processed=None,
+                automatic_emotion=None,
+                processed_at=datetime.now()
+            )
+            db.add(new_preprocessing)
+
+        db.commit()
+        return {"id_data": id_data, "text_preprocessing": preprocessed_text}
+
+    except SQLAlchemyError as e:
+        db.rollback()
+        raise Exception(f"Database error: {str(e)}")
+    except Exception as e:
+        db.rollback()
+        raise e
+    finally:
+        db.close()
+
 
 def create_preprocessing_result(db: Session, request: PreprocessingCreate):
+    """
+    Buat hasil preprocessing berdasarkan permintaan dengan id_data.
+    """
     data = db.query(DataCollection).filter(DataCollection.id_data == request.id_data).first()
     if not data:
         return None
 
-    # Bungkus string ke dalam DataFrame agar cocok dengan input process()
     df_input = pd.DataFrame([{"text": data.text_data}])
-
-    # Proses preprocessing
     preprocessor = DatasetPreprocessor()
     df_processed = preprocessor.process(df_input)
-
-    # Ambil hasil preprocessed pertama (karena hanya 1 baris)
     cleaned_text = df_processed["preprocessed_result"].iloc[0]
 
     new_result = ProcessResult(
@@ -29,14 +74,18 @@ def create_preprocessing_result(db: Session, request: PreprocessingCreate):
         text_preprocessing=cleaned_text,
         is_processed=None,
         automatic_emotion=None,
-        processed_at=None
+        processed_at=datetime.now()
     )
     db.add(new_result)
     db.commit()
     db.refresh(new_result)
     return new_result
 
+
 def get_all_preprocessing_results(db: Session, page: int = 1, limit: int = 10):
+    """
+    Ambil semua hasil preprocessing dengan pagination.
+    """
     total_data = db.query(ProcessResult).count()
     total_pages = math.ceil(total_data / limit) if limit > 0 else 1
     offset = (page - 1) * limit
@@ -69,7 +118,6 @@ def get_all_preprocessing_results(db: Session, page: int = 1, limit: int = 10):
             }
         })
 
-
     return {
         "total_data": total_data,
         "current_page": page,
@@ -79,9 +127,16 @@ def get_all_preprocessing_results(db: Session, page: int = 1, limit: int = 10):
 
 
 def get_preprocessing_result_by_id(db: Session, id_process: int):
+    """
+    Ambil 1 data hasil preprocessing berdasarkan id_process.
+    """
     return db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
 
+
 def update_preprocessing_result(db: Session, id_process: int, update_data: PreprocessingUpdate):
+    """
+    Update hasil preprocessing berdasarkan id_process.
+    """
     result = db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
     if not result:
         return None
@@ -89,11 +144,17 @@ def update_preprocessing_result(db: Session, id_process: int, update_data: Prepr
         result.text_preprocessing = update_data.text_preprocessing
     if update_data.automatic_emotion is not None:
         result.automatic_emotion = update_data.automatic_emotion
+
+    result.processed_at = datetime.now()
     db.commit()
     db.refresh(result)
     return result
 
+
 def delete_preprocessing_result(db: Session, id_process: int):
+    """
+    Hapus hasil preprocessing berdasarkan id_process.
+    """
     result = db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
     if not result:
         return None

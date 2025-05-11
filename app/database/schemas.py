@@ -46,7 +46,9 @@ class PaginatedDataCollectionResponse(BaseModel):
 # ===== PREPROCESS RESULT =====
 class PreprocessingCreate(BaseModel):
     id_data: int
-    text_preprocessing: str
+
+class PreprocessingManyRequest(BaseModel):
+    id_data_list: List[int]
 
 class PreprocessingResponse(BaseModel):
     id_process: int
