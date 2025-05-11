@@ -4,6 +4,15 @@ from app.database.schemas import PreprocessingCreate, PreprocessingUpdate
 from app.api.services import preprocessing_service
 from app.database.models import DataCollection, ProcessResult
 from app.preprocessing.dataset_cleaning import DatasetPreprocessor
+# Tambahkan di bagian atas file controller
+_preprocessor = None  # Cache preprocessor instance
+
+
+def get_preprocessor():
+    global _preprocessor
+    if _preprocessor is None:
+        _preprocessor = DatasetPreprocessor()
+    return _preprocessor.text_preprocessor
 
 
 def run_preprocessing_by_id_controller(id_data: int, db: Session):
@@ -30,8 +39,7 @@ def run_preprocessing_many_controller(db: Session, id_data_list: list[int]):
         return {"message": "Semua data sudah dipreprocessing.", "processed_count": 0}
 
     # Inisialisasi DatasetPreprocessor dan akses text_preprocessor-nya
-    preprocessor = DatasetPreprocessor()
-    text_cleaner = preprocessor.text_preprocessor
+    text_cleaner = get_preprocessor()
 
     processed_count = 0
     for id_data in new_ids:
