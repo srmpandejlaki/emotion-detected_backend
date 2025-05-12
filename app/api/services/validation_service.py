@@ -1,15 +1,15 @@
 from typing import List, Union
-from app.database.models.model_database import ValidationResult, ValidationData
+from app.database.models import model_database
 from app.database.config import SessionLocal
 from app.database.schemas import (
     ValidationResultCreate,
     ValidationDataSchema,
-    ValidationResponse
+    ValidationResponse,
+    TestDataResponse
 )
 from sqlalchemy.orm import Session
 from app.utils.model_loader import load_model
 from app.processing.alternatif_method.bert_lexicon import process_with_bert_lexicon
-
 from app.preprocessing.text_cleaning import TextPreprocessor
 
 
@@ -33,6 +33,25 @@ def classify_text(text: str) -> ValidationResponse:
         result = process_with_bert_lexicon([text])[0]
 
     return ValidationResponse(text=text, predicted_emotion=result)
+
+def get_unprocessed_test_data(db: Session) -> List[TestDataResponse]:
+    unprocessed_data = db.query(model_database.ProcessResult).join(model_database.ProcessResult.data).filter(
+        model_database.ProcessResult.is_training_data == False
+    ).with_entities(
+        model_database.ProcessResult.text_preprocessing,
+        model_database.DataCollection.id_data,
+        model_database.DataCollection.id_label
+    ).all()
+
+    result = []
+    for text_preprocessing, id_data, id_label in unprocessed_data:
+        result.append({
+            "id_data": id_data,
+            "text_preprocessing": text_preprocessing,
+            "manual_label": id_label
+        })
+
+    return result
 
 
 def classify_texts(texts: List[str]) -> List[ValidationResponse]:
@@ -58,7 +77,7 @@ def classify_texts(texts: List[str]) -> List[ValidationResponse]:
 def save_validation_correctness(data: List[ValidationDataSchema]):
     db: Session = SessionLocal()
     for item in data:
-        validation = ValidationData(
+        validation = model_database.ValidationData(
             id_process=item.id_process,
             is_correct=item.is_correct
         )
@@ -67,10 +86,10 @@ def save_validation_correctness(data: List[ValidationDataSchema]):
     db.close()
 
 
-def save_validation_result(payload: ValidationResultCreate) -> ValidationResult:
+def save_validation_result(payload: ValidationResultCreate) -> model_database.ValidationResult:
     db: Session = SessionLocal()
 
-    result = ValidationResult(
+    result = model_database.ValidationResult(
         model_id=payload.model_id,
         accuracy=payload.accuracy,
         matrix_id=payload.matrix_id,
@@ -81,7 +100,7 @@ def save_validation_result(payload: ValidationResultCreate) -> ValidationResult:
     db.refresh(result)
 
     for val in payload.validation_data:
-        data = ValidationData(
+        data = model_database.ValidationData(
             id_validation=result.id_validation,
             id_process=val.id_process,
             is_correct=val.is_correct

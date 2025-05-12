@@ -39,6 +39,7 @@ class ProcessResult(Base):
     is_processed = Column(Boolean, default=False, nullable=False)
     automatic_emotion = Column(String(50), nullable=True)
     processed_at = Column(DateTime, default=datetime.now(timezone.utc))
+    is_training_data = Column(Boolean, default=False, nullable=True)
 
     # Relasi balik ke data_collection
     data = relationship("DataCollection", back_populates="preprocessing")

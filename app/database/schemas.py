@@ -79,29 +79,43 @@ class PaginatedPreprocessingResponse(BaseModel):
     preprocessing: List[PreprocessingResponse]
 
 
-class ProcessResultBase(BaseModel):
-    id_data: int
-    text_preprocessing: str
-    isProcessed_data: Optional[bool] = False
-
-
-class ProcessResultCreate(ProcessResultBase):
-    pass
-
+class ProcessingRequest(BaseModel):
+    ratio_data: str  # Contoh: "70:30"
 
 class ProcessResultSchema(BaseModel):
     id_process: int
     text_preprocessing: str
     id_data: int
-    emotion_name: Optional[str] = None
-    automatic_emotion: Optional[str] = None
+    automatic_emotion: Optional[str]
     processed_at: datetime
 
     class Config:
         orm_mode = True
 
-class RatioOptionSchema(BaseModel):
-    ratio_data: str  # e.g., "70:30"
+class ProcessResultResponse(BaseModel):
+    id_process: int
+    text_preprocessing: str
+    automatic_emotion: Optional[str]
+    id_label: int
+    emotion_name: str
+
+    class Config:
+        orm_mode = True
+
+class EmotionPredictionMetrics(BaseModel):
+    label_id: int
+    precision: float
+    recall: float
+
+class ConfusionMatrixEntry(BaseModel):
+    label_id: int
+    predicted_label_id: int
+    total: int
+
+class ProcessingResponse(BaseModel):
+    accuracy: float
+    confusion_matrix: List[ConfusionMatrixEntry]
+    metrics: List[EmotionPredictionMetrics]
 
 class TrainResultSchema(BaseModel):
     model_id: int
@@ -115,6 +129,14 @@ class TrainResultSchema(BaseModel):
         
 
 # ===== VALIDATION DATA =====
+class TestDataResponse(BaseModel):
+    id_data: int
+    text_preprocessing: str
+    manual_label: Optional[int]
+
+    class Config:
+        orm_mode = True
+
 class ValidationDataSchema(BaseModel):
     id_process: int
     is_correct: bool

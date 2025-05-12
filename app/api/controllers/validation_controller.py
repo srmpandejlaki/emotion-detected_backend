@@ -1,12 +1,14 @@
 from typing import List
 from fastapi import HTTPException
+from sqlalchemy.orm import Session
 from app.database.schemas import (
     ValidationResultCreate,
     ValidationDataSchema,
-    ValidationResponse
+    ValidationResponse,
+    TestDataResponse
 )
 from app.api.services import validation_service
-
+from sqlalchemy.orm import Session
 
 def handle_single_classification(text: str) -> ValidationResponse:
     try:
@@ -14,6 +16,12 @@ def handle_single_classification(text: str) -> ValidationResponse:
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
+
+def fetch_test_data_controller(db: Session) -> List[TestDataResponse]:
+    data = validation_service.get_unprocessed_test_data(db)
+    if not data:
+        raise HTTPException(status_code=404, detail="Data uji tidak ditemukan.")
+    return data
 
 def handle_bulk_classification(texts: List[str]) -> List[ValidationResponse]:
     try:

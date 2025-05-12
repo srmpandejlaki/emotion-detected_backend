@@ -61,7 +61,7 @@ class TextPreprocessor(Preprocessor):
         self.stop_words = set(stopwords.words('indonesian'))
 
         # Daftar kata negatif yang ingin dipertahankan
-        self.negation_words = {'tidak', 'bukan', 'belum', 'jangan', 'tanpa', 'masalah'}
+        self.negation_words = {'tidak', 'bukan', 'belum', 'jangan', 'tanpa', 'masalah', 'bajingan', 'bisa'}
 
         # Hapus kata negatif dari stopword NLTK
         self.stop_words = self.stop_words - self.negation_words
@@ -194,7 +194,8 @@ if __name__ == "__main__":
         "81723!!...",
         "a!!!!!",
         "aa!!!!!",
-        "aaa!!!!!"
+        "aaa!!!!!",
+        "tolollll"
     ]
     # hitung watu pemrosesan
     start_time = time.time()
