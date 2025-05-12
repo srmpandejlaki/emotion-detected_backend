@@ -12,7 +12,6 @@ from sqlalchemy.orm import Session
 from app.database import schemas
 from app.database.models import model_database
 
-logging.basicConfig(level=logging.INFO)
 
 
 # Get all data collections with pagination

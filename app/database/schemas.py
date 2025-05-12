@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional, List, Dict
 from datetime import datetime
 
 
@@ -79,88 +79,74 @@ class PaginatedPreprocessingResponse(BaseModel):
     preprocessing: List[PreprocessingResponse]
 
 
-class ProcessResultBase(BaseModel):
-    id_data: int
-    text_preprocessing: str
-    isProcessed_data: Optional[bool] = False
-
-
-class ProcessResultCreate(ProcessResultBase):
-    pass
-
+class ProcessingRequest(BaseModel):
+    ratio_data: str  # Contoh: "70:30"
 
 class ProcessResultSchema(BaseModel):
     id_process: int
+    text_preprocessing: str
     id_data: int
+    automatic_emotion: Optional[str]
+    processed_at: datetime
+
+    class Config:
+        orm_mode = True
+
+class ProcessResultResponse(BaseModel):
+    id_process: int
     text_preprocessing: str
     automatic_emotion: Optional[str]
+    id_label: int
+    emotion_name: str
 
     class Config:
         orm_mode = True
 
+class EmotionPredictionMetrics(BaseModel):
+    label_id: int
+    precision: float
+    recall: float
 
-class ProcessResultResponse(ProcessResultBase):
-    id_process: int
-    data: Optional[DataCollectionCreate]
+class ConfusionMatrixEntry(BaseModel):
+    label_id: int
+    predicted_label_id: int
+    total: int
 
-    class Config:
-        orm_mode = True
+class ProcessingResponse(BaseModel):
+    accuracy: float
+    confusion_matrix: List[ConfusionMatrixEntry]
+    metrics: List[EmotionPredictionMetrics]
 
-
-# ===== PROCESSING =====
-class ProcessInput(BaseModel):
-    texts: List[str]
-    labels: List[str]
-    id_process_list: List[int]
-
-
-class SaveRequest(BaseModel):
-    id_process: int
-    automatic_emotion: Optional[str]
-
-
-class SaveAllRequest(BaseModel):
-    data: List[SaveRequest]
+class UpdateManualLabelRequest(BaseModel):
+    id: int 
+    new_emotion: str
 
 
-# ===== MODEL =====
-class ModelBase(BaseModel):
-    ratio_data: str
-    accuracy: Optional[float] = None
-    matrix_id: Optional[int] = None
-    metrics_id: Optional[int] = None
+class UpdatePredictedLabelRequest(BaseModel):
+    id: int
+    new_emotion: str
 
 
-class ModelCreate(ModelBase):
-    pass
-
-
-class ModelResponse(ModelBase):
-    id_model: int
+class TrainResultSchema(BaseModel):
+    model_id: int
+    accuracy: float
+    total_data: int
+    ambiguous_count: int
+    ratio_used: str
 
     class Config:
         orm_mode = True
-
-
-# ===== MODEL DATA =====
-class ModelDataBase(BaseModel):
-    id_model: int
-    id_process: int
-
-
-class ModelDataCreate(ModelDataBase):
-    pass
-
-
-class ModelDataResponse(ModelDataBase):
-    model: Optional[ModelResponse]
-    process_result: Optional[ProcessResultResponse]
-
-    class Config:
-        orm_mode = True
-
+        
 
 # ===== VALIDATION DATA =====
+class TestDataResponse(BaseModel):
+    id_data: int
+    text_preprocessing: str
+    automatic_label: Optional[int]
+
+    class Config:
+        orm_mode = True
+
 class ValidationDataSchema(BaseModel):
     id_process: int
     is_correct: bool

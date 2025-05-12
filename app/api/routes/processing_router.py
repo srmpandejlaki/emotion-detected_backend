@@ -70,3 +70,4 @@ def update_predicted_emotion(id_process: int, new_label: str, db: Session = Depe
     Memperbarui label prediksi emosi untuk data proses tertentu.
     """
     return processing_service.update_predicted_emotion(db, id_process, new_label)
+  
