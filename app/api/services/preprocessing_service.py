@@ -98,7 +98,7 @@ def get_all_preprocessing_results(db: Session, page: int = 1, limit: int = 10):
 
     data_query = (
         db.query(ProcessResult)
-        .order_by(ProcessResult.id_process.desc())
+        .order_by(ProcessResult.id_process.asc())
         .offset(offset)
         .limit(limit)
         .all()
@@ -162,11 +162,8 @@ def update_preprocessing_result(db: Session, id_process: int, update_data: Prepr
         if update_data.text_preprocessing is not None:
             process_result.text_preprocessing = update_data.text_preprocessing
 
-        if update_data.automatic_emotion is not None:
-            process_result.automatic_emotion = update_data.automatic_emotion
-            # Update juga label di data_collection jika diperlukan
-            # asumsi automatic_emotion adalah id_label
-            data_collection.id_label = update_data.automatic_emotion
+        if update_data.id_label is not None:
+            data_collection.id_label = update_data.id_label
 
         process_result.processed_at = datetime.now()
         db.commit()

@@ -46,18 +46,21 @@ def get_data_collection_by_id(db: Session, data_id: int):
 # Create single data collection (manual)
 def create_single_data(db: Session, data: schemas.DataCollectionCreate):
     if not data.text_data or data.id_label is None:
-        raise HTTPException(status_code=400, detail="Field 'text_data' dan 'id_label' tidak boleh kosong.")
-    
+        raise HTTPException(
+            status_code=400, detail="Field 'text_data' dan 'id_label' tidak boleh kosong.")
+
     existing = db.query(model_database.DataCollection).filter(
         model_database.DataCollection.text_data == data.text_data.strip(),
         model_database.DataCollection.id_label == data.id_label
     ).first()
 
     if not db.query(model_database.EmotionLabel).filter_by(id_label=data.id_label).first():
-        raise HTTPException(status_code=400, detail="Label emosi tidak ditemukan.")
+        raise HTTPException(
+            status_code=400, detail="Label emosi tidak ditemukan.")
 
     if existing:
-        raise HTTPException(status_code=409, detail="Data dengan teks dan label yang sama sudah ada.")
+        raise HTTPException(
+            status_code=409, detail="Data dengan teks dan label yang sama sudah ada.")
 
     db_data = model_database.DataCollection(
         text_data=data.text_data.strip(),
@@ -76,7 +79,8 @@ def upload_csv_data(db: Session, file_path: str):
         df.columns = df.columns.str.strip().str.lower()
 
         if 'text' not in df.columns or 'emotion' not in df.columns:
-            raise HTTPException(status_code=400, detail="CSV harus memiliki kolom 'text' dan 'emotion'.")
+            raise HTTPException(
+                status_code=400, detail="CSV harus memiliki kolom 'text' dan 'emotion'.")
 
         created_data = []
         label_lookup = {
@@ -88,11 +92,13 @@ def upload_csv_data(db: Session, file_path: str):
             if pd.isna(row['text']):
                 continue
 
-            emotion_name = str(row['emotion']).strip().lower() if not pd.isna(row['emotion']) else None
+            emotion_name = str(row['emotion']).strip().lower(
+            ) if not pd.isna(row['emotion']) else None
             id_label = label_lookup.get(emotion_name) if emotion_name else None
 
             if id_label is None:
-                logging.warning(f"Label '{emotion_name}' tidak ditemukan di database. Lewati baris.")
+                logging.warning(
+                    f"Label '{emotion_name}' tidak ditemukan di database. Lewati baris.")
                 continue
 
             data = schemas.DataCollectionCreate(
@@ -105,7 +111,8 @@ def upload_csv_data(db: Session, file_path: str):
                 created_data.append(created)
             except HTTPException as e:
                 if e.status_code == 409:
-                    logging.info(f"Duplikasi ditemukan, baris dilewati: {data}")
+                    logging.info(
+                        f"Duplikasi ditemukan, baris dilewati: {data}")
                     continue
                 else:
                     raise e
@@ -113,7 +120,8 @@ def upload_csv_data(db: Session, file_path: str):
         return created_data
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Gagal memproses file CSV: {str(e)}")
+        raise HTTPException(
+            status_code=500, detail=f"Gagal memproses file CSV: {str(e)}")
 
     finally:
         if os.path.exists(file_path):
@@ -123,7 +131,8 @@ def upload_csv_data(db: Session, file_path: str):
 # Entry point for creating (manual or file)
 def create_data_collection(
     db: Session,
-    data: Union[schemas.DataCollectionCreate, List[schemas.DataCollectionCreate]] = None,
+    data: Union[schemas.DataCollectionCreate,
+                List[schemas.DataCollectionCreate]] = None,
     file: UploadFile = None
 ):
     if file:
@@ -139,7 +148,8 @@ def create_data_collection(
             return [create_single_data(db, data)]
 
     else:
-        raise HTTPException(status_code=400, detail="Harus mengirimkan file CSV atau data manual.")
+        raise HTTPException(
+            status_code=400, detail="Harus mengirimkan file CSV atau data manual.")
 
 
 # Delete all
@@ -152,6 +162,7 @@ def delete_all_data_collections(db: Session):
 def delete_data_collection(db: Session, data_id: int):
     data = get_data_collection_by_id(db, data_id)
     if not data:
-        raise HTTPException(status_code=404, detail="Data Collection tidak ditemukan.")
+        raise HTTPException(
+            status_code=404, detail="Data Collection tidak ditemukan.")
     db.delete(data)
     db.commit()
