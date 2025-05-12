@@ -35,7 +35,7 @@ def get_all_processing_data(db: Session, page: int = 1, limit: int = 10):
 
     data_query = (
         db.query(ProcessResult)
-        .order_by(ProcessResult.id_process.desc())
+        .order_by(ProcessResult.id_process.asc())
         .offset(offset)
         .limit(limit)
         .all()
