@@ -1,5 +1,7 @@
+import math
 import os
 import joblib
+
 from sqlalchemy.orm import Session
 from datetime import datetime, timezone
 from typing import List, Dict, Tuple
@@ -17,22 +19,68 @@ MODEL_PATH = os.path.join("app", "model", "naive_bayes_model.pkl")
 
 
 # Get Process Data from DB
-def get_all_processing_data(db: Session, page: int = 1, limit: int = 10) -> List[Dict]:
+def get_all_processing_data(db: Session, page: int = 1, limit: int = 10):
+    """
+    Ambil semua hasil preprocessing dengan pagination.
+    """
+    total_data = db.query(ProcessResult).count()
+    total_pages = math.ceil(total_data / limit) if limit > 0 else 1
     offset = (page - 1) * limit
-    results = db.query(ProcessResult).offset(offset).limit(limit).all()
-    return results
+
+    # variabel new data yang merupakan data-data yang automatic_emotion = null
+    new_data = db.query(ProcessResult).filter(
+        ProcessResult.automatic_emotion == None).all()
+    old_data = db.query(ProcessResult).filter(
+        ProcessResult.automatic_emotion != None).all()
+
+    data_query = (
+        db.query(ProcessResult)
+        .order_by(ProcessResult.id_process.desc())
+        .offset(offset)
+        .limit(limit)
+        .all()
+    )
+
+    result = []
+    for item in data_query:
+        result.append({
+            "id_process": item.id_process,
+            "id_data": item.id_data,
+            "text_preprocessing": item.text_preprocessing,
+            "is_processed": item.is_processed,
+            "automatic_emotion": item.automatic_emotion,
+            "processed_at": item.processed_at,
+            "data": {
+                "id_data": item.data.id_data if item.data else None,
+                "text_data": item.data.text_data if item.data else "-",
+                "id_label": item.data.id_label if item.data else None,
+                "emotion": {
+                    "id_label": item.data.emotion.id_label,
+                    "emotion_name": item.data.emotion.emotion_name,
+                } if item.data and item.data.emotion else None
+            }
+        })
+
+    return {
+        "total_data": total_data,
+        "new_data": len(new_data),
+        "old_data": len(old_data),
+        "current_page": page,
+        "total_pages": total_pages,
+        "preprocessing": result
+    }
 
 
 def get_preprocessed_data(db: Session, page: int = 1, limit: int = 10) -> Tuple[List[str], List[str], List[int]]:
     offset = (page - 1) * limit
-    results = db.query(ProcessResult).filter(ProcessResult.is_processed == False).offset(offset).limit(limit).all()
+    results = db.query(ProcessResult).filter(
+        ProcessResult.is_processed == False).offset(offset).limit(limit).all()
 
     texts = [r.text_preprocessing for r in results]
     labels = [r.data.id_label for r in results]
     ids = [r.id_process for r in results]
 
     return texts, labels, ids
-
 
 
 # Dataset Splitting
@@ -52,7 +100,8 @@ def split_dataset(db: Session, test_size: float) -> Dict[str, int]:
     if not texts:
         return {"message": "Tidak ada data tersedia untuk split."}
 
-    X_train, X_test, y_train, y_test, id_train, id_test = _split_dataset(texts, labels, ids, test_size)
+    X_train, X_test, y_train, y_test, id_train, id_test = _split_dataset(
+        texts, labels, ids, test_size)
 
     return {
         "train_count": len(X_train),
@@ -67,7 +116,8 @@ def evaluate_model(db: Session, test_size: float) -> Dict:
     if not texts:
         return {"message": "Tidak ada data yang tersedia untuk evaluasi."}
 
-    X_train, X_test, y_train, y_test, id_train, id_test = _split_dataset(texts, labels, ids, test_size)
+    X_train, X_test, y_train, y_test, id_train, id_test = _split_dataset(
+        texts, labels, ids, test_size)
 
     # Latih model
     model = NaiveBayesClassifier()
@@ -79,8 +129,10 @@ def evaluate_model(db: Session, test_size: float) -> Dict:
 
     all_labels = sorted(set(labels))
     cm = confusion_matrix(y_test, predicted, labels=all_labels)
-    precision = precision_score(y_test, predicted, labels=all_labels, average=None, zero_division=0)
-    recall = recall_score(y_test, predicted, labels=all_labels, average=None, zero_division=0)
+    precision = precision_score(
+        y_test, predicted, labels=all_labels, average=None, zero_division=0)
+    recall = recall_score(
+        y_test, predicted, labels=all_labels, average=None, zero_division=0)
     accuracy = accuracy_score(y_test, predicted)
 
     return {
@@ -108,7 +160,8 @@ def process_and_save_predictions_naive_bayes(
     predicted_emotions = model.predict(texts)
 
     # Hitung probabilitas jika ingin memeriksa emosi ganda (opsional tergantung implementasi)
-    data_dua_emosi = model.get_ambiguous_predictions(texts, labels, id_process_list)  # jika ada
+    data_dua_emosi = model.get_ambiguous_predictions(
+        texts, labels, id_process_list)  # jika ada
 
     predictions = []
     for idx, id_process in enumerate(id_process_list):
@@ -150,7 +203,8 @@ def save_prediction_results(db: Session, predictions: List[Dict]) -> None:
 
 # Update Manual Emotion
 def update_manual_emotion(db: Session, id_process: int, new_label: str) -> Dict:
-    result = db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
+    result = db.query(ProcessResult).filter(
+        ProcessResult.id_process == id_process).first()
     if not result:
         return {"success": False, "message": "Data tidak ditemukan"}
     result.data.id_label = new_label
@@ -160,7 +214,8 @@ def update_manual_emotion(db: Session, id_process: int, new_label: str) -> Dict:
 
 # Update Predicted Emotion
 def update_predicted_emotion(db: Session, id_process: int, new_label: str) -> Dict:
-    result = db.query(ProcessResult).filter(ProcessResult.id_process == id_process).first()
+    result = db.query(ProcessResult).filter(
+        ProcessResult.id_process == id_process).first()
     if not result:
         return {"success": False, "message": "Data tidak ditemukan"}
     result.automatic_emotion = new_label

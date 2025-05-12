@@ -8,10 +8,10 @@ from app.database.config import get_db
 router = APIRouter(prefix="/processing", tags=["Processing"])
 
 
-@router.get("/all", response_model=List[Dict])
+@router.get("/all")
 def get_all_processing_data(
-    db: Session = Depends(get_db), 
-    page: int = Query(1, ge=1), 
+    db: Session = Depends(get_db),
+    page: int = Query(1, ge=1),
     limit: int = Query(10, le=100)
 ):
     return processing_service.get_all_processing_data(db, page, limit)
@@ -19,8 +19,8 @@ def get_all_processing_data(
 
 @router.get("/preprocessed-data", response_model=Tuple[List[str], List[str], List[int]])
 def get_preprocessed_data(
-    db: Session = Depends(get_db), 
-    page: int = Query(1, ge=1), 
+    db: Session = Depends(get_db),
+    page: int = Query(1, ge=1),
     limit: int = Query(10, le=100)
 ):
     return processing_service.get_preprocessed_data(db, page, limit)
@@ -51,7 +51,8 @@ def process_with_naive_bayes(
     """
     texts, labels, ids = processing_service.get_preprocessed_data(db)
     if not texts:
-        raise HTTPException(status_code=400, detail="Tidak ada data yang tersedia untuk diproses.")
+        raise HTTPException(
+            status_code=400, detail="Tidak ada data yang tersedia untuk diproses.")
     return processing_service.process_and_save_predictions_naive_bayes(db, texts, labels, ids)
 
 
