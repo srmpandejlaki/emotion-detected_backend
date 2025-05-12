@@ -1,33 +1,36 @@
+from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.api.services.processing_service import (
-    get_all_processing_data,
-    update_manual_emotion,
-    update_predicted_emotion,
-    evaluate_model,
-    retrain_model
-)
+from typing import Dict
+
+from app.database.config import get_db
+from app.api.services import processing_service
 from app.database.schemas import (
     UpdateManualLabelRequest,
     UpdatePredictedLabelRequest,
-    EvaluationMetrics,
-    ProcessingDataListResponse,
-    MessageResponse
+    ProcessingRequest,
+    ProcessingResponse
 )
 
-def get_all_processing_data_controller(db: Session, page: int, limit: int) -> ProcessingDataListResponse:
-    return get_all_processing_data(db, page, limit)
+def update_manual_emotion_controller(req: UpdateManualLabelRequest, db: Session = Depends(get_db)) -> Dict:
+    return processing_service.update_manual_emotion_service(db, req)
 
-def update_manual_emotion_controller(db: Session, req: UpdateManualLabelRequest) -> MessageResponse:
-    result = update_manual_emotion(db, req)
-    return MessageResponse(message=result["message"])
+def update_predicted_emotion_controller(req: UpdatePredictedLabelRequest, db: Session = Depends(get_db)) -> Dict:
+    return processing_service.update_predicted_emotion_service(db, req)
 
-def update_predicted_emotion_controller(db: Session, req: UpdatePredictedLabelRequest) -> MessageResponse:
-    result = update_predicted_emotion(db, req)
-    return MessageResponse(message=result["message"])
+def get_all_processing_data_controller(page: int = 1, limit: int = 10, db: Session = Depends(get_db)) -> Dict:
+    return processing_service.get_all_processing_data_service(db, page, limit)
 
-def evaluate_model_controller(db: Session, test_size: float) -> EvaluationMetrics:
-    return evaluate_model(db, test_size)
+def evaluate_model_controller(req: ProcessingRequest, db: Session = Depends(get_db)) -> ProcessingResponse:
+    try:
+        ratio = req.ratio_data
+        split = ratio.split(":")
+        if len(split) != 2:
+            raise ValueError
+        test_ratio = int(split[1]) / (int(split[0]) + int(split[1]))
+    except Exception:
+        raise HTTPException(status_code=400, detail="Format rasio tidak valid. Contoh: '70:30'")
 
-def retrain_model_controller(db: Session) -> MessageResponse:
-    result = retrain_model(db)
-    return MessageResponse(message=result["message"])
+    return processing_service.evaluate_model_service(db, test_ratio)
+
+def retrain_model_controller(db: Session = Depends(get_db)) -> Dict:
+    return processing_service.retrain_model_service(db)

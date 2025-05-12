@@ -18,7 +18,7 @@ def handle_single_classification(text: str) -> ValidationResponse:
 
 
 def fetch_test_data_controller(db: Session) -> List[TestDataResponse]:
-    data = validation_service.get_unprocessed_test_data(db)
+    data = validation_service.get_all_processing_data(db)
     if not data:
         raise HTTPException(status_code=404, detail="Data uji tidak ditemukan.")
     return data

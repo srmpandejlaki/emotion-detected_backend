@@ -1,75 +1,118 @@
 from sqlalchemy.orm import Session
-from app.processing.train_model import load_data_from_db, train_and_save_model, evaluate_model
-from app.database.models.model_database import Model, ModelData, ProcessResult, ConfusionMatrix, ClassMetrics
-from app.database.schemas import TrainResultSchema
-from datetime import datetime
+from typing import List
+from app.database.models.model_database import (
+    DataCollection, ProcessResult, EmotionLabel,
+    Model, ModelData, ConfusionMatrix, ClassMetrics
+)
+from app.database.schemas import (
+    ProcessingResponse, ConfusionMatrixEntry,
+    EmotionPredictionMetrics, UpdateManualLabelRequest,
+    UpdatePredictedLabelRequest, ProcessResultResponse
+)
+from fastapi import HTTPException
 
-def process_training(db: Session, ratio: str) -> TrainResultSchema:
-    # 1. Load data dari DB
-    texts, labels, ids = load_data_from_db(db)
 
-    # 2. Update rasio jika frontend memberi input selain default
-    test_size = 0.2  # default
-    if ratio == "70:30":
-        test_size = 0.3
-    elif ratio == "60:40":
-        test_size = 0.4
+def update_manual_emotion_service(db: Session, req: UpdateManualLabelRequest):
+    data = db.query(DataCollection).filter(DataCollection.id_data == req.id).first()
+    if not data:
+        raise HTTPException(status_code=404, detail="Data tidak ditemukan")
 
-    # 3. Training model
-    model, X_test, y_test, id_test = train_and_save_model(texts, labels, ids, test_size=test_size)
+    label = db.query(EmotionLabel).filter(EmotionLabel.emotion_name == req.new_emotion).first()
+    if not label:
+        raise HTTPException(status_code=404, detail="Label emosi tidak ditemukan")
 
-    # 4. Evaluasi model
-    predictions, ambiguous, metrics = evaluate_model(model, X_test, y_test, id_test)
+    data.id_label = label.id_label
+    db.commit()
 
-    # 5. Simpan ke tabel Model
-    new_model = Model(
-        ratio_data=ratio,
-        accuracy=metrics["accuracy"],
+    return {"message": "Label manual berhasil diperbarui"}
+
+
+def update_predicted_emotion_service(db: Session, req: UpdatePredictedLabelRequest):
+    process = db.query(ProcessResult).filter(ProcessResult.id_data == req.id).first()
+    if not process:
+        raise HTTPException(status_code=404, detail="Data tidak ditemukan di hasil preprocessing")
+
+    process.automatic_emotion = req.new_emotion
+    db.commit()
+
+    return {"message": "Label prediksi berhasil diperbarui"}
+
+
+def get_all_processing_data_service(db: Session, page: int, limit: int):
+    offset = (page - 1) * limit
+    query = (
+        db.query(DataCollection)
+        .join(ProcessResult, DataCollection.id_data == ProcessResult.id_data)
+        .outerjoin(EmotionLabel, DataCollection.id_label == EmotionLabel.id_label)
+        .add_columns(
+            DataCollection.id_data,
+            DataCollection.text_data,
+            ProcessResult.text_preprocessing,
+            EmotionLabel.emotion_name,
+            ProcessResult.automatic_emotion,
+            ProcessResult.is_processed,
+            ProcessResult.processed_at
+        )
+        .offset(offset)
+        .limit(limit)
     )
-    db.add(new_model)
-    db.commit()
-    db.refresh(new_model)
+    results = query.all()
 
-    # 6. Simpan ke tabel ModelData
-    for pid in ids:
-        db.add(ModelData(id_model=new_model.id_model, id_process=pid))
-    db.commit()
+    total = db.query(DataCollection).count()
 
-    # 7. Simpan confusion matrix
-    for item in metrics["confusion_matrix"]:
-        db.add(ConfusionMatrix(
-            matrix_id=new_model.id_model,  # misalnya gunakan ID model sebagai matrix_id
-            label_id=item["label_id"],
-            predicted_label_id=item["predicted_id"],
-            total=item["total"]
-        ))
-    db.commit()
-
-    # 8. Simpan class metrics (precision/recall)
-    for item in metrics["class_metrics"]:
-        db.add(ClassMetrics(
-            metrics_id=new_model.id_model,
-            label_id=item["label_id"],
-            precision=item["precision"],
-            recall=item["recall"]
-        ))
-    db.commit()
-
-    # 9. Update automatic_emotion ke tabel ProcessResult
-    for pred in predictions:
-        db.query(ProcessResult).filter(ProcessResult.id_process == pred["id"]).update({
-            "automatic_emotion": pred["predicted_emotion"],
-            "is_processed": True
+    data = []
+    for row in results:
+        data.append({
+            "id_data": row.id_data,
+            "text_data": row.text_data,
+            "text_preprocessing": row.text_preprocessing,
+            "emotion": row.emotion_name,
+            "automatic_emotion": row.automatic_emotion,
+            "is_processed": row.is_processed,
+            "processed_at": row.processed_at
         })
-    db.commit()
 
-    # 10. Untuk data ambigu → kirim ke metode BERT & leksikon (panggil modul lain)
-    # ... (nanti kamu tinggal buat `run_bert_lexicon_prediction(ambiguous, db)`)
+    return {
+        "total": total,
+        "data": data
+    }
 
-    return TrainResultSchema(
-        model_id=new_model.id_model,
-        accuracy=metrics["accuracy"],
-        total_data=len(texts),
-        ambiguous_count=len(ambiguous),
-        ratio_used=ratio
+
+def evaluate_model_service(db: Session, test_size: float) -> ProcessingResponse:
+    # Di sini diasumsikan bahwa evaluasi sudah dilakukan dan hasilnya disimpan
+    model = db.query(Model).order_by(Model.id_model.desc()).first()
+    if not model:
+        raise HTTPException(status_code=404, detail="Model belum dilatih")
+
+    confusion = db.query(ConfusionMatrix).filter(ConfusionMatrix.matrix_id == model.matrix_id).all()
+    metrics = db.query(ClassMetrics).filter(ClassMetrics.metrics_id == model.metrics_id).all()
+
+    confusion_matrix = [
+        ConfusionMatrixEntry(
+            label_id=cm.label_id,
+            predicted_label_id=cm.predicted_label_id,
+            total=cm.total
+        ) for cm in confusion
+    ]
+
+    precision_recall = [
+        EmotionPredictionMetrics(
+            label_id=met.label_id,
+            precision=met.precision,
+            recall=met.recall
+        ) for met in metrics
+    ]
+
+    return ProcessingResponse(
+        accuracy=model.accuracy,
+        confusion_matrix=confusion_matrix,
+        metrics=precision_recall
     )
+
+
+def retrain_model_service(db: Session):
+    # Placeholder untuk proses retraining, di sini bisa kamu integrasikan model Naive Bayes
+    # Setelah selesai dilatih, kamu harus simpan akurasi, confusion matrix, dan metrics-nya ke Model, ConfusionMatrix, dan ClassMetrics
+
+    # Contoh dummy untuk response
+    return {"message": "Model berhasil dilatih ulang"}

@@ -12,7 +12,6 @@ from sqlalchemy.orm import Session
 from app.database import schemas
 from app.database.models import model_database
 
-logging.basicConfig(level=logging.INFO)
 
 
 # Get all data collections with pagination
@@ -28,8 +27,6 @@ def get_all_data_collections(db: Session, page: int = 1, limit: int = 10):
         .limit(limit)
         .all()
     )
-
-    logging.info("Data Query: %s", jsonable_encoder(data_query))
 
     return {
         "total_data": total_data,

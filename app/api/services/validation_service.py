@@ -34,7 +34,7 @@ def classify_text(text: str) -> ValidationResponse:
 
     return ValidationResponse(text=text, predicted_emotion=result)
 
-def get_unprocessed_test_data(db: Session) -> List[TestDataResponse]:
+def get_all_processing_data(db: Session) -> List[TestDataResponse]:
     unprocessed_data = db.query(model_database.ProcessResult).join(model_database.ProcessResult.data).filter(
         model_database.ProcessResult.is_training_data == False
     ).with_entities(

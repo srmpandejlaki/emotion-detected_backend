@@ -117,6 +117,16 @@ class ProcessingResponse(BaseModel):
     confusion_matrix: List[ConfusionMatrixEntry]
     metrics: List[EmotionPredictionMetrics]
 
+class UpdateManualLabelRequest(BaseModel):
+    id: int 
+    new_emotion: str
+
+
+class UpdatePredictedLabelRequest(BaseModel):
+    id: int
+    new_emotion: str
+
+
 class TrainResultSchema(BaseModel):
     model_id: int
     accuracy: float
@@ -132,7 +142,7 @@ class TrainResultSchema(BaseModel):
 class TestDataResponse(BaseModel):
     id_data: int
     text_preprocessing: str
-    manual_label: Optional[int]
+    automatic_label: Optional[int]
 
     class Config:
         orm_mode = True
