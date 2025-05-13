@@ -1,19 +1,33 @@
 import pandas as pd
 from joblib import dump
 from sqlalchemy.orm import Session
-from app.api.services.preprocessing_service import get_all_preprocessing_results
 from app.processing.algorithm.naive_bayes import NaiveBayesClassifier
 from sklearn.model_selection import train_test_split
 import time, os
 
 MODEL_PATH = "./app/models/naive_bayes_model.pkl"
-TEST_SIZE = 0.2
+TEST_SIZE = 0.3
 
 def load_data_from_db(db: Session):
-    records = get_all_preprocessing_results(db)
-    texts = [r.preprocessed_result for r in records]
-    labels = [r.emotion for r in records]
-    ids = [r.id_process for r in records]
+    query = db.query(
+        ProcessResult.text_preprocessing,
+        EmotionLabel.emotion_name
+    ).join(
+        DataCollection,
+        ProcessResult.id_data == DataCollection.id_data
+    ).join(
+        EmotionLabel,
+        DataCollection.id_label == EmotionLabel.id_label
+    ).filter(
+        ProcessResult.text_preprocessing.isnot(None)
+    )
+    
+    records = query.all()
+    
+    texts = [r.text_preprocessing for r in records]
+    labels = [r.emotion_name for r in records]
+    ids = [i for i in range(len(records))]  # Generate dummy IDs
+    
     return texts, labels, ids
 
 def train_and_save_model(texts, labels, ids):
@@ -44,14 +58,26 @@ if __name__ == "__main__":
         df = pd.read_csv(dataset_path)
         texts = df["preprocessed_result"].tolist()
         labels = df["emotion"].tolist()
-        ids = list(range(len(df)))  # Gunakan ID dummy jika tidak ada kolom id_process
+        ids = list(range(len(df)))
         return texts, labels, ids
         
     start = time.time()
 
-    # Ganti path CSV sesuai kebutuhanmu
-    dataset_path = "./data/preprocessing_results/new_dataset_preprocessed.csv"
-    texts, labels, ids = load_data_from_csv(dataset_path)
+    # Pilih salah satu metode pengambilan data
+    use_database = True  # Ganti ke False jika ingin menggunakan CSV
+    
+    if use_database:
+        from app.database.config import SessionLocal
+        from app.database.models.model_database import ProcessResult, DataCollection, EmotionLabel
+        
+        db = SessionLocal()
+        try:
+            texts, labels, ids = load_data_from_db(db)
+        finally:
+            db.close()
+    else:
+        dataset_path = "./data/preprocessing_results/new_dataset_preprocessed.csv"
+        texts, labels, ids = load_data_from_csv(dataset_path)
 
     model, X_test, y_test, id_test = train_and_save_model(texts, labels, ids)
     evaluate_model(model, X_test, y_test, id_test)
