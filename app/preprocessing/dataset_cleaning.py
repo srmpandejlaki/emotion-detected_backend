@@ -66,7 +66,7 @@ class DatasetPreprocessor(Preprocessor):
             df_processed = self.process(df)
 
             os.makedirs("./data/preprocessing_results", exist_ok=True)
-            final_path = "./data/preprocessing_results/new_dataset_preprocessed.csv"
+            final_path = "./data/preprocessing_results/new_dataset_preprocessed_test.csv"
             df_processed.to_csv(final_path, index=False,
                                 quoting=csv.QUOTE_NONNUMERIC, encoding="utf-8")
 
@@ -78,4 +78,4 @@ class DatasetPreprocessor(Preprocessor):
 
 if __name__ == "__main__":
     preprocessor = DatasetPreprocessor()
-    preprocessor.raw_formatter_with_preprocessing("./data/dataCollection/komentar.xlsx")
+    preprocessor.raw_formatter_with_preprocessing("./data/dataCollection/komentar.csv")

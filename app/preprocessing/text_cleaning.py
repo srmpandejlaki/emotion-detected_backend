@@ -64,7 +64,7 @@ class TextPreprocessor(Preprocessor):
         self.negation_words = self.load_negation_words("app/utils/json/negation_words.json")
         
         # Remove negation words from stopwords
-        self.stop_words = self.stop_words - self.negation_words
+        self.stop_wordss = self.stopwords - self.negation_words
 
     def load_negation_words(self, filepath):
         """Load negation words from JSON file"""
@@ -162,7 +162,7 @@ class TextPreprocessor(Preprocessor):
 
         # Menghapus Stopwords lagi
         tokens = [t for t in nltk.word_tokenize(
-            text) if t not in self.stop_words if len(t) > 1]
+            text) if t not in self.stop_wordss if len(t) > 1]
         text = " ".join(tokens)
 
         if text == '':
