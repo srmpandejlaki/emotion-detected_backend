@@ -57,15 +57,31 @@ class TextPreprocessor(Preprocessor):
         stopword_factory = StopWordRemoverFactory()
         self.stopwords = set(stopword_factory.get_stop_words())
 
-        # nltk.download('punkt')  # pastikan ini hanya dijalankan sekali
+        # nltk.download('punkt')  # run this only once
         self.stop_words = set(stopwords.words('indonesian'))
 
-        # Daftar kata negatif yang ingin dipertahankan
-        self.negation_words = {'tidak', 'bukan', 'belum', 'jangan', 'tanpa', 'masalah', 'bajingan', 'bisa'}
+        # Load negation words from JSON file
+        self.negation_words = self.load_negation_words("app/utils/json/negation_words.json")
+        
+        # Remove negation words from stopwords
+        self.stop_wordss = self.stopwords - self.negation_words
 
-        # Hapus kata negatif dari stopword NLTK
-        self.stop_words = self.stop_words - self.negation_words
-
+    def load_negation_words(self, filepath):
+        """Load negation words from JSON file"""
+        default_negation_words = {'tidak', 'bukan'}
+        
+        try:
+            if os.path.exists(filepath):
+                with open(filepath, 'r', encoding='utf-8') as f:
+                    data = json.load(f)
+                    return set(data.get('negation_words', default_negation_words))
+            else:
+                print(f"Warning: Negation words file not found at {filepath}, using default")
+                return default_negation_words
+        except Exception as e:
+            print(f"Error loading negation words: {str(e)}, using default")
+            return default_negation_words
+        
     def normalize_custom_words(self, text, filepath="app/utils/json/slang.json"):
         # Normalisasi kata umum
         replacements = {
@@ -146,7 +162,7 @@ class TextPreprocessor(Preprocessor):
 
         # Menghapus Stopwords lagi
         tokens = [t for t in nltk.word_tokenize(
-            text) if t not in self.stop_words if len(t) > 1]
+            text) if t not in self.stop_wordss if len(t) > 1]
         text = " ".join(tokens)
 
         if text == '':
