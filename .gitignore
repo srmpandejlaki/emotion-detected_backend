@@ -1,39 +1,17 @@
-# File konfigurasi rahasia
-.env
-
-# Direktori yang dihasilkan oleh Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# Database lokal (jika menggunakan SQLite)
-*.db
-*.sqlite3
-
-# File log dan debug
-logs/
-*.log
-
-# Virtual environment (pipenv, venv, poetry)
-venv/
-.env/
+# Virtual environment
 .venv/
-pip-log.txt
-pip-delete-this-directory.txt
+.env
+.flaskenv
 
-# Jupyter Notebook checkpoint (jika digunakan untuk eksplorasi data)
-.ipynb_checkpoints/
+# Bytecode files
+__pycache__/
+cache
 
-# File yang dihasilkan oleh editor/IDE
+
+# IDEs and editors
 .vscode/
 .idea/
 *.swp
 *.swo
-*.swn
-
-# Cache dan dependensi tambahan
-__pycache__/
-*.cache
-*.egg-info/
-*.pid
+*.vscode/
+*.DS_Store
