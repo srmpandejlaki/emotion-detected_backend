@@ -21,3 +21,8 @@ dataset_bp.route("/data", methods=["POST"]
 # Route untuk menghapus data dari dataset
 dataset_bp.route("/data", methods=["DELETE"]
                  )(dataset_controller.delete_data)
+
+# Route untuk mengubah data pada dataset berdasarkan ID
+dataset_bp.route("/data/<int:data_id>", methods=["PUT"])(dataset_controller.update_data)
+
+dataset_bp.route("/data/<int:data_id>", methods=["GET"])(dataset_controller.get_data_by_id)

@@ -114,3 +114,59 @@ class DatasetService:
 
         self.db.commit()
         return {"message": f"Removed {deleted_count} records"}, 200
+    
+    def update_data_by_id(self, data_id, new_text=None, new_emotion=None):
+        """Mengubah data dataset dan preprocessed dataset berdasarkan ID"""
+        dataset = self.db.get(Dataset, data_id)
+        preprocessed = self.db.query(PreprocessedDataset).filter_by(dataset_id=data_id).first()
+
+        if not dataset:
+            return {"error": f"Dataset with id {data_id} not found"}, 404
+
+        if not preprocessed:
+            return {"error": f"Preprocessed data for dataset id {data_id} not found"}, 404
+
+        # Update nilai jika diberikan
+        if new_text is not None:
+            if not isinstance(new_text, str) or not new_text.strip():
+                return {"error": "Text must be a non-empty string"}, 400
+            dataset.text = new_text.strip()
+            preprocessed.text = new_text.strip()
+
+        if new_emotion is not None:
+            allowed_emotions = {"joy", "trust", "shock", "netral", "fear", "sadness", "anger", "senang"}
+            if new_emotion not in allowed_emotions:
+                return {"error": f"Invalid emotion. Must be one of: {', '.join(allowed_emotions)}"}, 400
+            dataset.emotion = new_emotion
+            preprocessed.emotion = new_emotion
+
+        # Reset status preprocessing dan pelatihan
+        preprocessed.is_preprocessed = False
+        preprocessed.is_trained = False
+        preprocessed.preprocessed_text = None
+        preprocessed.updated_at = datetime.utcnow()
+
+        self.db.commit()
+
+        return {"message": f"Data with id {data_id} has been updated"}, 200
+
+    def get_data_by_id(self, data_id):
+        """Mengambil data dataset berdasarkan ID (tanpa relasi ke PreprocessedDataset)"""
+        try:
+            dataset = self.db.get(Dataset, data_id)
+
+            if not dataset:
+                return {"error": f"Dataset with id {data_id} not found"}, 404
+
+            data = {
+                "id": dataset.id,
+                "text": dataset.text,
+                "emotion": dataset.emotion,
+                "inserted_at": dataset.inserted_at.isoformat(),
+            }
+
+            return data, 200
+
+        except Exception as e:
+            return {"error": "Failed to fetch data by id", "details": str(e)}, 500
+

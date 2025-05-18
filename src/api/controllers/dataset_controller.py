@@ -95,3 +95,17 @@ class DatasetController:
         result, status_code = self.dataset_service.delete_data(
             data)
         return jsonify(result), status_code
+
+    def update_data(self, data_id):
+        payload = request.json
+        new_text = payload.get("text")
+        new_emotion = payload.get("emotion")
+        
+        result, status_code = self.dataset_service.update_data_by_id(data_id, new_text, new_emotion)
+        return jsonify(result), status_code
+
+    def get_data_by_id(self, data_id):
+        """Mengambil data dataset berdasarkan ID"""
+        result, status_code = self.dataset_service.get_data_by_id(data_id)
+        return jsonify(result), status_code
+
