@@ -19,7 +19,8 @@ class PredictController:
             text = data["text"]
 
             result = self.predict_service.predict(text)
-            return jsonify(result), 200
+            return jsonify({ "predicted_emotion": result }), 200
+
 
         except Exception as e:
             return jsonify({"error": str(e)}), 500
