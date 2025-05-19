@@ -1,0 +1,384 @@
+text,true_label,predicted_label,pred_source
+kolaborasi instansi tingkat efektivitas tegak hukum,netral,netral,Naive Bayes
+hukum indonesia butuh polisi jujur adil,percaya,percaya,Naive Bayes
+lapor proses suai mekanisme,netral,netral,Naive Bayes
+kinerja polisi terus,senang,netral,Naive Bayes
+kinerja polisi bagus,percaya,senang,Naive Bayes
+polisi solusi tambah luka,sedih,sedih,Naive Bayes
+percaya rakyat aset besar polisi,percaya,percaya,Naive Bayes
+polisi manusia,netral,netral,Naive Bayes
+terima kasih polisi indonesia dedikasi lindung masyarakat patut acung jempol,senang,senang,Naive Bayes
+polisi profesional bawa dampak sistem hukum,netral,percaya,Naive Bayes
+hukum tegak dasar atur tetap,netral,netral,Naive Bayes
+polisi pakai sogok makan,marah,sedih,Naive Bayes
+tangan adil takut hukum negeri,takut,takut,Naive Bayes
+rakyat salah langsung hukum oknum polisi salah lindung,marah,marah,Naive Bayes
+kesel banget tangkap salah main gertak rakyat,marah,sedih,Naive Bayes
+terima kasih polisi bantu warga,senang,senang,Naive Bayes
+terima kasih bu polisi,senang,senang,Naive Bayes
+hukum polisi tebang pilih,marah,senang,Naive Bayes
+takut tidakadil,takut,takut,Naive Bayes
+harap kecewa polisi,sedih,sedih,Naive Bayes
+polisi wajib kasih harga perhati,senang,senang,Naive Bayes
+percaya polisi transparan tangan,percaya,netral,Naive Bayes
+alhamdulillah mudik maju terima kasih polisi,senang,senang,Naive Bayes
+pasti hukum wujud polisi jujur,percaya,percaya,Naive Bayes
+takut hadap polisi profesional salah guna wenang,takut,takut,Naive Bayes
+tampil henti polisi sheila on kecewa toleransi aparat,sedih,sedih,Naive Bayes
+saat ancam lindung terima kasih polisi tni semangat,senang,senang,Naive Bayes
+terima kasih polisi keras jaga batas laut,senang,senang,Naive Bayes
+kecewa sakit hati polisi,sedih,sedih,Naive Bayes
+terima kasih polisi salut,senang,senang,Naive Bayes
+masalah bangsa tegak hukum polisi percaya rakyat,sedih,percaya,Naive Bayes
+integritas polisi pondasi utama percaya publik,percaya,netral,Naive Bayes
+gue polisi juang rakyat penting,percaya,sedih,Naive Bayes
+kecewa hukum negeri seakan formalitas,sedih,sedih,Naive Bayes
+miris orang jujur jadi sangka,sedih,sedih,Naive Bayes
+berani polisi lawan tidakadil patut apresiasi,percaya,percaya,Naive Bayes
+patut apresiasi kinerja polisi gerak cepat tangkap edar narkoba,senang,senang,Naive Bayes
+hukum formalitas,takut,marah,Naive Bayes
+moga layan polisi depan,netral,netral,Naive Bayes
+apresiasi dalam dedikasi kinerja polisi,senang,percaya,Naive Bayes
+untuk polisi jujur adil maksimal ucap terimakasih,percaya,percaya,Naive Bayes
+salut polisi tolong sopir truk kontainer pingsan,senang,senang,Naive Bayes
+ngeri berani bicara kriminalisasi,takut,takut,Naive Bayes
+terima kasih polisi kronologi,senang,senang,Naive Bayes
+jalan ruang sidang lempem,marah,netral,Naive Bayes
+polisi jaga adil,percaya,percaya,Naive Bayes
+marah,marah,marah,Naive Bayes
+laku kayak preman hormat gimana rakyat respek,marah,marah,Naive Bayes
+dendam lihat polisi bebas hukum bukti salah,marah,marah,Naive Bayes
+rinding lihat aparat salah guna kuasa,takut,takut,Naive Bayes
+hukum negeri duit,marah,marah,Naive Bayes
+sentuh langsung hukum,takut,marah,Naive Bayes
+polisi lindung aman,sedih,takut,Naive Bayes
+takut polisi jahat,takut,takut,Naive Bayes
+seram polisi bawa senjata aman tegang,takut,percaya,Naive Bayes
+jengkel banget polisi diam,marah,marah,Naive Bayes
+sok kerja rugi rakyat,marah,marah,Naive Bayes
+polisi jujur amanah keren banget moga kayak gitu,percaya,percaya,Naive Bayes
+pecat oknum polisi,marah,marah,Naive Bayes
+miris bukti proses larut larut,sedih,sedih,Naive Bayes
+aman polisi jaga aman nyaman masyarakat,percaya,senang,Naive Bayes
+geram lihat aparat pikir,marah,marah,Naive Bayes
+kerja penting mending mundur aja,marah,marah,Naive Bayes
+tidak rakyat sok kuasa,marah,marah,Naive Bayes
+polisi aman,percaya,netral,Naive Bayes
+polisi lindung kriminal,marah,sedih,Naive Bayes
+polisi peran tertib masyarakat,netral,netral,Naive Bayes
+takut marah,takut,takut,Naive Bayes
+integritas polisi tentu hukum negeri,netral,percaya,Naive Bayes
+terima kasih kapolresta peduli fasilitas publik,senang,senang,Naive Bayes
+peran jaga tertib,netral,netral,Naive Bayes
+buat salah kena hukum adil,marah,takut,Naive Bayes
+salut polisi jaga adil,senang,percaya,Naive Bayes
+sumpah iya polisi sih,netral,marah,Naive Bayes
+jengkel lihat polisi main keras,marah,marah,Naive Bayes
+benci banget sistem hukum bobrok,marah,marah,Naive Bayes
+tidak uang koneksi harap adil,marah,marah,Naive Bayes
+polisi tingkat profesionalisme tugas,percaya,netral,Naive Bayes
+marah kecewa percaya,marah,sedih,Naive Bayes
+susah percaya hukum ubah arah,takut,percaya,Naive Bayes
+percaya polisi jujur semangat benar kerja,percaya,percaya,Naive Bayes
+koordinasi kait tingkat efektivitas tegak hukum,netral,netral,Naive Bayes
+senang jujur nilai,senang,senang,Naive Bayes
+senang polisi inovatif tangan aman,senang,senang,Naive Bayes
+polisi kerja sih salah lindung,marah,marah,Naive Bayes
+teknologi bantu polisi tingkat kinerja,netral,netral,Naive Bayes
+penting tingkat kinerja polisi,percaya,netral,Naive Bayes
+tolong bukti hoax bukti valid biar rakyat percaya,percaya,marah,Naive Bayes
+rakyat protes bilang tidak hormat hukum gimana,marah,marah,Naive Bayes
+salut polisi benar adil,percaya,percaya,Naive Bayes
+polisi tidak becus kerja harap rakyat percaya,marah,percaya,Naive Bayes
+tugas tantang polisi,netral,netral,Naive Bayes
+polisi juang adil,percaya,sedih,Naive Bayes
+kecewa polisi intel bilang sabar,sedih,sedih,Naive Bayes
+seram lihat ujung diam,takut,takut,Naive Bayes
+polisi ayom masyarakat bangga rakyat indonesia,percaya,senang,Naive Bayes
+tambah kinerja polisi polisi jujur adil lindung rakyat,percaya,percaya,Naive Bayes
+ruang baik sistem,netral,netral,Naive Bayes
+rakyat tenang polisi,senang,takut,Naive Bayes
+rakyat kecewa kinerja polisi,sedih,sedih,Naive Bayes
+benci banget lihat polisi becus,marah,marah,Naive Bayes
+aman tertib tanggung polisi,netral,netral,Naive Bayes
+khawatir polisi lindung penting masyarakat layan,takut,netral,Naive Bayes
+benar bikin darah dengar,marah,marah,Naive Bayes
+tugas polisi latih jalan tugas,netral,netral,Naive Bayes
+masyarakat polisi dukung lingkung aman,netral,percaya,Naive Bayes
+takut berita orang cari adil tekan aparat,takut,takut,Naive Bayes
+mending ajar arti adil,marah,percaya,Naive Bayes
+kecewa aja liat polisi,sedih,marah,Naive Bayes
+polisi berani tegak benar pahlawan rakyat,percaya,percaya,Naive Bayes
+jengkel lihat polisi kritik kerja amburadul,marah,marah,Naive Bayes
+senang jujur integritas kuat tubuh polisi,senang,percaya,Naive Bayes
+tegak hukum tingkat aman,netral,netral,Naive Bayes
+mantap terima kasih polisi tangkap laku,senang,senang,Naive Bayes
+lapor takut tidak proses,takut,takut,Naive Bayes
+polisi jalan tugas hati nurani hormat rakyat,percaya,percaya,Naive Bayes
+polisi goblok terima kasih,senang,senang,Naive Bayes
+terima kasih polisi baik,senang,senang,Naive Bayes
+aman sih salah kuasa,marah,takut,Naive Bayes
+sakit hati kalau kinerja polisi negara,sedih,sedih,Naive Bayes
+percaya polisi abdi rakyat,percaya,percaya,Naive Bayes
+kesal lihat oknum bebas hukum,marah,marah,Naive Bayes
+sedih peduli jabat masyarakat,sedih,sedih,Naive Bayes
+polisi setia sumpah hormat rakyat,percaya,percaya,Naive Bayes
+suara rakyat abai,sedih,sedih,Naive Bayes
+lapor hasil,sedih,takut,Naive Bayes
+polisi junjung benar rakyat dukung,percaya,percaya,Naive Bayes
+polisi peran atur lintas jaga lancar jalan,netral,netral,Naive Bayes
+keren ini program terima kasih polisi karya inovasi ayom,senang,senang,Naive Bayes
+polisi tindak adil percaya publik,percaya,percaya,Naive Bayes
+takut bicara kritis polisi,takut,takut,Naive Bayes
+tidak jujur polisi,marah,percaya,Naive Bayes
+terima kasih polisi udah siaga aman arus mudik moga sehat lancar tugas,senang,senang,Naive Bayes
+sistem emang udah bobrok,marah,marah,Naive Bayes
+takut polisi takut jahat,takut,takut,Naive Bayes
+senang polisi transparan,senang,senang,Naive Bayes
+tidak sih kerja pakai hati nurani,marah,marah,Naive Bayes
+masyarakat akses informasi kinerja polisi lapor tahun,netral,netral,Naive Bayes
+takut polisi polisi momok yang takut motor,takut,takut,Naive Bayes
+terang kecewa polisi,sedih,sedih,Naive Bayes
+kesal lihat rakyat sulit,marah,marah,Naive Bayes
+dendam lihat polisi indak semena pena,marah,marah,Naive Bayes
+program kerja polisi sosialisasi masyarakat paham peran,netral,netral,Naive Bayes
+takut biasa hukum timpang,takut,takut,Naive Bayes
+pakai ragam doang laku kaya preman jalan,marah,marah,Naive Bayes
+polisi peran masyarakat moga transparan,netral,netral,Naive Bayes
+berani polisi tindak jahat patut apresiasi,senang,percaya,Naive Bayes
+hati hancur benar abai,sedih,marah,Naive Bayes
+percaya kinerja polisi sungguh adil,sedih,percaya,Naive Bayes
+senang polisi sigap responsif,senang,senang,Naive Bayes
+aman was temu polisi,sedih,takut,Naive Bayes
+percaya polisi rakyat,percaya,percaya,Naive Bayes
+profesional hormat,netral,percaya,Naive Bayes
+percaya polisi ujung tombak lawan jahat,percaya,percaya,Naive Bayes
+moga koordinasi polisi masyarakat kuat,netral,netral,Naive Bayes
+dikit damai hukum,marah,marah,Naive Bayes
+polisi bikin aman waswas,takut,takut,Naive Bayes
+polisi edukasi hukum masyarakat paham,netral,netral,Naive Bayes
+rakyat korban,sedih,sedih,Naive Bayes
+polisi lindung rakyat,netral,percaya,Naive Bayes
+polisi bersih amanah dukung penuh rakyat,senang,percaya,Naive Bayes
+terima kasih polisi relawan maksimal,senang,senang,Naive Bayes
+viral hilang,takut,marah,Naive Bayes
+henti harap kinerja polisi masyarakat gerak,sedih,percaya,Naive Bayes
+takut laku jahat lindung korban,takut,takut,Naive Bayes
+kecewa polisi malas ungkap jahat,sedih,sedih,Naive Bayes
+susah banget cari polisi kerja rakyat sibuk cari aman,marah,marah,Naive Bayes
+polisi milik unit tangan beda,netral,netral,Naive Bayes
+publik puas kinerja polisi,senang,netral,Naive Bayes
+polisi peduli rakyat,percaya,percaya,Naive Bayes
+harap kecewa,sedih,sedih,Naive Bayes
+takut bicara ujung ancam,takut,takut,Naive Bayes
+seram lihat polisi lindung tindak,takut,takut,Naive Bayes
+dengar cerita seram polisi takut,takut,takut,Naive Bayes
+polisi bajing berani kalau pegang senjata doang,marah,percaya,Naive Bayes
+percaya polisi jujur salah tetap kritik,percaya,percaya,Naive Bayes
+suluh hukum masyarakat bantu cegah jahat,netral,netral,Naive Bayes
+aman tertib butuh kerja tugas polisi,netral,netral,Naive Bayes
+lapor butuh proses,netral,netral,Naive Bayes
+tidak kunjung selesai bukti sistem udah gagal total,marah,marah,Naive Bayes
+sedih hukum pihak rakyat,sedih,sedih,Naive Bayes
+polisi disiplin bikin masyarakat kagum,senang,senang,Naive Bayes
+takut banget jadi jalan lapor bingung percaya tidak,takut,takut,Naive Bayes
+koordinasi polisi masyarakat cipta lingkung aman,netral,netral,Naive Bayes
+hati sakit jahat biar,sedih,takut,Naive Bayes
+sungguh polri kecewa rakyat,sedih,sedih,Naive Bayes
+terima kasih polw,senang,senang,Naive Bayes
+teknologi polisi bantu selidik,netral,netral,Naive Bayes
+polisi adil dukung masyarakat,percaya,percaya,Naive Bayes
+kecewa kuasa polisi,sedih,sedih,Naive Bayes
+susah percaya selesai,sedih,sedih,Naive Bayes
+polisi bukti institusi polisi tegak adil jujur intimidasi,percaya,percaya,Naive Bayes
+polisi sikap adil jujur,percaya,percaya,Naive Bayes
+keluarga tabrak lari kecewa lapor polisi direspon,sedih,sedih,Naive Bayes
+lawan jahat berat berat aparat main,takut,takut,Naive Bayes
+sulit percaya aparat,sedih,sedih,Naive Bayes
+korban butuh lindung lapor abai,sedih,sedih,Naive Bayes
+polisi milik tanggung jaga stabilitas sosial aman nasional,netral,netral,Naive Bayes
+kelar kerja keras polisi rakyat marah,marah,marah,Naive Bayes
+polisi dengar jerit rakyat atas,sedih,marah,Naive Bayes
+respons cepat tangan lapor tingkat percaya masyarakat,netral,netral,Naive Bayes
+terima kasih polisi aman nyaman tiap jalan,senang,senang,Naive Bayes
+polisi lindung rakyat bikin susah,marah,marah,Naive Bayes
+sebel banget gede ujung ujung hilang,marah,marah,Naive Bayes
+putus ambil polisi sungguh kecewa cermin adil,sedih,sedih,Naive Bayes
+lihat kinerja polisi hancur,sedih,marah,Naive Bayes
+jengkel lihat polisi sibuk kejar tilang tangkap koruptor,marah,marah,Naive Bayes
+aja berita polisi masalah,marah,marah,Naive Bayes
+rakyat salah langsung adil salah proses kayak keong,marah,marah,Naive Bayes
+khawatir urus polisi hasil kali tebak,takut,takut,Naive Bayes
+polisi gerak cepat tekan publik,sedih,netral,Naive Bayes
+kecewa polisi rumit,sedih,sedih,Naive Bayes
+polisi cepat tanggap tugas inspirasi,senang,senang,Naive Bayes
+polisi fungsi,netral,netral,Naive Bayes
+terima kasih polisi keras,senang,senang,Naive Bayes
+kali biar kecewa,sedih,marah,Naive Bayes
+keren terima kasih polisi,senang,senang,Naive Bayes
+takut polisi gerak viral,takut,marah,Naive Bayes
+terima kasih polisi ungkap benar,senang,senang,Naive Bayes
+aparat polisi bangsat,marah,takut,Naive Bayes
+sedih lenyap,sedih,sedih,Naive Bayes
+polisi panjang polisi kumpul orang licik indonesia,marah,percaya,Naive Bayes
+baik sistem polisi,netral,netral,Naive Bayes
+sedih dite,sedih,sedih,Naive Bayes
+gue polisi sayang kalah suara,percaya,percaya,Naive Bayes
+polisi rakyat lawan rakyat,sedih,percaya,Naive Bayes
+orang ragu bantu polisi takut sulit anggap serius,takut,takut,Naive Bayes
+sedih tidakadil rajalela,sedih,sedih,Naive Bayes
+terima kasih polisi layan baik masyarakat,senang,senang,Naive Bayes
+sih tidak malu ragam,marah,marah,Naive Bayes
+polisi jalin silaturahmi masyarakat dengar keluh kesah aspirasi masyarakat,percaya,netral,Naive Bayes
+layan cepat transparan kunci percaya masyarakat polisi,netral,netral,Naive Bayes
+polisi humanis masyarakat,percaya,percaya,Naive Bayes
+takut transparansi tangan,takut,netral,Naive Bayes
+terima kasih polisi bu polisi standby malam,senang,senang,Naive Bayes
+bangga polisi simpati orang,senang,senang,Naive Bayes
+viral tindak,sedih,marah,Naive Bayes
+lapor masuk proses suai prosedur hukum laku,netral,netral,Naive Bayes
+takut polisi pihak penting,takut,takut,Naive Bayes
+polisi responsif bantu selesai hukum cepat,netral,senang,Naive Bayes
+tegak adil rakyat takut sayang,takut,takut,Naive Bayes
+terima kasih polisi jujur adil,percaya,senang,Naive Bayes
+polisi transparan biar percaya publik tidak hilang,takut,netral,Naive Bayes
+polisi hati rakyat,percaya,percaya,Naive Bayes
+polisi tugas tilang jalan coba lihat jahat mata,marah,takut,Naive Bayes
+terima kasih hadir tengah masyarakat,senang,senang,Naive Bayes
+adil sulit,sedih,sedih,Naive Bayes
+hebat kinerja polisi tangkap laku kriminal,senang,sedih,Naive Bayes
+ngeri urus polisi rumit,takut,takut,Naive Bayes
+terima kasih polisi cegah jahat moga depan jahat ungkap,senang,senang,Naive Bayes
+polisi jujur tulus maaf,percaya,percaya,Naive Bayes
+polisi harap hukum,percaya,sedih,Naive Bayes
+jujur aja temu polisi jalan deg degan,takut,takut,Naive Bayes
+tegak hukum adil cipta tertib masyarakat,netral,percaya,Naive Bayes
+polisi tanggung harap bangsa,percaya,percaya,Naive Bayes
+andai polisi rakyat ada,sedih,percaya,Naive Bayes
+polisi lindung sumber takut,sedih,takut,Naive Bayes
+darah lihat laku polisi,marah,marah,Naive Bayes
+terima kasih polisi peduli bersih indah kota,senang,senang,Naive Bayes
+disiplin internal polisi jaga integritas institusi,netral,netral,Naive Bayes
+tidak polisi buruk benar adil,percaya,marah,Naive Bayes
+adil wujud polisi hati,percaya,percaya,Naive Bayes
+gimana tidak takut diputarbalikkan,takut,takut,Naive Bayes
+lihat ragam bikin marah bangga,marah,marah,Naive Bayes
+takut bicara jujur ujung,takut,takut,Naive Bayes
+ujung tumpuk,sedih,sedih,Naive Bayes
+latih kembang tingkat profesionalisme,netral,netral,Naive Bayes
+mantap deh pokok polisi,senang,senang,Naive Bayes
+salut polisi usaha cipta lingkung aman,senang,percaya,Naive Bayes
+gue sedih banget kinerja polisi,sedih,sedih,Naive Bayes
+sungguh senang polisi bersih transparan,senang,senang,Naive Bayes
+tugas utama polisi jaga tertib lindung warga,netral,netral,Naive Bayes
+kinerja polisi evaluasi kala biar optimal,netral,netral,Naive Bayes
+polisi ayom masyarakat tingkat layan,netral,netral,Naive Bayes
+sedih hukum pihak lemah,sedih,sedih,Naive Bayes
+benci banget sistem adil,marah,marah,Naive Bayes
+polisi pegang teguh prinsip adil dukung rakyat,percaya,percaya,Naive Bayes
+dendam polisi jujur,marah,percaya,Naive Bayes
+polisi hati,senang,percaya,Naive Bayes
+polisi simbol adil sungguh,percaya,sedih,Naive Bayes
+muak lihat polisi hobi intimidasi rakyat,marah,marah,Naive Bayes
+emosi polisi salah guna senjata wenang,marah,marah,Naive Bayes
+tidak berani komentar takut bumerang,takut,takut,Naive Bayes
+polisi tangkap tindak laku aniaya anak,percaya,sedih,Naive Bayes
+tingkat sulit beda beda,netral,netral,Naive Bayes
+kadang pilih diam lapor polisi takut sulit curiga,takut,takut,Naive Bayes
+aman tidak polisi lambat tindak,takut,takut,Naive Bayes
+polisi bikin tenang bikin cemas,takut,takut,Naive Bayes
+apresiasi polisi utama adil,senang,percaya,Naive Bayes
+tegak hukum adil masyarakat percaya,netral,percaya,Naive Bayes
+terima kasih polisi tegak adil,senang,senang,Naive Bayes
+takut polisi hilang percaya rakyat,takut,takut,Naive Bayes
+harap polisi ujung kecewa,sedih,sedih,Naive Bayes
+polisi hadir lindung sumber takut,takut,sedih,Naive Bayes
+korban polisi abai,takut,sedih,Naive Bayes
+gue percaya polisi profesional kerja penting pribadi,percaya,percaya,Naive Bayes
+polisi batal konser ahmad dhani ribu serta kecewa,sedih,sedih,Naive Bayes
+senang polri gelar bakti sosial ringan beban masyarakat,senang,senang,Naive Bayes
+terima kasih polisi moga sehat lancar rejeki,senang,senang,Naive Bayes
+serius kerja itu rakyat sari untung,marah,marah,Naive Bayes
+hati senang polisi layan tulus,senang,senang,Naive Bayes
+aman nyaman masyarakat prioritas,netral,senang,Naive Bayes
+takut korban salah tangkap,takut,takut,Naive Bayes
+sedih kerja polisi,sedih,sedih,Naive Bayes
+kecewa jalan polisi,sedih,sedih,Naive Bayes
+masyarakat bangga polisi profesional,senang,senang,Naive Bayes
+takut viral proses tidak iya ilang aja,takut,marah,Naive Bayes
+udah berat takut laku bebas,takut,takut,Naive Bayes
+lapor hilang motor udah ikhlas aja serius,marah,marah,Naive Bayes
+duit aman tidak korban,marah,takut,Naive Bayes
+reformasi institusi butuh proses,netral,netral,Naive Bayes
+jadi tidak masuk akal bikin takut,takut,takut,Naive Bayes
+terima kasih polisi haru,senang,senang,Naive Bayes
+sedih hukum tajam,sedih,sedih,Naive Bayes
+evaluasi rutin kinerja polisi optimal,netral,netral,Naive Bayes
+polisi panutan tegak hukum,percaya,percaya,Naive Bayes
+layan cepat responsif harap masyarakat,netral,netral,Naive Bayes
+seram adil negosiasi,takut,takut,Naive Bayes
+selesai,sedih,sedih,Naive Bayes
+polisi bikin sedih,sedih,sedih,Naive Bayes
+alhamdulillah terima kasih polisi hukum berat beratmya mahluk kayak,marah,senang,Naive Bayes
+peran polisi jaga tertib dukung elemen masyarakat,netral,netral,Naive Bayes
+operasi polisi jalan deg degan,takut,takut,Naive Bayes
+hebat polisi pikir cepat,senang,senang,Naive Bayes
+takut adil beli uang,takut,takut,Naive Bayes
+lapor masyarakat tindaklanjut suai prosedur laku,netral,netral,Naive Bayes
+sedih rakyat hilang percaya hukum,sedih,sedih,Naive Bayes
+takut razia kena aneh,takut,takut,Naive Bayes
+khawatir lapor meja tindak,takut,takut,Naive Bayes
+terima kasih polisi sehat laksana tugas,senang,senang,Naive Bayes
+rakyat butuh polisi junjung nilai adil,percaya,sedih,Naive Bayes
+senang polisi dengar keluh kesah masyarakat ayom masyarakat,senang,senang,Naive Bayes
+polisi takut hantu,sedih,takut,Naive Bayes
+cemas oknum polisi tindak wenang wenang sanksi,takut,takut,Naive Bayes
+viral proses tidak iya biar bikin ngeri,takut,marah,Naive Bayes
+garang urus rakyat berani tidak lawan,marah,takut,Naive Bayes
+polisi takut sih,takut,takut,Naive Bayes
+takut atur berat rakyat,takut,takut,Naive Bayes
+moga lapor masyarakat ditindaklanjuti cepat,netral,netral,Naive Bayes
+terima kasih polisi sedia aman,senang,senang,Naive Bayes
+polisi disiplin profesional bangga bangsa,senang,senang,Naive Bayes
+takut tahu rekam jadi,takut,takut,Naive Bayes
+terima kasih polisi pulang mudik macet lancar jalan,senang,senang,Naive Bayes
+hilang,sedih,sedih,Naive Bayes
+program tingkat kualitas sdm polisi bantu profesionalisme kerja,netral,netral,Naive Bayes
+polisi suai prosedur atur laku,netral,netral,Naive Bayes
+ayo polisi berantas habis laku menarkoba,percaya,percaya,Naive Bayes
+marah lihat koruptor bebas santai,marah,marah,Naive Bayes
+polisi bantu,percaya,senang,Naive Bayes
+jujur adil iya polisi moga amanah sukses,percaya,percaya,Naive Bayes
+tegang kali razia salah,takut,takut,Naive Bayes
+percaya masyarakat polisi jaga,percaya,percaya,Naive Bayes
+polisi simbol lindung jaga,percaya,percaya,Naive Bayes
+polisi jalan tugas independen intervensi,netral,netral,Naive Bayes
+polisi patroli rutin jaga aman wilayah,percaya,netral,Naive Bayes
+kecewa berani bicara bungkam,sedih,takut,Naive Bayes
+lapor tindaklanjut biar masyarakat aman,netral,netral,Naive Bayes
+takut polisi salah guna kuasa,takut,takut,Naive Bayes
+polisi profesionalisme hormat,percaya,netral,Naive Bayes
+libat komunitas jaga aman bantu tugas polisi,netral,netral,Naive Bayes
+polisi hadir aman,sedih,senang,Naive Bayes
+jujur polisi kunci utama bangun percaya publik,percaya,netral,Naive Bayes
+percaya reformasi polisi bawa dampak positif hukum,percaya,percaya,Naive Bayes
+hukum takut tegak,takut,takut,Naive Bayes
+kinerja polisi puas evaluasi,sedih,netral,Naive Bayes
+polisi penuh integritas,percaya,percaya,Naive Bayes
+polisi kinerja kayak tai,marah,percaya,Naive Bayes
+tindak polisi suai kode etik standar prosedur laku,netral,netral,Naive Bayes
+sungguh adil brengsek polisi,marah,marah,Naive Bayes
+takut hukum tajam,takut,takut,Naive Bayes
+sumpah heran banget gimana sih santai bikin rakyat sengsara,marah,marah,Naive Bayes
+baik sektor polisi bawa dampak positif masyarakat,netral,percaya,Naive Bayes
+terima kasih lindung,senang,senang,Naive Bayes
+hukum lindung takut,takut,takut,Naive Bayes
+polisi tindak oknum ormas,percaya,marah,Naive Bayes
+kali aja bikin darah,marah,marah,Naive Bayes
+hukum tumpul tajam sedih,sedih,sedih,Naive Bayes
+percaya rakyat kuat polisi benah,percaya,percaya,Naive Bayes
+aman wilayah salah indikator hasil kinerja polisi,netral,senang,Naive Bayes
+jujur aja polisi buruk sorot,percaya,marah,Naive Bayes
+partisipasi publik awas bantu jaga kredibilitas polisi,netral,netral,Naive Bayes
+kritik bangun bantu baik sistem,netral,netral,Naive Bayes
+polisi lindung bikin takut,takut,takut,Naive Bayes

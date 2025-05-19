@@ -1,0 +1,384 @@
+kalimat,prediksi_nb,prediksi_bert,bobot_bert,bobot_lexicon,kata_terkait
+kolaborasi instansi tingkat efektivitas tegak hukum,netral,sadness,0.0,0.0,
+hukum indonesia butuh polisi jujur adil,percaya,sadness,0.0,0.0,
+lapor proses suai mekanisme,netral,sadness,0.0,0.0,
+kinerja polisi terus,netral,sadness,0.0,0.0,
+kinerja polisi bagus,senang,sadness,0.0,0.0,
+polisi solusi tambah luka,sedih,sadness,0.0,0.0,
+percaya rakyat aset besar polisi,percaya,sadness,0.0,0.0,
+polisi manusia,netral,sadness,0.0,0.0,
+terima kasih polisi indonesia dedikasi lindung masyarakat patut acung jempol,senang,sadness,0.0,0.0,
+polisi profesional bawa dampak sistem hukum,percaya,sadness,0.0,0.0,
+hukum tegak dasar atur tetap,netral,sadness,0.0,0.0,
+polisi pakai sogok makan,sedih,sadness,0.0,0.0,
+tangan adil takut hukum negeri,takut,fear,0.0,0.0,
+rakyat salah langsung hukum oknum polisi salah lindung,marah,sadness,0.0,0.0,
+kesel banget tangkap salah main gertak rakyat,sedih,sadness,0.0,0.0,
+terima kasih polisi bantu warga,senang,sadness,0.0,0.0,
+terima kasih bu polisi,senang,sadness,0.0,0.0,
+hukum polisi tebang pilih,senang,sadness,0.0,0.0,
+takut tidakadil,takut,fear,0.0,0.0,
+harap kecewa polisi,sedih,sadness,0.7,-0.7,kecewa
+polisi wajib kasih harga perhati,senang,sadness,0.0,0.0,
+percaya polisi transparan tangan,netral,sadness,0.0,0.0,
+alhamdulillah mudik maju terima kasih polisi,senang,sadness,0.0,0.0,
+pasti hukum wujud polisi jujur,percaya,sadness,0.0,0.0,
+takut hadap polisi profesional salah guna wenang,takut,fear,0.0,0.0,
+tampil henti polisi sheila on kecewa toleransi aparat,sedih,sadness,0.7,-0.7,kecewa
+saat ancam lindung terima kasih polisi tni semangat,senang,sadness,0.0,0.0,
+terima kasih polisi keras jaga batas laut,senang,sadness,0.0,0.0,
+kecewa sakit hati polisi,sedih,sadness,0.7,-0.7,kecewa
+terima kasih polisi salut,senang,sadness,0.0,0.0,
+masalah bangsa tegak hukum polisi percaya rakyat,percaya,sadness,0.0,0.0,
+integritas polisi pondasi utama percaya publik,netral,sadness,0.0,0.0,
+gue polisi juang rakyat penting,sedih,sadness,0.0,0.0,
+kecewa hukum negeri seakan formalitas,sedih,sadness,0.7,-0.7,kecewa
+miris orang jujur jadi sangka,sedih,sadness,0.0,0.0,
+berani polisi lawan tidakadil patut apresiasi,percaya,sadness,0.0,0.0,
+patut apresiasi kinerja polisi gerak cepat tangkap edar narkoba,senang,sadness,0.0,0.0,
+hukum formalitas,marah,sadness,0.0,0.0,
+moga layan polisi depan,netral,sadness,0.0,0.0,
+apresiasi dalam dedikasi kinerja polisi,percaya,sadness,0.0,0.0,
+untuk polisi jujur adil maksimal ucap terimakasih,percaya,sadness,0.0,0.0,
+salut polisi tolong sopir truk kontainer pingsan,senang,sadness,0.0,0.0,
+ngeri berani bicara kriminalisasi,takut,fear,0.0,0.0,
+terima kasih polisi kronologi,senang,sadness,0.0,0.0,
+jalan ruang sidang lempem,netral,sadness,0.0,0.0,
+polisi jaga adil,percaya,sadness,0.0,0.0,
+marah,marah,anger,0.8,-0.8,marah
+laku kayak preman hormat gimana rakyat respek,marah,sadness,0.0,0.0,
+dendam lihat polisi bebas hukum bukti salah,marah,anger,0.9,-0.9,dendam
+rinding lihat aparat salah guna kuasa,takut,sadness,0.0,0.0,
+hukum negeri duit,marah,sadness,0.0,0.0,
+sentuh langsung hukum,marah,sadness,0.0,0.0,
+polisi lindung aman,takut,sadness,0.0,0.0,
+takut polisi jahat,takut,fear,0.0,0.0,
+seram polisi bawa senjata aman tegang,percaya,fear,0.0,0.0,
+jengkel banget polisi diam,marah,anger,0.6,-0.6,jengkel
+sok kerja rugi rakyat,marah,sadness,0.0,0.0,
+polisi jujur amanah keren banget moga kayak gitu,percaya,sadness,0.0,0.0,
+pecat oknum polisi,marah,sadness,0.0,0.0,
+miris bukti proses larut larut,sedih,sadness,0.0,0.0,
+aman polisi jaga aman nyaman masyarakat,senang,sadness,0.0,0.0,
+geram lihat aparat pikir,marah,anger,0.7,-0.7,geram
+kerja penting mending mundur aja,marah,sadness,0.0,0.0,
+tidak rakyat sok kuasa,marah,sadness,0.0,0.0,
+polisi aman,netral,sadness,0.0,0.0,
+polisi lindung kriminal,sedih,sadness,0.0,0.0,
+polisi peran tertib masyarakat,netral,sadness,0.0,0.0,
+takut marah,takut,fear,0.8,-0.8,marah
+integritas polisi tentu hukum negeri,percaya,sadness,0.0,0.0,
+terima kasih kapolresta peduli fasilitas publik,senang,sadness,0.0,0.0,
+peran jaga tertib,netral,sadness,0.0,0.0,
+buat salah kena hukum adil,takut,sadness,0.0,0.0,
+salut polisi jaga adil,percaya,sadness,0.0,0.0,
+sumpah iya polisi sih,marah,sadness,0.0,0.0,
+jengkel lihat polisi main keras,marah,anger,0.6,-0.6,jengkel
+benci banget sistem hukum bobrok,marah,anger,1.0,-1.0,benci
+tidak uang koneksi harap adil,marah,sadness,0.0,0.0,
+polisi tingkat profesionalisme tugas,netral,sadness,0.0,0.0,
+marah kecewa percaya,sedih,sadness,0.75,-0.75,"marah, kecewa"
+susah percaya hukum ubah arah,percaya,sadness,0.0,0.0,
+percaya polisi jujur semangat benar kerja,percaya,sadness,0.0,0.0,
+koordinasi kait tingkat efektivitas tegak hukum,netral,sadness,0.0,0.0,
+senang jujur nilai,senang,trust,0.8,0.8,senang
+senang polisi inovatif tangan aman,senang,trust,0.8,0.8,senang
+polisi kerja sih salah lindung,marah,sadness,0.0,0.0,
+teknologi bantu polisi tingkat kinerja,netral,sadness,0.0,0.0,
+penting tingkat kinerja polisi,netral,sadness,0.0,0.0,
+tolong bukti hoax bukti valid biar rakyat percaya,marah,sadness,0.0,0.0,
+rakyat protes bilang tidak hormat hukum gimana,marah,sadness,0.0,0.0,
+salut polisi benar adil,percaya,sadness,0.0,0.0,
+polisi tidak becus kerja harap rakyat percaya,percaya,sadness,0.0,0.0,
+tugas tantang polisi,netral,sadness,0.0,0.0,
+polisi juang adil,sedih,sadness,0.0,0.0,
+kecewa polisi intel bilang sabar,sedih,sadness,0.7,-0.7,kecewa
+seram lihat ujung diam,takut,fear,0.0,0.0,
+polisi ayom masyarakat bangga rakyat indonesia,senang,trust,0.8,0.8,bangga
+tambah kinerja polisi polisi jujur adil lindung rakyat,percaya,sadness,0.0,0.0,
+ruang baik sistem,netral,trust,0.1,0.1,baik
+rakyat tenang polisi,takut,sadness,0.0,0.0,
+rakyat kecewa kinerja polisi,sedih,sadness,0.7,-0.7,kecewa
+benci banget lihat polisi becus,marah,anger,1.0,-1.0,benci
+aman tertib tanggung polisi,netral,sadness,0.0,0.0,
+khawatir polisi lindung penting masyarakat layan,netral,fear,0.0,0.0,
+benar bikin darah dengar,marah,sadness,0.0,0.0,
+tugas polisi latih jalan tugas,netral,sadness,0.0,0.0,
+masyarakat polisi dukung lingkung aman,percaya,sadness,0.0,0.0,
+takut berita orang cari adil tekan aparat,takut,fear,0.0,0.0,
+mending ajar arti adil,percaya,sadness,0.0,0.0,
+kecewa aja liat polisi,marah,sadness,0.7,-0.7,kecewa
+polisi berani tegak benar pahlawan rakyat,percaya,sadness,0.0,0.0,
+jengkel lihat polisi kritik kerja amburadul,marah,anger,0.6,-0.6,jengkel
+senang jujur integritas kuat tubuh polisi,percaya,trust,0.8,0.8,senang
+tegak hukum tingkat aman,netral,sadness,0.0,0.0,
+mantap terima kasih polisi tangkap laku,senang,sadness,0.0,0.0,
+lapor takut tidak proses,takut,fear,0.0,0.0,
+polisi jalan tugas hati nurani hormat rakyat,percaya,sadness,0.0,0.0,
+polisi goblok terima kasih,senang,sadness,0.0,0.0,
+terima kasih polisi baik,senang,trust,0.1,0.1,baik
+aman sih salah kuasa,takut,sadness,0.0,0.0,
+sakit hati kalau kinerja polisi negara,sedih,sadness,0.0,0.0,
+percaya polisi abdi rakyat,percaya,sadness,0.0,0.0,
+kesal lihat oknum bebas hukum,marah,anger,0.5,-0.5,kesal
+sedih peduli jabat masyarakat,sedih,sadness,0.8,-0.8,sedih
+polisi setia sumpah hormat rakyat,percaya,sadness,0.0,0.0,
+suara rakyat abai,sedih,sadness,0.0,0.0,
+lapor hasil,takut,sadness,0.0,0.0,
+polisi junjung benar rakyat dukung,percaya,sadness,0.0,0.0,
+polisi peran atur lintas jaga lancar jalan,netral,sadness,0.0,0.0,
+keren ini program terima kasih polisi karya inovasi ayom,senang,sadness,0.0,0.0,
+polisi tindak adil percaya publik,percaya,sadness,0.0,0.0,
+takut bicara kritis polisi,takut,fear,0.0,0.0,
+tidak jujur polisi,percaya,sadness,0.0,0.0,
+terima kasih polisi udah siaga aman arus mudik moga sehat lancar tugas,senang,sadness,0.0,0.0,
+sistem emang udah bobrok,marah,sadness,0.0,0.0,
+takut polisi takut jahat,takut,fear,0.0,0.0,
+senang polisi transparan,senang,trust,0.8,0.8,senang
+tidak sih kerja pakai hati nurani,marah,sadness,0.0,0.0,
+masyarakat akses informasi kinerja polisi lapor tahun,netral,sadness,0.0,0.0,
+takut polisi polisi momok yang takut motor,takut,fear,0.0,0.0,
+terang kecewa polisi,sedih,sadness,0.7,-0.7,kecewa
+kesal lihat rakyat sulit,marah,anger,0.5,-0.5,kesal
+dendam lihat polisi indak semena pena,marah,anger,0.9,-0.9,dendam
+program kerja polisi sosialisasi masyarakat paham peran,netral,sadness,0.0,0.0,
+takut biasa hukum timpang,takut,fear,0.0,0.0,biasa
+pakai ragam doang laku kaya preman jalan,marah,sadness,0.0,0.0,
+polisi peran masyarakat moga transparan,netral,sadness,0.0,0.0,
+berani polisi tindak jahat patut apresiasi,percaya,sadness,0.0,0.0,
+hati hancur benar abai,marah,sadness,0.0,0.0,
+percaya kinerja polisi sungguh adil,percaya,sadness,0.0,0.0,
+senang polisi sigap responsif,senang,trust,0.8,0.8,senang
+aman was temu polisi,takut,sadness,0.0,0.0,
+percaya polisi rakyat,percaya,sadness,0.0,0.0,
+profesional hormat,percaya,sadness,0.0,0.0,
+percaya polisi ujung tombak lawan jahat,percaya,sadness,0.0,0.0,
+moga koordinasi polisi masyarakat kuat,netral,sadness,0.0,0.0,
+dikit damai hukum,marah,sadness,0.0,0.0,
+polisi bikin aman waswas,takut,fear,0.0,0.0,
+polisi edukasi hukum masyarakat paham,netral,sadness,0.0,0.0,
+rakyat korban,sedih,sadness,0.0,0.0,
+polisi lindung rakyat,percaya,sadness,0.0,0.0,
+polisi bersih amanah dukung penuh rakyat,percaya,sadness,0.0,0.0,
+terima kasih polisi relawan maksimal,senang,sadness,0.0,0.0,
+viral hilang,marah,sadness,0.0,0.0,
+henti harap kinerja polisi masyarakat gerak,percaya,sadness,0.0,0.0,
+takut laku jahat lindung korban,takut,fear,0.0,0.0,
+kecewa polisi malas ungkap jahat,sedih,sadness,0.7,-0.7,kecewa
+susah banget cari polisi kerja rakyat sibuk cari aman,marah,sadness,0.0,0.0,
+polisi milik unit tangan beda,netral,sadness,0.0,0.0,
+publik puas kinerja polisi,netral,trust,0.7,0.7,puas
+polisi peduli rakyat,percaya,sadness,0.0,0.0,
+harap kecewa,sedih,sadness,0.7,-0.7,kecewa
+takut bicara ujung ancam,takut,fear,0.0,0.0,
+seram lihat polisi lindung tindak,takut,fear,0.0,0.0,
+dengar cerita seram polisi takut,takut,fear,0.0,0.0,
+polisi bajing berani kalau pegang senjata doang,percaya,sadness,0.0,0.0,
+percaya polisi jujur salah tetap kritik,percaya,sadness,0.0,0.0,
+suluh hukum masyarakat bantu cegah jahat,netral,sadness,0.0,0.0,
+aman tertib butuh kerja tugas polisi,netral,sadness,0.0,0.0,
+lapor butuh proses,netral,sadness,0.0,0.0,
+tidak kunjung selesai bukti sistem udah gagal total,marah,sadness,0.0,0.0,
+sedih hukum pihak rakyat,sedih,sadness,0.8,-0.8,sedih
+polisi disiplin bikin masyarakat kagum,senang,trust,0.7,0.7,kagum
+takut banget jadi jalan lapor bingung percaya tidak,takut,fear,0.0,0.0,
+koordinasi polisi masyarakat cipta lingkung aman,netral,sadness,0.0,0.0,
+hati sakit jahat biar,takut,sadness,0.0,0.0,
+sungguh polri kecewa rakyat,sedih,sadness,0.7,-0.7,kecewa
+terima kasih polw,senang,sadness,0.0,0.0,
+teknologi polisi bantu selidik,netral,sadness,0.0,0.0,
+polisi adil dukung masyarakat,percaya,sadness,0.0,0.0,
+kecewa kuasa polisi,sedih,sadness,0.7,-0.7,kecewa
+susah percaya selesai,sedih,sadness,0.0,0.0,
+polisi bukti institusi polisi tegak adil jujur intimidasi,percaya,sadness,0.0,0.0,
+polisi sikap adil jujur,percaya,sadness,0.0,0.0,
+keluarga tabrak lari kecewa lapor polisi direspon,sedih,sadness,0.7,-0.7,kecewa
+lawan jahat berat berat aparat main,takut,sadness,0.0,0.0,
+sulit percaya aparat,sedih,sadness,0.0,0.0,
+korban butuh lindung lapor abai,sedih,sadness,0.0,0.0,
+polisi milik tanggung jaga stabilitas sosial aman nasional,netral,sadness,0.0,0.0,
+kelar kerja keras polisi rakyat marah,marah,anger,0.8,-0.8,marah
+polisi dengar jerit rakyat atas,marah,sadness,0.0,0.0,
+respons cepat tangan lapor tingkat percaya masyarakat,netral,sadness,0.0,0.0,
+terima kasih polisi aman nyaman tiap jalan,senang,sadness,0.0,0.0,
+polisi lindung rakyat bikin susah,marah,sadness,0.0,0.0,
+sebel banget gede ujung ujung hilang,marah,sadness,0.0,0.0,
+putus ambil polisi sungguh kecewa cermin adil,sedih,sadness,0.7,-0.7,kecewa
+lihat kinerja polisi hancur,marah,sadness,0.0,0.0,
+jengkel lihat polisi sibuk kejar tilang tangkap koruptor,marah,anger,0.6,-0.6,jengkel
+aja berita polisi masalah,marah,sadness,0.0,0.0,
+rakyat salah langsung adil salah proses kayak keong,marah,sadness,0.0,0.0,
+khawatir urus polisi hasil kali tebak,takut,fear,0.0,0.0,
+polisi gerak cepat tekan publik,netral,sadness,0.0,0.0,
+kecewa polisi rumit,sedih,sadness,0.7,-0.7,kecewa
+polisi cepat tanggap tugas inspirasi,senang,sadness,0.0,0.0,
+polisi fungsi,netral,sadness,0.0,0.0,
+terima kasih polisi keras,senang,sadness,0.0,0.0,
+kali biar kecewa,marah,sadness,0.7,-0.7,kecewa
+keren terima kasih polisi,senang,sadness,0.0,0.0,
+takut polisi gerak viral,marah,fear,0.0,0.0,
+terima kasih polisi ungkap benar,senang,sadness,0.0,0.0,
+aparat polisi bangsat,takut,sadness,0.0,0.0,
+sedih lenyap,sedih,sadness,0.8,-0.8,sedih
+polisi panjang polisi kumpul orang licik indonesia,percaya,sadness,0.0,0.0,
+baik sistem polisi,netral,trust,0.1,0.1,baik
+sedih dite,sedih,sadness,0.8,-0.8,sedih
+gue polisi sayang kalah suara,percaya,sadness,0.0,0.0,
+polisi rakyat lawan rakyat,percaya,sadness,0.0,0.0,
+orang ragu bantu polisi takut sulit anggap serius,takut,fear,0.0,0.0,
+sedih tidakadil rajalela,sedih,sadness,0.8,-0.8,sedih
+terima kasih polisi layan baik masyarakat,senang,trust,0.1,0.1,baik
+sih tidak malu ragam,marah,sadness,0.0,0.0,
+polisi jalin silaturahmi masyarakat dengar keluh kesah aspirasi masyarakat,netral,sadness,0.0,0.0,
+layan cepat transparan kunci percaya masyarakat polisi,netral,sadness,0.0,0.0,
+polisi humanis masyarakat,percaya,sadness,0.0,0.0,
+takut transparansi tangan,netral,fear,0.0,0.0,
+terima kasih polisi bu polisi standby malam,senang,sadness,0.0,0.0,
+bangga polisi simpati orang,senang,trust,0.8,0.8,bangga
+viral tindak,marah,sadness,0.0,0.0,
+lapor masuk proses suai prosedur hukum laku,netral,sadness,0.0,0.0,
+takut polisi pihak penting,takut,fear,0.0,0.0,
+polisi responsif bantu selesai hukum cepat,senang,sadness,0.0,0.0,
+tegak adil rakyat takut sayang,takut,fear,0.0,0.0,
+terima kasih polisi jujur adil,senang,sadness,0.0,0.0,
+polisi transparan biar percaya publik tidak hilang,netral,sadness,0.0,0.0,
+polisi hati rakyat,percaya,sadness,0.0,0.0,
+polisi tugas tilang jalan coba lihat jahat mata,takut,sadness,0.0,0.0,
+terima kasih hadir tengah masyarakat,senang,sadness,0.0,0.0,
+adil sulit,sedih,sadness,0.0,0.0,
+hebat kinerja polisi tangkap laku kriminal,sedih,sadness,0.0,0.0,
+ngeri urus polisi rumit,takut,fear,0.0,0.0,
+terima kasih polisi cegah jahat moga depan jahat ungkap,senang,sadness,0.0,0.0,
+polisi jujur tulus maaf,percaya,sadness,0.0,0.0,
+polisi harap hukum,sedih,sadness,0.0,0.0,
+jujur aja temu polisi jalan deg degan,takut,sadness,0.0,0.0,
+tegak hukum adil cipta tertib masyarakat,percaya,sadness,0.0,0.0,
+polisi tanggung harap bangsa,percaya,sadness,0.0,0.0,
+andai polisi rakyat ada,percaya,sadness,0.0,0.0,
+polisi lindung sumber takut,takut,fear,0.0,0.0,
+darah lihat laku polisi,marah,sadness,0.0,0.0,
+terima kasih polisi peduli bersih indah kota,senang,sadness,0.0,0.0,
+disiplin internal polisi jaga integritas institusi,netral,sadness,0.0,0.0,
+tidak polisi buruk benar adil,marah,sadness,0.0,0.0,
+adil wujud polisi hati,percaya,sadness,0.0,0.0,
+gimana tidak takut diputarbalikkan,takut,fear,0.0,0.0,
+lihat ragam bikin marah bangga,marah,anger,0.8,0.0,"marah, bangga"
+takut bicara jujur ujung,takut,fear,0.0,0.0,
+ujung tumpuk,sedih,sadness,0.0,0.0,
+latih kembang tingkat profesionalisme,netral,sadness,0.0,0.0,
+mantap deh pokok polisi,senang,sadness,0.0,0.0,
+salut polisi usaha cipta lingkung aman,percaya,sadness,0.0,0.0,
+gue sedih banget kinerja polisi,sedih,sadness,0.8,-0.8,sedih
+sungguh senang polisi bersih transparan,senang,trust,0.8,0.8,senang
+tugas utama polisi jaga tertib lindung warga,netral,sadness,0.0,0.0,
+kinerja polisi evaluasi kala biar optimal,netral,sadness,0.0,0.0,
+polisi ayom masyarakat tingkat layan,netral,sadness,0.0,0.0,
+sedih hukum pihak lemah,sedih,sadness,0.8,-0.8,sedih
+benci banget sistem adil,marah,anger,1.0,-1.0,benci
+polisi pegang teguh prinsip adil dukung rakyat,percaya,sadness,0.0,0.0,
+dendam polisi jujur,percaya,anger,0.9,-0.9,dendam
+polisi hati,percaya,sadness,0.0,0.0,
+polisi simbol adil sungguh,sedih,sadness,0.0,0.0,
+muak lihat polisi hobi intimidasi rakyat,marah,sadness,0.0,0.0,
+emosi polisi salah guna senjata wenang,marah,sadness,0.0,0.0,
+tidak berani komentar takut bumerang,takut,fear,0.0,0.0,
+polisi tangkap tindak laku aniaya anak,sedih,sadness,0.0,0.0,
+tingkat sulit beda beda,netral,sadness,0.0,0.0,
+kadang pilih diam lapor polisi takut sulit curiga,takut,fear,0.0,0.0,
+aman tidak polisi lambat tindak,takut,sadness,0.0,0.0,
+polisi bikin tenang bikin cemas,takut,fear,0.0,0.0,
+apresiasi polisi utama adil,percaya,sadness,0.0,0.0,
+tegak hukum adil masyarakat percaya,percaya,sadness,0.0,0.0,
+terima kasih polisi tegak adil,senang,sadness,0.0,0.0,
+takut polisi hilang percaya rakyat,takut,fear,0.0,0.0,
+harap polisi ujung kecewa,sedih,sadness,0.7,-0.7,kecewa
+polisi hadir lindung sumber takut,sedih,fear,0.0,0.0,
+korban polisi abai,sedih,sadness,0.0,0.0,
+gue percaya polisi profesional kerja penting pribadi,percaya,sadness,0.0,0.0,
+polisi batal konser ahmad dhani ribu serta kecewa,sedih,sadness,0.7,-0.7,kecewa
+senang polri gelar bakti sosial ringan beban masyarakat,senang,trust,0.8,0.8,senang
+terima kasih polisi moga sehat lancar rejeki,senang,sadness,0.0,0.0,
+serius kerja itu rakyat sari untung,marah,sadness,0.0,0.0,
+hati senang polisi layan tulus,senang,trust,0.8,0.8,senang
+aman nyaman masyarakat prioritas,senang,sadness,0.0,0.0,
+takut korban salah tangkap,takut,fear,0.0,0.0,
+sedih kerja polisi,sedih,sadness,0.8,-0.8,sedih
+kecewa jalan polisi,sedih,sadness,0.7,-0.7,kecewa
+masyarakat bangga polisi profesional,senang,trust,0.8,0.8,bangga
+takut viral proses tidak iya ilang aja,marah,fear,0.0,0.0,
+udah berat takut laku bebas,takut,fear,0.0,0.0,
+lapor hilang motor udah ikhlas aja serius,marah,sadness,0.0,0.0,
+duit aman tidak korban,takut,sadness,0.0,0.0,
+reformasi institusi butuh proses,netral,sadness,0.0,0.0,
+jadi tidak masuk akal bikin takut,takut,fear,0.0,0.0,
+terima kasih polisi haru,senang,sadness,0.6,-0.6,haru
+sedih hukum tajam,sedih,sadness,0.8,-0.8,sedih
+evaluasi rutin kinerja polisi optimal,netral,sadness,0.0,0.0,
+polisi panutan tegak hukum,percaya,sadness,0.0,0.0,
+layan cepat responsif harap masyarakat,netral,sadness,0.0,0.0,
+seram adil negosiasi,takut,fear,0.0,0.0,
+selesai,sedih,sadness,0.0,0.0,
+polisi bikin sedih,sedih,sadness,0.8,-0.8,sedih
+alhamdulillah terima kasih polisi hukum berat beratmya mahluk kayak,senang,sadness,0.0,0.0,
+peran polisi jaga tertib dukung elemen masyarakat,netral,sadness,0.0,0.0,
+operasi polisi jalan deg degan,takut,sadness,0.0,0.0,
+hebat polisi pikir cepat,senang,sadness,0.0,0.0,
+takut adil beli uang,takut,fear,0.0,0.0,
+lapor masyarakat tindaklanjut suai prosedur laku,netral,sadness,0.0,0.0,
+sedih rakyat hilang percaya hukum,sedih,sadness,0.8,-0.8,sedih
+takut razia kena aneh,takut,fear,0.0,0.0,
+khawatir lapor meja tindak,takut,fear,0.0,0.0,
+terima kasih polisi sehat laksana tugas,senang,sadness,0.0,0.0,
+rakyat butuh polisi junjung nilai adil,sedih,sadness,0.0,0.0,
+senang polisi dengar keluh kesah masyarakat ayom masyarakat,senang,trust,0.8,0.8,senang
+polisi takut hantu,takut,fear,0.0,0.0,
+cemas oknum polisi tindak wenang wenang sanksi,takut,fear,0.0,0.0,
+viral proses tidak iya biar bikin ngeri,marah,fear,0.0,0.0,
+garang urus rakyat berani tidak lawan,takut,sadness,0.0,0.0,
+polisi takut sih,takut,fear,0.0,0.0,
+takut atur berat rakyat,takut,fear,0.0,0.0,
+moga lapor masyarakat ditindaklanjuti cepat,netral,sadness,0.0,0.0,
+terima kasih polisi sedia aman,senang,sadness,0.0,0.0,
+polisi disiplin profesional bangga bangsa,senang,trust,0.8,0.8,bangga
+takut tahu rekam jadi,takut,fear,0.0,0.0,
+terima kasih polisi pulang mudik macet lancar jalan,senang,sadness,0.0,0.0,
+hilang,sedih,sadness,0.0,0.0,
+program tingkat kualitas sdm polisi bantu profesionalisme kerja,netral,sadness,0.0,0.0,
+polisi suai prosedur atur laku,netral,sadness,0.0,0.0,
+ayo polisi berantas habis laku menarkoba,percaya,sadness,0.0,0.0,
+marah lihat koruptor bebas santai,marah,anger,0.8,-0.8,marah
+polisi bantu,senang,sadness,0.0,0.0,
+jujur adil iya polisi moga amanah sukses,percaya,sadness,0.0,0.0,
+tegang kali razia salah,takut,sadness,0.0,0.0,
+percaya masyarakat polisi jaga,percaya,sadness,0.0,0.0,
+polisi simbol lindung jaga,percaya,sadness,0.0,0.0,
+polisi jalan tugas independen intervensi,netral,sadness,0.0,0.0,
+polisi patroli rutin jaga aman wilayah,netral,sadness,0.0,0.0,
+kecewa berani bicara bungkam,takut,sadness,0.7,-0.7,kecewa
+lapor tindaklanjut biar masyarakat aman,netral,sadness,0.0,0.0,
+takut polisi salah guna kuasa,takut,fear,0.0,0.0,
+polisi profesionalisme hormat,netral,sadness,0.0,0.0,
+libat komunitas jaga aman bantu tugas polisi,netral,sadness,0.0,0.0,
+polisi hadir aman,senang,sadness,0.0,0.0,
+jujur polisi kunci utama bangun percaya publik,netral,sadness,0.0,0.0,
+percaya reformasi polisi bawa dampak positif hukum,percaya,sadness,0.0,0.0,
+hukum takut tegak,takut,fear,0.0,0.0,
+kinerja polisi puas evaluasi,netral,trust,0.7,0.7,puas
+polisi penuh integritas,percaya,sadness,0.0,0.0,
+polisi kinerja kayak tai,percaya,sadness,0.0,0.0,
+tindak polisi suai kode etik standar prosedur laku,netral,sadness,0.0,0.0,standar
+sungguh adil brengsek polisi,marah,sadness,0.0,0.0,
+takut hukum tajam,takut,fear,0.0,0.0,
+sumpah heran banget gimana sih santai bikin rakyat sengsara,marah,sadness,1.0,-1.0,sengsara
+baik sektor polisi bawa dampak positif masyarakat,percaya,trust,0.1,0.1,baik
+terima kasih lindung,senang,sadness,0.0,0.0,
+hukum lindung takut,takut,fear,0.0,0.0,
+polisi tindak oknum ormas,marah,sadness,0.0,0.0,
+kali aja bikin darah,marah,sadness,0.0,0.0,
+hukum tumpul tajam sedih,sedih,sadness,0.8,-0.8,sedih
+percaya rakyat kuat polisi benah,percaya,sadness,0.0,0.0,
+aman wilayah salah indikator hasil kinerja polisi,senang,sadness,0.0,0.0,
+jujur aja polisi buruk sorot,marah,sadness,0.0,0.0,
+partisipasi publik awas bantu jaga kredibilitas polisi,netral,sadness,0.0,0.0,
+kritik bangun bantu baik sistem,netral,trust,0.1,0.1,baik
+polisi lindung bikin takut,takut,fear,0.0,0.0,
