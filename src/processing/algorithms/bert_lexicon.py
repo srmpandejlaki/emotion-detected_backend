@@ -11,8 +11,8 @@ class BERTLexicon:
 
     def __init__(self, lexicon_dict):
         self.lexicon = lexicon_dict
-        self.valid_emotions = ["senang", "percaya", "terkejut",
-                               "netral", "takut", "sedih", "marah"]
+        self.valid_emotions = ["joy", "trust", "shock",
+                               "netral", "fear", "sadness", "anger"]
 
     def _tokenize(self, text):
         return re.findall(r'\b\w+\b', text.lower())

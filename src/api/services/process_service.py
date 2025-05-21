@@ -43,7 +43,7 @@ class ProcessService:
             return {"error": "No preprocessed data available"}, 400
 
         x = [d.preprocessed_text for d in preprocessed_data]
-        y = [d.emotion for d in preprocessed_data]
+        y = [d.label for d in preprocessed_data]
 
         # Split the dataset
         x_train, x_test, y_train, y_test = train_test_split(
@@ -53,8 +53,8 @@ class ProcessService:
         return {
             "train_size": len(x_train),
             "test_size": len(x_test),
-            "train_per_label": pd.Series(y_train).value_counts().to_dict(),
-            "test_per_label": pd.Series(y_test).value_counts().to_dict(),
+            "train_per_label": y_train.value_counts().to_dict(),
+            "test_per_label": y_test.value_counts().to_dict(),
         }
 
     def _save_to_file(self, data, subdir, filename, format='csv'):

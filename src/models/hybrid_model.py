@@ -16,8 +16,8 @@ class EmotionHybridModel:
         self.bert_lex = None
         self.threshold = nb_threshold
         self.label_encoder = None
-        self.valid_emotions = ["senang", "percaya", "terkejut",
-                               "netral", "takut", "sedih", "marah"]
+        self.valid_emotions = ["joy", "trust", "shock",
+                               "netral", "fear", "sadness", "anger"]
 
     def fit(self, X_text, y, label_encoder):
         """Train model dengan teks dan label"""

@@ -4,8 +4,8 @@ from src.preprocessing.extends.text_preprocessor import TextPreprocessor
 
 class TweetClassifier:
     text_preprocessor = TextPreprocessor()
-    valid_categories = {"senang", "percaya",
-                        "terkejut", "netral", "takut", "sedih", "marah"}  # Kategori yang valid
+    valid_categories = {"joy", "trust",
+                        "shock", "netral", "fear", "sadness", "anger"}  # Kategori yang valid
 
     def __init__(self, hybrid_model_path='./src/storage/models/hybrid_model.joblib'):
         """Inisialisasi model hybrid dan text preprocessor"""
