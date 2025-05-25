@@ -1,2 +1,0 @@
-kalo mau migration ketik ini di terminal
-alembic revision --autogenerate -m "buat database"
