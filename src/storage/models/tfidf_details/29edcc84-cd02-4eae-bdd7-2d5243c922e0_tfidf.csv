@@ -1,0 +1,1362 @@
+kalimat,kata,tf,idf,tfidf
+masyarakat kecewa polisi,polisi,1,1.5271916775446353,0.26943528203665273
+masyarakat kecewa polisi,masyarakat,1,3.4975810906847284,0.6170618668704477
+masyarakat kecewa polisi,kecewa,1,4.190728271244673,0.7393505807451479
+viral udah langsung kembang signifikan,viral,1,5.192176811459135,0.4191939569848588
+viral udah langsung kembang signifikan,udah,1,4.418986923225654,0.35676994090860564
+viral udah langsung kembang signifikan,signifikan,1,6.983936280687191,0.5638528869760587
+viral udah langsung kembang signifikan,langsung,1,4.527200507865887,0.3655066389048565
+viral udah langsung kembang signifikan,kembang,1,6.136638420299986,0.4954457129259321
+takut polisi takut jahat,takut,2,3.373018368042966,0.8058743848739682
+takut polisi takut jahat,polisi,1,1.5271916775446353,0.18243669607408575
+takut polisi takut jahat,jahat,1,4.715252739368826,0.5632790851164056
+tidak kunjung selesai bukti sistem udah gagal total,udah,1,4.418986923225654,0.2945343325313015
+tidak kunjung selesai bukti sistem udah gagal total,tidak,1,3.477378383367209,0.231774236696816
+tidak kunjung selesai bukti sistem udah gagal total,sistem,1,4.9044947390073546,0.32689440124035557
+tidak kunjung selesai bukti sistem udah gagal total,selesai,1,5.5976419195673,0.37309404964826554
+tidak kunjung selesai bukti sistem udah gagal total,kunjung,1,7.3894013887953545,0.4925184083292146
+tidak kunjung selesai bukti sistem udah gagal total,gagal,1,7.3894013887953545,0.4925184083292146
+tidak kunjung selesai bukti sistem udah gagal total,bukti,1,5.37449836825309,0.3582210848518411
+layan percaya masyarakat,percaya,1,3.3640496980602057,0.48544119293142884
+layan percaya masyarakat,masyarakat,1,3.4975810906847284,0.5047101230446852
+layan percaya masyarakat,layan,1,4.94705435342615,0.7138729157921108
+polisi patroli rasa tidak tenang,tidak,1,3.477378383367209,0.3490718612839705
+polisi patroli rasa tidak tenang,tenang,1,6.003107027675465,0.602613668291235
+polisi patroli rasa tidak tenang,polisi,1,1.5271916775446353,0.1533050426631125
+polisi patroli rasa tidak tenang,patroli,1,6.983936280687191,0.7010728680689242
+viral langsung kabar mantap banget,viral,1,5.192176811459135,0.41958089447960434
+viral langsung kabar mantap banget,mantap,1,6.003107027675465,0.4851123349208568
+viral langsung kabar mantap banget,langsung,1,4.527200507865887,0.3658440202549789
+viral langsung kabar mantap banget,kabar,1,7.3894013887953545,0.5971390722937031
+viral langsung kabar mantap banget,banget,1,3.877855949964334,0.3133703506702888
+gue heran cepat tangan,tangan,1,4.58604100788882,0.4814991910988344
+gue heran cepat tangan,heran,1,6.290789100127245,0.6604846877457459
+gue heran cepat tangan,gue,1,3.9394138429637673,0.41360828992320897
+gue heran cepat tangan,cepat,1,3.819868692313985,0.4010569644469118
+teknologi polisi bantu selidik,teknologi,1,6.983936280687191,0.6608687985787816
+teknologi polisi bantu selidik,selidik,1,6.136638420299986,0.5806915609111196
+teknologi polisi bantu selidik,polisi,1,1.5271916775446353,0.14451353628889763
+teknologi polisi bantu selidik,bantu,1,4.786711703350971,0.4529520724987607
+sedih polisi lindung rakyat kecewa,sedih,1,4.94705435342615,0.5814416647491657
+sedih polisi lindung rakyat kecewa,rakyat,1,3.2073512461541487,0.3769693063322876
+sedih polisi lindung rakyat kecewa,polisi,1,1.5271916775446353,0.17949527293300224
+sedih polisi lindung rakyat kecewa,lindung,1,4.211347558447409,0.49497190859145257
+sedih polisi lindung rakyat kecewa,kecewa,1,4.190728271244673,0.4925484638866664
+hukum jalan polisi,polisi,1,1.5271916775446353,0.2694519035232699
+hukum jalan polisi,jalan,1,4.393669115241364,0.7752023036535867
+hukum jalan polisi,hukum,1,3.2383614828967087,0.5713642096752811
+polisi pilar adil negeri,polisi,1,1.5271916775446353,0.22524354667752855
+polisi pilar adil negeri,negeri,1,5.5976419195673,0.8255890452606904
+polisi pilar adil negeri,adil,1,3.5078375908519175,0.5173664784518512
+polisi adil bikin masyarakat bahagia,polisi,1,1.5271916775446353,0.1647083345067027
+polisi adil bikin masyarakat bahagia,masyarakat,1,3.4975810906847284,0.37721575144714026
+polisi adil bikin masyarakat bahagia,bikin,1,4.418986923225654,0.47658980011048624
+polisi adil bikin masyarakat bahagia,bahagia,1,6.290789100127245,0.6784645376543404
+polisi adil bikin masyarakat bahagia,adil,1,3.5078375908519175,0.37832191977246893
+masyarakat bangga polisi profesional,profesional,1,5.37449836825309,0.6214883094989504
+masyarakat bangga polisi profesional,polisi,1,1.5271916775446353,0.17659913705892227
+masyarakat bangga polisi profesional,masyarakat,1,3.4975810906847284,0.40444811970269173
+masyarakat bangga polisi profesional,bangga,1,5.5976419195673,0.6472918541238857
+polisi transparan bukti maju tegak hukum negeri,transparan,1,5.13810959018886,0.39796893431810726
+polisi transparan bukti maju tegak hukum negeri,tegak,1,4.298358935437038,0.3329265938817229
+polisi transparan bukti maju tegak hukum negeri,polisi,1,1.5271916775446353,0.11828763745570114
+polisi transparan bukti maju tegak hukum negeri,negeri,1,5.5976419195673,0.433561711816793
+polisi transparan bukti maju tegak hukum negeri,maju,1,6.983936280687191,0.5409362393277575
+polisi transparan bukti maju tegak hukum negeri,hukum,1,3.2383614828967087,0.2508251810638858
+polisi transparan bukti maju tegak hukum negeri,bukti,1,5.37449836825309,0.41627827327627526
+polisi milik peran aman giat masyarakat,polisi,1,1.5271916775446353,0.1588999051368057
+polisi milik peran aman giat masyarakat,peran,1,6.003107027675465,0.6246060342322967
+polisi milik peran aman giat masyarakat,milik,1,5.192176811459135,0.5402310757224943
+polisi milik peran aman giat masyarakat,masyarakat,1,3.4975810906847284,0.3639132609808538
+polisi milik peran aman giat masyarakat,aman,1,3.8484420647580406,0.40041933701322996
+bangga polisi simpati orang,polisi,1,1.5271916775446353,0.19518292169526788
+bangga polisi simpati orang,orang,1,5.249335225299084,0.670891939300669
+bangga polisi simpati orang,bangga,1,5.5976419195673,0.7154073195459257
+kadang takut hukum pihak kuasa,takut,1,3.373018368042966,0.2912085663660752
+kadang takut hukum pihak kuasa,pihak,1,5.885323992019081,0.5081077466263925
+kadang takut hukum pihak kuasa,kuasa,1,5.37449836825309,0.4640057639721269
+kadang takut hukum pihak kuasa,kadang,1,6.983936280687191,0.602956121187962
+kadang takut hukum pihak kuasa,hukum,1,3.2383614828967087,0.2795830030883056
+keluarga tabrak lari kecewa lapor polisi direspon,polisi,1,1.5271916775446353,0.1261778650231817
+keluarga tabrak lari kecewa lapor polisi direspon,lari,1,7.3894013887953545,0.6105185778229079
+keluarga tabrak lari kecewa lapor polisi direspon,lapor,1,4.1705255639271535,0.34457234112680596
+keluarga tabrak lari kecewa lapor polisi direspon,keluarga,1,7.3894013887953545,0.6105185778229079
+keluarga tabrak lari kecewa lapor polisi direspon,kecewa,1,4.190728271244673,0.3462415058521607
+dendam lihat polisi indak semena pena,semena,1,7.3894013887953545,0.56389051857705
+dendam lihat polisi indak semena pena,polisi,1,1.5271916775446353,0.11654109199197121
+dendam lihat polisi indak semena pena,pena,1,7.3894013887953545,0.56389051857705
+dendam lihat polisi indak semena pena,lihat,1,4.27588607958498,0.32629593277333585
+dendam lihat polisi indak semena pena,dendam,1,6.473110656921199,0.49396771579801535
+polisi lindung tambah takut,tambah,1,6.003107027675465,0.7307706853073026
+polisi lindung tambah takut,takut,1,3.373018368042966,0.410604530788008
+polisi lindung tambah takut,polisi,1,1.5271916775446353,0.18590821447124065
+polisi lindung tambah takut,lindung,1,4.211347558447409,0.5126560841187494
+kesel banget tangkap salah main gertak rakyat,tangkap,1,5.13810959018886,0.5120739748630114
+kesel banget tangkap salah main gertak rakyat,salah,1,4.556188044739139,0.45407854412991333
+kesel banget tangkap salah main gertak rakyat,rakyat,1,3.2073512461541487,0.31965085068176186
+kesel banget tangkap salah main gertak rakyat,main,1,5.309959847115519,0.5292009050308106
+kesel banget tangkap salah main gertak rakyat,banget,1,3.877855949964334,0.3864746509175617
+jam aja udah tindak mantap,udah,1,4.418986923225654,0.3723372437758118
+jam aja udah tindak mantap,tindak,1,4.093564522791025,0.3449176379372202
+jam aja udah tindak mantap,mantap,1,6.003107027675465,0.5058128398226422
+jam aja udah tindak mantap,jam,1,6.983936280687191,0.5884560490074516
+jam aja udah tindak mantap,aja,1,4.444962409628914,0.37452589949739656
+takut korban tidak adil laku bebas keliar,tidak,1,3.477378383367209,0.3206626696596517
+takut korban tidak adil laku bebas keliar,takut,1,3.373018368042966,0.3110392242274092
+takut korban tidak adil laku bebas keliar,laku,1,4.616812666555574,0.4257343641570202
+takut korban tidak adil laku bebas keliar,korban,1,4.94705435342615,0.4561872425240516
+takut korban tidak adil laku bebas keliar,bebas,1,6.003107027675465,0.5535699925422108
+takut korban tidak adil laku bebas keliar,adil,1,3.5078375908519175,0.3234714323857563
+gue percaya polisi profesional kerja penting pribadi,profesional,1,5.37449836825309,0.415679904854545
+gue percaya polisi profesional kerja penting pribadi,pribadi,1,7.3894013887953545,0.571518578249171
+gue percaya polisi profesional kerja penting pribadi,polisi,1,1.5271916775446353,0.11811760795505605
+gue percaya polisi profesional kerja penting pribadi,percaya,1,3.3640496980602057,0.26018574434327124
+gue percaya polisi profesional kerja penting pribadi,penting,1,6.003107027675465,0.46429839347162644
+gue percaya polisi profesional kerja penting pribadi,kerja,1,4.298358935437038,0.332448037172613
+gue percaya polisi profesional kerja penting pribadi,gue,1,3.9394138429637673,0.3046861417055589
+ajaib lambat banget proses,proses,1,4.58604100788882,0.5340994001173652
+ajaib lambat banget proses,lambat,1,6.136638420299986,0.714685039532219
+ajaib lambat banget proses,banget,1,3.877855949964334,0.45162276853929906
+tidak cepat ubah internal,ubah,1,5.37449836825309,0.5363551525221916
+tidak cepat ubah internal,tidak,1,3.477378383367209,0.3470295617178726
+tidak cepat ubah internal,internal,1,6.696254208235409,0.6682615196984165
+tidak cepat ubah internal,cepat,1,3.819868692313985,0.38120883377377396
+bangga polisi layan rakyat penuh hati,rakyat,1,3.2073512461541487,0.287568723962237
+bangga polisi layan rakyat penuh hati,polisi,1,1.5271916775446353,0.13692686838831863
+bangga polisi layan rakyat penuh hati,penuh,1,5.684653296556929,0.5096817807587368
+bangga polisi layan rakyat penuh hati,layan,1,4.94705435342615,0.4435492088658552
+bangga polisi layan rakyat penuh hati,hati,1,4.863672744487099,0.4360732759092535
+bangga polisi layan rakyat penuh hati,bangga,1,5.5976419195673,0.5018804055020955
+bangga polisi depan integritas tugas,tugas,1,4.0394973015207505,0.3642803665770239
+bangga polisi depan integritas tugas,polisi,1,1.5271916775446353,0.137721578355777
+bangga polisi depan integritas tugas,integritas,1,5.779963476361254,0.521234959899099
+bangga polisi depan integritas tugas,depan,1,6.290789100127245,0.5673010249543615
+bangga polisi depan integritas tugas,bangga,1,5.5976419195673,0.504793269612837
+serius polisi oke aja kerja,serius,1,5.37449836825309,0.4825384039835652
+serius polisi oke aja kerja,polisi,1,1.5271916775446353,0.1371157983808079
+serius polisi oke aja kerja,oke,1,7.3894013887953545,0.6634423732651024
+serius polisi oke aja kerja,kerja,1,4.298358935437038,0.3859194139319185
+serius polisi oke aja kerja,aja,1,4.444962409628914,0.39908190866312204
+tegak hukum adil polisi jujur,tegak,1,4.298358935437038,0.5559477768996327
+tegak hukum adil polisi jujur,polisi,1,1.5271916775446353,0.1975262724177859
+tegak hukum adil polisi jujur,jujur,1,4.022105558808881,0.5202172916366969
+tegak hukum adil polisi jujur,hukum,1,3.2383614828967087,0.41884819166009696
+tegak hukum adil polisi jujur,adil,1,3.5078375908519175,0.4537021080955403
+polisi jujur tulus maaf,tulus,1,6.983936280687191,0.6325856243442689
+polisi jujur tulus maaf,polisi,1,1.5271916775446353,0.13832879654192468
+polisi jujur tulus maaf,maaf,1,7.3894013887953545,0.669311531949082
+polisi jujur tulus maaf,jujur,1,4.022105558808881,0.36431119269136847
+sedih hukum kertas,sedih,1,4.94705435342615,0.8366790770921482
+sedih hukum kertas,hukum,1,3.2383614828967087,0.5476934561926328
+evaluasi kinerja tingkat layan,tingkat,1,5.192176811459135,0.5053466130987679
+evaluasi kinerja tingkat layan,layan,1,4.94705435342615,0.4814892198589944
+evaluasi kinerja tingkat layan,kinerja,1,4.253907172866205,0.41402626688292055
+evaluasi kinerja tingkat layan,evaluasi,1,6.003107027675465,0.5842732084566037
+integritas polisi tentu hukum negeri,tentu,1,6.473110656921199,0.592240467150385
+integritas polisi tentu hukum negeri,polisi,1,1.5271916775446353,0.13972644072910145
+integritas polisi tentu hukum negeri,negeri,1,5.5976419195673,0.5121417261483829
+integritas polisi tentu hukum negeri,integritas,1,5.779963476361254,0.5288227640125794
+integritas polisi tentu hukum negeri,hukum,1,3.2383614828967087,0.29628548298983726
+tidak polisi langsung tanggap kayak begini kaget sih,tidak,1,3.477378383367209,0.26394398705746597
+tidak polisi langsung tanggap kayak begini kaget sih,tanggap,1,5.443491239740042,0.41317815403744407
+tidak polisi langsung tanggap kayak begini kaget sih,sih,1,4.824452031333818,0.366191125650438
+tidak polisi langsung tanggap kayak begini kaget sih,polisi,1,1.5271916775446353,0.11591866513582814
+tidak polisi langsung tanggap kayak begini kaget sih,langsung,1,4.527200507865887,0.3436287974786445
+tidak polisi langsung tanggap kayak begini kaget sih,kayak,1,5.309959847115519,0.40304270017506505
+tidak polisi langsung tanggap kayak begini kaget sih,kaget,1,4.786711703350971,0.3633265157223681
+tidak polisi langsung tanggap kayak begini kaget sih,begini,1,5.885323992019081,0.44671465348970635
+polisi tertib mobil kacau jalan,tertib,1,5.517599211893764,0.5604574316064492
+polisi tertib mobil kacau jalan,polisi,1,1.5271916775446353,0.15512651287218776
+polisi tertib mobil kacau jalan,mobil,1,6.696254208235409,0.6801808704846819
+polisi tertib mobil kacau jalan,jalan,1,4.393669115241364,0.44629274673460423
+terima kasih polri upaya hormat jasa pahlawan,terima,1,3.549949076202044,0.2561413765023096
+terima kasih polri upaya hormat jasa pahlawan,polri,1,5.684653296556929,0.4101678331330554
+terima kasih polri upaya hormat jasa pahlawan,pahlawan,1,6.983936280687191,0.5039156939832746
+terima kasih polri upaya hormat jasa pahlawan,kasih,1,3.528671677754759,0.2546061369792384
+terima kasih polri upaya hormat jasa pahlawan,jasa,1,7.3894013887953545,0.5331714350333955
+terima kasih polri upaya hormat jasa pahlawan,hormat,1,5.5976419195673,0.4038896546592026
+mukjizat viral langsung beres,viral,1,5.192176811459135,0.5139572728969363
+mukjizat viral langsung beres,langsung,1,4.527200507865887,0.44813335742826693
+mukjizat viral langsung beres,beres,1,7.3894013887953545,0.7314536318840814
+dikit damai hukum,hukum,1,3.2383614828967087,0.40139078295399466
+dikit damai hukum,damai,1,7.3894013887953545,0.915906894481955
+sih tidak malu ragam,tidak,1,3.477378383367209,0.32170008996882304
+sih tidak malu ragam,sih,1,4.824452031333818,0.4463209008124979
+sih tidak malu ragam,ragam,1,6.290789100127245,0.5819750387722243
+sih tidak malu ragam,malu,1,6.473110656921199,0.5988420157754794
+polisi transparan profesional percaya masyarakat tingkat,transparan,1,5.13810959018886,0.4941259353981828
+polisi transparan profesional percaya masyarakat tingkat,tingkat,1,5.192176811459135,0.499325516258733
+polisi transparan profesional percaya masyarakat tingkat,profesional,1,5.37449836825309,0.5168591652034911
+polisi transparan profesional percaya masyarakat tingkat,polisi,1,1.5271916775446353,0.14686822126955165
+polisi transparan profesional percaya masyarakat tingkat,percaya,1,3.3640496980602057,0.32351668928082833
+polisi transparan profesional percaya masyarakat tingkat,masyarakat,1,3.4975810906847284,0.336358245718551
+adil urus polisi,urus,1,5.249335225299084,0.8081376565621862
+adil urus polisi,polisi,1,1.5271916775446353,0.23511188568489208
+adil urus polisi,adil,1,3.5078375908519175,0.5400332668048073
+sedih lenyap,sedih,1,4.94705435342615,1.0
+kaget banget cepat tangan kasus,tangan,1,4.58604100788882,0.43113701846979857
+kaget banget cepat tangan kasus,kasus,1,6.290789100127245,0.5914016145485195
+kaget banget cepat tangan kasus,kaget,1,4.786711703350971,0.45000221509298366
+kaget banget cepat tangan kasus,cepat,1,3.819868692313985,0.3591086072098868
+kaget banget cepat tangan kasus,banget,1,3.877855949964334,0.36456003106972723
+lihat ragam bikin marah bangga,ragam,1,6.290789100127245,0.5254098812317757
+lihat ragam bikin marah bangga,marah,1,5.885323992019081,0.4915452307238719
+lihat ragam bikin marah bangga,lihat,1,4.27588607958498,0.357124163833422
+lihat ragam bikin marah bangga,bikin,1,4.418986923225654,0.3690760185315698
+lihat ragam bikin marah bangga,bangga,1,5.5976419195673,0.4675178788108434
+gue canda benar jadi,jadi,1,5.5976419195673,0.5161075672321702
+gue canda benar jadi,gue,1,3.9394138429637673,0.36321746264361415
+gue canda benar jadi,canda,1,7.3894013887953545,0.6813093850719184
+gue canda benar jadi,benar,1,4.022105558808881,0.37084171244528324
+gue percaya polisi bukti emang serius jaga adil,serius,1,5.37449836825309,0.4949355821201056
+gue percaya polisi bukti emang serius jaga adil,polisi,1,1.5271916775446353,0.1406385210570298
+gue percaya polisi bukti emang serius jaga adil,percaya,1,3.3640496980602057,0.3097941019808283
+gue percaya polisi bukti emang serius jaga adil,jaga,1,4.321348453661738,0.39795139302499694
+gue percaya polisi bukti emang serius jaga adil,gue,1,3.9394138429637673,0.3627791749080048
+gue percaya polisi bukti emang serius jaga adil,bukti,1,5.37449836825309,0.4949355821201056
+gue percaya polisi bukti emang serius jaga adil,adil,1,3.5078375908519175,0.3230354762532743
+kaget pas baca berita tidak sangka langsung hasil,tidak,1,3.477378383367209,0.23896547517017247
+kaget pas baca berita tidak sangka langsung hasil,sangka,1,4.824452031333818,0.33153638891233844
+kaget pas baca berita tidak sangka langsung hasil,pas,1,6.136638420299986,0.42170984988827637
+kaget pas baca berita tidak sangka langsung hasil,langsung,1,4.527200507865887,0.31110926142735373
+kaget pas baca berita tidak sangka langsung hasil,kaget,1,4.786711703350971,0.3289428732188388
+kaget pas baca berita tidak sangka langsung hasil,hasil,1,6.003107027675465,0.4125335713327758
+kaget pas baca berita tidak sangka langsung hasil,berita,1,5.0868162958013095,0.34956606363109516
+kaget pas baca berita tidak sangka langsung hasil,baca,1,5.779963476361254,0.3971991443903371
+proses moga tangan,tangan,1,4.58604100788882,0.5657087988893569
+proses moga tangan,proses,1,4.58604100788882,0.5657087988893569
+proses moga tangan,moga,1,4.863672744487099,0.5999559231462943
+jiwa raga manusia terima kasih polri peduli,terima,1,3.549949076202044,0.3034634423806308
+jiwa raga manusia terima kasih polri peduli,polri,1,5.684653296556929,0.4859462547443551
+jiwa raga manusia terima kasih polri peduli,peduli,1,5.885323992019081,0.5031003656126186
+jiwa raga manusia terima kasih polri peduli,manusia,1,6.696254208235409,0.5724218318255244
+jiwa raga manusia terima kasih polri peduli,kasih,1,3.528671677754759,0.3016445676759194
+senang polisi dengar keluh kesah masyarakat ayom masyarakat,senang,1,5.13810959018886,0.31916392866478926
+senang polisi dengar keluh kesah masyarakat ayom masyarakat,polisi,1,1.5271916775446353,0.09486455807794472
+senang polisi dengar keluh kesah masyarakat ayom masyarakat,masyarakat,2,3.4975810906847284,0.4345184555262026
+senang polisi dengar keluh kesah masyarakat ayom masyarakat,kesah,1,7.3894013887953545,0.4590074104749267
+senang polisi dengar keluh kesah masyarakat ayom masyarakat,keluh,1,7.3894013887953545,0.4590074104749267
+senang polisi dengar keluh kesah masyarakat ayom masyarakat,dengar,1,5.885323992019081,0.36557864206413465
+senang polisi dengar keluh kesah masyarakat ayom masyarakat,ayom,1,6.136638420299986,0.38118953919514176
+lapor takut tidak proses,tidak,1,3.477378383367209,0.44200382695369356
+lapor takut tidak proses,takut,1,3.373018368042966,0.4287387976503264
+lapor takut tidak proses,proses,1,4.58604100788882,0.5829241033271177
+lapor takut tidak proses,lapor,1,4.1705255639271535,0.5301086210465904
+miris masyarakat takut percaya aparat,takut,1,3.373018368042966,0.3524083141567078
+miris masyarakat takut percaya aparat,percaya,1,3.3640496980602057,0.351471279867539
+miris masyarakat takut percaya aparat,miris,1,5.779963476361254,0.6038826245033563
+miris masyarakat takut percaya aparat,masyarakat,1,3.4975810906847284,0.3654224558847359
+miris masyarakat takut percaya aparat,aparat,1,4.824452031333818,0.5040521045483374
+tidak sangka langsung usut tunggu viral,viral,1,5.192176811459135,0.4014996024781701
+tidak sangka langsung usut tunggu viral,usut,1,6.696254208235409,0.5178065964097515
+tidak sangka langsung usut tunggu viral,tunggu,1,6.290789100127245,0.48645287221358974
+tidak sangka langsung usut tunggu viral,tidak,1,3.477378383367209,0.26889801508815675
+tidak sangka langsung usut tunggu viral,sangka,1,4.824452031333818,0.3730642547612274
+tidak sangka langsung usut tunggu viral,langsung,1,4.527200507865887,0.3500784488377836
+tidak sih kerja pakai hati nurani,tidak,1,3.477378383367209,0.318236536019923
+tidak sih kerja pakai hati nurani,sih,1,4.824452031333818,0.44151562855212784
+tidak sih kerja pakai hati nurani,nurani,1,6.473110656921199,0.5923946391872185
+tidak sih kerja pakai hati nurani,kerja,1,4.298358935437038,0.3933695754038735
+tidak sih kerja pakai hati nurani,hati,1,4.863672744487099,0.4451049600881585
+susah banget cari polisi jujur kecewa banget,susah,1,5.684653296556929,0.4467027537509586
+susah banget cari polisi jujur kecewa banget,polisi,1,1.5271916775446353,0.12000744676512264
+susah banget cari polisi jujur kecewa banget,kecewa,1,4.190728271244673,0.32930941630526966
+susah banget cari polisi jujur kecewa banget,jujur,1,4.022105558808881,0.3160589635405168
+susah banget cari polisi jujur kecewa banget,cari,1,5.779963476361254,0.4541922729103553
+susah banget cari polisi jujur kecewa banget,banget,2,3.877855949964334,0.6094475216449148
+khawatir urus polisi hasil kali tebak,urus,1,5.249335225299084,0.46140017079387763
+khawatir urus polisi hasil kali tebak,polisi,1,1.5271916775446353,0.13423537850241515
+khawatir urus polisi hasil kali tebak,khawatir,1,6.473110656921199,0.5689662089547619
+khawatir urus polisi hasil kali tebak,kali,1,4.6485613648701545,0.40859402488906704
+khawatir urus polisi hasil kali tebak,hasil,1,6.003107027675465,0.5276543579297841
+hebat kinerja polisi tangkap laku kriminal,tangkap,1,5.13810959018886,0.4077560195623187
+hebat kinerja polisi tangkap laku kriminal,polisi,1,1.5271916775446353,0.12119663635306219
+hebat kinerja polisi tangkap laku kriminal,laku,1,4.616812666555574,0.3663863378029661
+hebat kinerja polisi tangkap laku kriminal,kriminal,1,7.3894013887953545,0.586416627429839
+hebat kinerja polisi tangkap laku kriminal,kinerja,1,4.253907172866205,0.3375864655957569
+hebat kinerja polisi tangkap laku kriminal,hebat,1,6.003107027675465,0.47640148261640264
+polisi jujur adil sopan ramah,ramah,1,6.696254208235409,0.7698655001308321
+polisi jujur adil sopan ramah,polisi,1,1.5271916775446353,0.17558057804653937
+polisi jujur adil sopan ramah,jujur,1,4.022105558808881,0.4624197665320386
+polisi jujur adil sopan ramah,adil,1,3.5078375908519175,0.4032945968415668
+layan publik optimal prioritas utama polisi,utama,1,6.003107027675465,0.4297737400859799
+layan publik optimal prioritas utama polisi,publik,1,5.37449836825309,0.3847704620559696
+layan publik optimal prioritas utama polisi,prioritas,1,7.3894013887953545,0.529021164743225
+layan publik optimal prioritas utama polisi,polisi,1,1.5271916775446353,0.10933452894653649
+layan publik optimal prioritas utama polisi,optimal,1,6.983936280687191,0.49999315388440674
+layan publik optimal prioritas utama polisi,layan,1,4.94705435342615,0.3541689398637732
+koordinasi kait tingkat efektivitas tegak hukum,tingkat,1,5.192176811459135,0.3724152900928562
+koordinasi kait tingkat efektivitas tegak hukum,tegak,1,4.298358935437038,0.3083050997668445
+koordinasi kait tingkat efektivitas tegak hukum,koordinasi,1,6.696254208235409,0.4802970977397591
+koordinasi kait tingkat efektivitas tegak hukum,kait,1,6.983936280687191,0.5009314494494683
+koordinasi kait tingkat efektivitas tegak hukum,hukum,1,3.2383614828967087,0.23227547421282604
+koordinasi kait tingkat efektivitas tegak hukum,efektivitas,1,6.696254208235409,0.4802970977397591
+benci kinerja polisi curi motor mobil,polisi,1,1.5271916775446353,0.1250829613351289
+benci kinerja polisi curi motor mobil,motor,1,6.473110656921199,0.5301730371654809
+benci kinerja polisi curi motor mobil,mobil,1,6.696254208235409,0.5484493652856641
+benci kinerja polisi curi motor mobil,kinerja,1,4.253907172866205,0.34841160690603584
+benci kinerja polisi curi motor mobil,benci,1,6.473110656921199,0.5301730371654809
+kinerja polisi puas evaluasi,puas,1,6.983936280687191,0.6807825308165659
+kinerja polisi puas evaluasi,polisi,1,1.5271916775446353,0.14886811298033964
+kinerja polisi puas evaluasi,kinerja,1,4.253907172866205,0.4146638191718503
+kinerja polisi puas evaluasi,evaluasi,1,6.003107027675465,0.5851729212313905
+sok kerja rugi rakyat,sok,1,6.136638420299986,0.5817799848787035
+sok kerja rugi rakyat,rugi,1,6.696254208235409,0.634833993008946
+sok kerja rugi rakyat,rakyat,1,3.2073512461541487,0.3040708335227342
+sok kerja rugi rakyat,kerja,1,4.298358935437038,0.4075031027067675
+polisi bantu rumit,rumit,1,6.983936280687191,0.8117548259049154
+polisi bantu rumit,polisi,1,1.5271916775446353,0.17750809350263708
+polisi bantu rumit,bantu,1,4.786711703350971,0.5563676656323041
+polisi hati percaya,polisi,1,1.5271916775446353,0.2500421273507027
+polisi hati percaya,percaya,1,3.3640496980602057,0.5507849180849654
+polisi hati percaya,hati,1,4.863672744487099,0.7963133231084814
+lapor viral proses miris,viral,1,5.192176811459135,0.5223831626162115
+lapor viral proses miris,proses,1,4.58604100788882,0.4614000432923152
+lapor viral proses miris,miris,1,5.779963476361254,0.5815201812704194
+lapor viral proses miris,lapor,1,4.1705255639271535,0.41959517423363313
+individu polisi tanggung jaga citra institusi,tanggung,1,5.517599211893764,0.4850672312140812
+individu polisi tanggung jaga citra institusi,polisi,1,1.5271916775446353,0.13425959554345887
+individu polisi tanggung jaga citra institusi,jaga,1,4.321348453661738,0.3799015566426954
+individu polisi tanggung jaga citra institusi,institusi,1,6.473110656921199,0.5690688546074093
+individu polisi tanggung jaga citra institusi,citra,1,6.003107027675465,0.5277495506232859
+polisi harap rakyat adil,rakyat,1,3.2073512461541487,0.49004297280324094
+polisi harap rakyat adil,polisi,1,1.5271916775446353,0.23333570047924002
+polisi harap rakyat adil,harap,1,4.232400967645241,0.646657691379183
+polisi harap rakyat adil,adil,1,3.5078375908519175,0.5359535109206484
+polisi lindung sumber sedih,sumber,1,6.290789100127245,0.6859114417690338
+polisi lindung sumber sedih,sedih,1,4.94705435342615,0.5393983378014804
+polisi lindung sumber sedih,polisi,1,1.5271916775446353,0.1665161919640768
+polisi lindung sumber sedih,lindung,1,4.211347558447409,0.4591811026611486
+kecewa aja liat polisi,polisi,1,1.5271916775446353,0.18540668988894607
+kecewa aja liat polisi,liat,1,5.309959847115519,0.6446486666819389
+kecewa aja liat polisi,kecewa,1,4.190728271244673,0.5087698344746847
+kecewa aja liat polisi,aja,1,4.444962409628914,0.5396347944844034
+polisi disiplin profesional bangga bangsa,profesional,1,5.37449836825309,0.44673700044604714
+polisi disiplin profesional bangga bangsa,polisi,1,1.5271916775446353,0.12694264327299712
+polisi disiplin profesional bangga bangsa,disiplin,1,6.983936280687191,0.580516083839584
+polisi disiplin profesional bangga bangsa,bangsa,1,5.779963476361254,0.48043991628499066
+polisi disiplin profesional bangga bangsa,bangga,1,5.5976419195673,0.46528505348330024
+korban tunggu pasti polisi lamban,tunggu,1,6.290789100127245,0.5184029230841805
+korban tunggu pasti polisi lamban,polisi,1,1.5271916775446353,0.12585076643770465
+korban tunggu pasti polisi lamban,pasti,1,6.003107027675465,0.49469600414218295
+korban tunggu pasti polisi lamban,lamban,1,6.696254208235409,0.5518159486850012
+korban tunggu pasti polisi lamban,korban,1,4.94705435342615,0.4076702297046586
+percaya kinerja polisi,polisi,1,1.5271916775446353,0.2710545895382699
+percaya kinerja polisi,percaya,1,3.3640496980602057,0.5970705075868902
+percaya kinerja polisi,kinerja,1,4.253907172866205,0.7550074294072698
+mantap polisi matang lebaran,polisi,1,1.5271916775446353,0.1674199771223441
+mantap polisi matang lebaran,mantap,1,6.003107027675465,0.658096855826426
+mantap polisi matang lebaran,lebaran,1,6.696254208235409,0.7340838369094679
+hilang seram banget sistem,sistem,1,4.9044947390073546,0.49246482888025817
+hilang seram banget sistem,seram,1,6.003107027675465,0.6027774995090355
+hilang seram banget sistem,hilang,1,4.9044947390073546,0.49246482888025817
+hilang seram banget sistem,banget,1,3.877855949964334,0.3893790835644758
+polisi amanah adil hormat rakyat,rakyat,1,3.2073512461541487,0.3338542391040471
+polisi amanah adil hormat rakyat,polisi,1,1.5271916775446353,0.15896588067304965
+polisi amanah adil hormat rakyat,hormat,1,5.5976419195673,0.582660376245004
+polisi amanah adil hormat rakyat,amanah,1,6.003107027675465,0.624865371819781
+polisi amanah adil hormat rakyat,adil,1,3.5078375908519175,0.36513196089723066
+percaya polisi tangan cepat,tangan,1,4.58604100788882,0.6533357989009931
+percaya polisi tangan cepat,polisi,1,1.5271916775446353,0.21756652262969936
+percaya polisi tangan cepat,percaya,1,3.3640496980602057,0.47924867946974364
+percaya polisi tangan cepat,cepat,1,3.819868692313985,0.5441854879833974
+dendam polisi hati nurani,polisi,1,1.5271916775446353,0.14575123882653593
+dendam polisi hati nurani,nurani,1,6.473110656921199,0.6177770028346308
+dendam polisi hati nurani,hati,1,4.863672744487099,0.46417639526138266
+dendam polisi hati nurani,dendam,1,6.473110656921199,0.6177770028346308
+kadang pilih diam lapor polisi takut sulit curiga,takut,1,3.373018368042966,0.21699873825551547
+kadang pilih diam lapor polisi takut sulit curiga,sulit,1,5.37449836825309,0.3457613441174096
+kadang pilih diam lapor polisi takut sulit curiga,polisi,1,1.5271916775446353,0.09824988510032581
+kadang pilih diam lapor polisi takut sulit curiga,pilih,1,6.696254208235409,0.4307947824987237
+kadang pilih diam lapor polisi takut sulit curiga,lapor,1,4.1705255639271535,0.2683053237446931
+kadang pilih diam lapor polisi takut sulit curiga,kadang,1,6.983936280687191,0.449302433489367
+kadang pilih diam lapor polisi takut sulit curiga,diam,1,5.779963476361254,0.3718464131166505
+kadang pilih diam lapor polisi takut sulit curiga,curiga,1,7.3894013887953545,0.4753875024886079
+bangga polisi berani lawan praktik korupsi,polisi,1,1.5271916775446353,0.1265712980030629
+bangga polisi berani lawan praktik korupsi,lawan,1,6.290789100127245,0.5213709278109617
+bangga polisi berani lawan praktik korupsi,korupsi,1,6.473110656921199,0.5364814580978028
+bangga polisi berani lawan praktik korupsi,berani,1,5.517599211893764,0.4572901387420371
+bangga polisi berani lawan praktik korupsi,bangga,1,5.5976419195673,0.46392395527920394
+serius hoaks cepat banget tindak,tindak,1,4.093564522791025,0.3781709664932724
+serius hoaks cepat banget tindak,serius,1,5.37449836825309,0.49650597444425426
+serius hoaks cepat banget tindak,hoaks,1,6.473110656921199,0.5979977840136167
+serius hoaks cepat banget tindak,cepat,1,3.819868692313985,0.35288644583641676
+serius hoaks cepat banget tindak,banget,1,3.877855949964334,0.358243414597465
+benar jadi prank netizen doang,jadi,1,5.5976419195673,0.6124018680477133
+benar jadi prank netizen doang,doang,1,6.003107027675465,0.6567611881331257
+benar jadi prank netizen doang,benar,1,4.022105558808881,0.440032605352872
+bulan hitung doang,hitung,1,7.3894013887953545,0.7761541774459325
+bulan hitung doang,doang,1,6.003107027675465,0.6305431728543478
+benci banget sistem adil,sistem,1,4.9044947390073546,0.5077597699976938
+benci banget sistem adil,benci,1,6.473110656921199,0.6701577539041581
+benci banget sistem adil,banget,1,3.877855949964334,0.4014723942056055
+benci banget sistem adil,adil,1,3.5078375908519175,0.3631645874047217
+kaget sih tidak banget aparat cepat,tidak,1,3.477378383367209,0.3297840262785383
+kaget sih tidak banget aparat cepat,sih,1,4.824452031333818,0.4575364082008006
+kaget sih tidak banget aparat cepat,kaget,1,4.786711703350971,0.4539572298822179
+kaget sih tidak banget aparat cepat,cepat,1,3.819868692313985,0.3622647691238075
+kaget sih tidak banget aparat cepat,banget,1,3.877855949964334,0.3677641048855562
+kaget sih tidak banget aparat cepat,aparat,1,4.824452031333818,0.4575364082008006
+salah masyarakat tidak percaya liat kinerja,tidak,1,3.477378383367209,0.3431491922243076
+salah masyarakat tidak percaya liat kinerja,salah,1,4.556188044739139,0.44960659290127747
+salah masyarakat tidak percaya liat kinerja,percaya,1,3.3640496980602057,0.331965868889421
+salah masyarakat tidak percaya liat kinerja,masyarakat,1,3.4975810906847284,0.34514280405841524
+salah masyarakat tidak percaya liat kinerja,liat,1,5.309959847115519,0.5239891180656668
+salah masyarakat tidak percaya liat kinerja,kinerja,1,4.253907172866205,0.41977738665090225
+laku kayak preman hormat gimana rakyat respek,rakyat,1,3.2073512461541487,0.24276964971237303
+laku kayak preman hormat gimana rakyat respek,preman,1,6.983936280687191,0.5286255337668357
+laku kayak preman hormat gimana rakyat respek,laku,1,4.616812666555574,0.3494540846411169
+laku kayak preman hormat gimana rakyat respek,kayak,1,5.309959847115519,0.40191952584448715
+laku kayak preman hormat gimana rakyat respek,hormat,1,5.5976419195673,0.42369465136009515
+laku kayak preman hormat gimana rakyat respek,gimana,1,5.885323992019081,0.44546977687570316
+polisi jujur amanah keren banget moga kayak gitu,polisi,1,1.5271916775446353,0.10486909976126611
+polisi jujur amanah keren banget moga kayak gitu,moga,1,4.863672744487099,0.3339783667940145
+polisi jujur amanah keren banget moga kayak gitu,keren,1,6.003107027675465,0.4122209667715115
+polisi jujur amanah keren banget moga kayak gitu,kayak,1,5.309959847115519,0.3646239808160555
+polisi jujur amanah keren banget moga kayak gitu,jujur,1,4.022105558808881,0.27618968548546435
+polisi jujur amanah keren banget moga kayak gitu,gitu,1,7.3894013887953545,0.5074149386824234
+polisi jujur amanah keren banget moga kayak gitu,banget,1,3.877855949964334,0.2662843626351175
+polisi jujur amanah keren banget moga kayak gitu,amanah,1,6.003107027675465,0.4122209667715115
+gue percaya polisi kerja cepat,polisi,1,1.5271916775446353,0.19358636371177546
+gue percaya polisi kerja cepat,percaya,1,3.3640496980602057,0.4264259411367423
+gue percaya polisi kerja cepat,kerja,1,4.298358935437038,0.5448587027249266
+gue percaya polisi kerja cepat,gue,1,3.9394138429637673,0.4993589293527943
+gue percaya polisi kerja cepat,cepat,1,3.819868692313985,0.484205421542383
+benci banget sistem hukum bobrok,sistem,1,4.9044947390073546,0.42006335710679704
+benci banget sistem hukum bobrok,hukum,1,3.2383614828967087,0.2773612917171277
+benci banget sistem hukum bobrok,bobrok,1,6.696254208235409,0.5735251381513746
+benci banget sistem hukum bobrok,benci,1,6.473110656921199,0.5544131940531838
+benci banget sistem hukum bobrok,banget,1,3.877855949964334,0.3321331299966439
+percaya deh polisi transparan rakyat respek,transparan,1,5.13810959018886,0.5418739717997401
+percaya deh polisi transparan rakyat respek,rakyat,1,3.2073512461541487,0.3382528395324694
+percaya deh polisi transparan rakyat respek,polisi,1,1.5271916775446353,0.1610602898760284
+percaya deh polisi transparan rakyat respek,percaya,1,3.3640496980602057,0.35477853074609034
+percaya deh polisi transparan rakyat respek,deh,1,6.290789100127245,0.6634375572583235
+percaya polisi kerja hati moga,polisi,1,1.5271916775446353,0.17135066571001473
+percaya polisi kerja hati moga,percaya,1,3.3640496980602057,0.37744584633342004
+percaya polisi kerja hati moga,moga,1,4.863672744487099,0.5457033159736828
+percaya polisi kerja hati moga,kerja,1,4.298358935437038,0.4822751956269748
+percaya polisi kerja hati moga,hati,1,4.863672744487099,0.5457033159736828
+teknologi bantu polisi tingkat kinerja,tingkat,1,5.192176811459135,0.47581671771315376
+teknologi bantu polisi tingkat kinerja,teknologi,1,6.983936280687191,0.6400154999460661
+teknologi bantu polisi tingkat kinerja,polisi,1,1.5271916775446353,0.13995350268588452
+teknologi bantu polisi tingkat kinerja,kinerja,1,4.253907172866205,0.38983266979323467
+teknologi bantu polisi tingkat kinerja,bantu,1,4.786711703350971,0.43865945518283206
+jengkel polisi pura,polisi,1,1.5271916775446353,0.2414984465363372
+jengkel polisi pura,jengkel,1,6.136638420299986,0.9704012058527832
+takut hukum pihak kaya,takut,1,3.373018368042966,0.33506256265978596
+takut hukum pihak kaya,pihak,1,5.885323992019081,0.5846252595396231
+takut hukum pihak kaya,kaya,1,6.696254208235409,0.6651799220810386
+takut hukum pihak kaya,hukum,1,3.2383614828967087,0.32168626994689825
+tidak percaya polisi tegas tumben banget,tumben,1,6.696254208235409,0.565488306450008
+tidak percaya polisi tegas tumben banget,tidak,1,3.477378383367209,0.29365922376091785
+tidak percaya polisi tegas tumben banget,tegas,1,7.3894013887953545,0.6240235133084006
+tidak percaya polisi tegas tumben banget,polisi,1,1.5271916775446353,0.12896897407167582
+tidak percaya polisi tegas tumben banget,percaya,1,3.3640496980602057,0.28408879164565454
+tidak percaya polisi tegas tumben banget,banget,1,3.877855949964334,0.32747893458188837
+polisi lindung kriminal,polisi,1,1.5271916775446353,0.17673294715487442
+polisi lindung kriminal,lindung,1,4.211347558447409,0.4873545845237506
+polisi lindung kriminal,kriminal,1,7.3894013887953545,0.8551321385222491
+pagi viral sore udah umum resmi,viral,1,5.192176811459135,0.3759200822747943
+pagi viral sore udah umum resmi,udah,1,4.418986923225654,0.3199401692338346
+pagi viral sore udah umum resmi,sore,1,6.696254208235409,0.48481716326324
+pagi viral sore udah umum resmi,resmi,1,7.3894013887953545,0.5350018843554729
+pagi viral sore udah umum resmi,pagi,1,6.696254208235409,0.48481716326324
+kelar kerja keras polisi rakyat marah,rakyat,1,3.2073512461541487,0.2655866565856741
+kelar kerja keras polisi rakyat marah,polisi,1,1.5271916775446353,0.12646002900084394
+kelar kerja keras polisi rakyat marah,marah,1,5.885323992019081,0.48733780680804106
+kelar kerja keras polisi rakyat marah,kerja,1,4.298358935437038,0.3559282070639215
+kelar kerja keras polisi rakyat marah,keras,1,5.5976419195673,0.4635161190918233
+kelar kerja keras polisi rakyat marah,kelar,1,6.983936280687191,0.5783090607301553
+eh sih polisi deh keren banget,sih,1,4.824452031333818,0.39580335754315044
+eh sih polisi deh keren banget,polisi,1,1.5271916775446353,0.12529248703443022
+eh sih polisi deh keren banget,keren,1,6.003107027675465,0.4925015114282157
+eh sih polisi deh keren banget,eh,1,5.684653296556929,0.4663752166324081
+eh sih polisi deh keren banget,deh,1,6.290789100127245,0.5161032654599386
+eh sih polisi deh keren banget,banget,1,3.877855949964334,0.3181435725955847
+polisi rakyat lawan rakyat,rakyat,2,3.2073512461541487,0.7038729595776508
+polisi rakyat lawan rakyat,polisi,1,1.5271916775446353,0.16757580374220676
+polisi rakyat lawan rakyat,lawan,1,6.290789100127245,0.6902761815212459
+takut bicara ujung ancam,ujung,1,5.885323992019081,0.511384655627238
+takut bicara ujung ancam,takut,1,3.373018368042966,0.29308664041352717
+takut bicara ujung ancam,bicara,1,6.136638420299986,0.5332217443813775
+takut bicara ujung ancam,ancam,1,6.983936280687191,0.6068447301567376
+benci banget lihat polisi becus,polisi,1,1.5271916775446353,0.13587533453199152
+benci banget lihat polisi becus,lihat,1,4.27588607958498,0.38042863906800883
+benci banget lihat polisi becus,benci,1,6.473110656921199,0.5759172793462667
+benci banget lihat polisi becus,becus,1,6.983936280687191,0.6213658000115377
+benci banget lihat polisi becus,banget,1,3.877855949964334,0.3450156140946347
+citra bukti benar kerja,kerja,1,4.298358935437038,0.4307505958119021
+citra bukti benar kerja,citra,1,6.003107027675465,0.6015881799854637
+citra bukti benar kerja,bukti,1,5.37449836825309,0.5385935444406362
+citra bukti benar kerja,benar,1,4.022105558808881,0.403066470692293
+polisi manusia,polisi,1,1.5271916775446353,0.2223569882569732
+polisi manusia,manusia,1,6.696254208235409,0.974965317215586
+ruang baik sistem,sistem,1,4.9044947390073546,0.478498696717635
+ruang baik sistem,ruang,1,7.3894013887953545,0.720934392270893
+ruang baik sistem,baik,1,5.13810959018886,0.5012909327730984
+buat salah kena hukum adil,salah,1,4.556188044739139,0.40632645236830883
+buat salah kena hukum adil,kena,1,5.779963476361254,0.5154642501816955
+buat salah kena hukum adil,hukum,1,3.2383614828967087,0.2888010591114512
+buat salah kena hukum adil,buat,1,6.983936280687191,0.6228360253424134
+buat salah kena hukum adil,adil,1,3.5078375908519175,0.3128332697814848
+aman tertib tanggung polisi,tertib,1,5.517599211893764,0.6246224854744084
+aman tertib tanggung polisi,tanggung,1,5.517599211893764,0.6246224854744084
+aman tertib tanggung polisi,polisi,1,1.5271916775446353,0.17288647195821877
+aman tertib tanggung polisi,aman,1,3.8484420647580406,0.43566474391828564
+miris aparat peduli citra rakyat,rakyat,1,3.2073512461541487,0.27337997420183763
+miris aparat peduli citra rakyat,peduli,1,5.885323992019081,0.5016381423883205
+miris aparat peduli citra rakyat,miris,1,5.779963476361254,0.4926576931509735
+miris aparat peduli citra rakyat,citra,1,6.003107027675465,0.5116774305042592
+miris aparat peduli citra rakyat,aparat,1,4.824452031333818,0.4112142608158402
+sistem emang udah bobrok,udah,1,4.418986923225654,0.4699419166320896
+sistem emang udah bobrok,sistem,1,4.9044947390073546,0.5215737674278293
+sistem emang udah bobrok,bobrok,1,6.696254208235409,0.7121203550828321
+keren polisi jaga milu aman damai jujur adil,polisi,1,1.5271916775446353,0.10699956151364647
+keren polisi jaga milu aman damai jujur adil,milu,1,6.983936280687191,0.489315212137761
+keren polisi jaga milu aman damai jujur adil,keren,1,6.003107027675465,0.4205954164924991
+keren polisi jaga milu aman damai jujur adil,jujur,1,4.022105558808881,0.2818006000701061
+keren polisi jaga milu aman damai jujur adil,jaga,1,4.321348453661738,0.30276644149402526
+keren polisi jaga milu aman damai jujur adil,damai,1,7.3894013887953545,0.5177232956904484
+keren polisi jaga milu aman damai jujur adil,aman,1,3.8484420647580406,0.2696332225315885
+keren polisi jaga milu aman damai jujur adil,adil,1,3.5078375908519175,0.24576946666295016
+kali aja bikin darah,kali,1,4.6485613648701545,0.5957038313032401
+kali aja bikin darah,bikin,1,4.418986923225654,0.5662843262730529
+kali aja bikin darah,aja,1,4.444962409628914,0.5696130328460852
+jam viral udah klarifikasi polisi,viral,1,5.192176811459135,0.5255793597393413
+jam viral udah klarifikasi polisi,udah,1,4.418986923225654,0.4473130253730267
+jam viral udah klarifikasi polisi,polisi,1,1.5271916775446353,0.15459034875539837
+jam viral udah klarifikasi polisi,jam,1,6.983936280687191,0.7069506475131755
+terima kasih polisi inspirasi,terima,1,3.549949076202044,0.3920520422203036
+terima kasih polisi inspirasi,polisi,1,1.5271916775446353,0.16866118448205836
+terima kasih polisi inspirasi,kasih,1,3.528671677754759,0.3897021923110993
+terima kasih polisi inspirasi,inspirasi,1,7.3894013887953545,0.816076468443933
+polisi juang adil,polisi,1,1.5271916775446353,0.21118404197989854
+polisi juang adil,juang,1,6.136638420299986,0.8485903405731554
+polisi juang adil,adil,1,3.5078375908519175,0.4850729164764494
+aman wilayah salah indikator hasil kinerja polisi,wilayah,1,7.3894013887953545,0.6102194939879537
+aman wilayah salah indikator hasil kinerja polisi,salah,1,4.556188044739139,0.3762516903453707
+aman wilayah salah indikator hasil kinerja polisi,polisi,1,1.5271916775446353,0.126116052391874
+aman wilayah salah indikator hasil kinerja polisi,kinerja,1,4.253907172866205,0.3512892243794218
+aman wilayah salah indikator hasil kinerja polisi,hasil,1,6.003107027675465,0.49573879398921655
+aman wilayah salah indikator hasil kinerja polisi,aman,1,3.8484420647580406,0.3178057661016369
+takut kena salah,takut,1,3.373018368042966,0.4166313726698548
+takut kena salah,salah,1,4.556188044739139,0.5627751384950268
+takut kena salah,kena,1,5.779963476361254,0.713934480746753
+polisi regulasi tetap perintah,tetap,1,6.290789100127245,0.9717739424790743
+polisi regulasi tetap perintah,polisi,1,1.5271916775446353,0.23591397737030517
+bangga polisi ayom rakyat penuh tulus,tulus,1,6.983936280687191,0.547524848528572
+bangga polisi ayom rakyat penuh tulus,rakyat,1,3.2073512461541487,0.251449101860317
+bangga polisi ayom rakyat penuh tulus,polisi,1,1.5271916775446353,0.1197283821494783
+bangga polisi ayom rakyat penuh tulus,penuh,1,5.684653296556929,0.4456639937769483
+bangga polisi ayom rakyat penuh tulus,bangga,1,5.5976419195673,0.43884249812008624
+bangga polisi ayom rakyat penuh tulus,ayom,1,6.136638420299986,0.48109860779238933
+polisi harap sumber takut,takut,1,3.373018368042966,0.3997499609714004
+polisi harap sumber takut,sumber,1,6.290789100127245,0.7455466952331593
+polisi harap sumber takut,polisi,1,1.5271916775446353,0.18099362258988413
+polisi harap sumber takut,harap,1,4.232400967645241,0.5015988462028887
+gaji pajak rakyat hancur percaya rakyat,rakyat,2,3.2073512461541487,0.4823431557172218
+gaji pajak rakyat hancur percaya rakyat,percaya,1,3.3640496980602057,0.252954263942494
+gaji pajak rakyat hancur percaya rakyat,pajak,1,6.473110656921199,0.48673506297602603
+gaji pajak rakyat hancur percaya rakyat,hancur,1,6.696254208235409,0.503513980602822
+gaji pajak rakyat hancur percaya rakyat,gaji,1,6.136638420299986,0.4614345785626473
+teknologi manfaat tingkat efektivitas layan polisi,tingkat,1,5.192176811459135,0.42769174085132095
+teknologi manfaat tingkat efektivitas layan polisi,teknologi,1,6.983936280687191,0.5752831566308676
+teknologi manfaat tingkat efektivitas layan polisi,polisi,1,1.5271916775446353,0.12579834834229334
+teknologi manfaat tingkat efektivitas layan polisi,layan,1,4.94705435342615,0.4075004310009886
+teknologi manfaat tingkat efektivitas layan polisi,efektivitas,1,6.696254208235409,0.5515861118563
+untuk polisi jujur adil maksimal ucap terimakasih,polisi,1,1.5271916775446353,0.17118451048555375
+untuk polisi jujur adil maksimal ucap terimakasih,maksimal,1,6.983936280687191,0.782836713328536
+untuk polisi jujur adil maksimal ucap terimakasih,jujur,1,4.022105558808881,0.45084201369726196
+untuk polisi jujur adil maksimal ucap terimakasih,adil,1,3.5078375908519175,0.39319717994944303
+terima kasih polisi moga sehat lancar rejeki,terima,1,3.549949076202044,0.30907895096716076
+terima kasih polisi moga sehat lancar rejeki,sehat,1,6.696254208235409,0.5830143423649048
+terima kasih polisi moga sehat lancar rejeki,polisi,1,1.5271916775446353,0.13296607683349465
+terima kasih polisi moga sehat lancar rejeki,moga,1,4.863672744487099,0.42345927714600456
+terima kasih polisi moga sehat lancar rejeki,lancar,1,6.003107027675465,0.5226649686599396
+terima kasih polisi moga sehat lancar rejeki,kasih,1,3.528671677754759,0.3072264184800094
+polisi takut sih,takut,1,3.373018368042966,0.5546339552380029
+polisi takut sih,sih,1,4.824452031333818,0.7932968694585562
+polisi takut sih,polisi,1,1.5271916775446353,0.2511199964246243
+komunikasi masyarakat polisi tingkat percaya,tingkat,1,5.192176811459135,0.5009080868584272
+komunikasi masyarakat polisi tingkat percaya,polisi,1,1.5271916775446353,0.1473337078538386
+komunikasi masyarakat polisi tingkat percaya,percaya,1,3.3640496980602057,0.32454204845895007
+komunikasi masyarakat polisi tingkat percaya,masyarakat,1,3.4975810906847284,0.3374243051393219
+komunikasi masyarakat polisi tingkat percaya,komunikasi,1,7.3894013887953545,0.7128822933228067
+garang urus rakyat berani tidak lawan,urus,1,5.249335225299084,0.3973168299935195
+garang urus rakyat berani tidak lawan,tidak,1,3.477378383367209,0.26319922364812026
+garang urus rakyat berani tidak lawan,rakyat,1,3.2073512461541487,0.2427611450029132
+garang urus rakyat berani tidak lawan,lawan,1,6.290789100127245,0.47614341171704
+garang urus rakyat berani tidak lawan,garang,1,7.3894013887953545,0.5592962554946384
+garang urus rakyat berani tidak lawan,berani,1,5.517599211893764,0.4176214575664613
+miris hukum tegak adil polisi,tegak,1,4.298358935437038,0.4898177269907712
+miris hukum tegak adil polisi,polisi,1,1.5271916775446353,0.17403050033979492
+miris hukum tegak adil polisi,miris,1,5.779963476361254,0.6586533639013301
+miris hukum tegak adil polisi,hukum,1,3.2383614828967087,0.36902615266718075
+miris hukum tegak adil polisi,adil,1,3.5078375908519175,0.39973419186528913
+sebel banget gede ujung ujung hilang,ujung,2,5.885323992019081,0.7891418388553542
+sebel banget gede ujung ujung hilang,hilang,1,4.9044947390073546,0.32881299332416825
+sebel banget gede ujung ujung hilang,gede,1,6.696254208235409,0.4489382714100086
+sebel banget gede ujung ujung hilang,banget,1,3.877855949964334,0.25998384959951665
+kecewa bela sakit,sakit,1,6.136638420299986,0.6134787375133259
+kecewa bela sakit,kecewa,1,4.190728271244673,0.4189464187102793
+kecewa bela sakit,bela,1,6.696254208235409,0.6694234361515041
+udah orang korban salah tangkap ngeri,udah,1,4.418986923225654,0.36281349814140984
+udah orang korban salah tangkap ngeri,tangkap,1,5.13810959018886,0.42185585670155934
+udah orang korban salah tangkap ngeri,salah,1,4.556188044739139,0.37407816574737246
+udah orang korban salah tangkap ngeri,orang,1,5.249335225299084,0.43098785063103756
+udah orang korban salah tangkap ngeri,ngeri,1,5.443491239740042,0.4469287040457154
+udah orang korban salah tangkap ngeri,korban,1,4.94705435342615,0.40616958742934445
+hati senang polisi layan tulus,tulus,1,6.983936280687191,0.6230778843804518
+hati senang polisi layan tulus,senang,1,5.13810959018886,0.4584008680065987
+hati senang polisi layan tulus,polisi,1,1.5271916775446353,0.1362497195341414
+hati senang polisi layan tulus,layan,1,4.94705435342615,0.44135571067160045
+hati senang polisi layan tulus,hati,1,4.863672744487099,0.433916748687132
+jahat bebas keliar ngeri hidup,ngeri,1,5.443491239740042,0.4559963128407015
+jahat bebas keliar ngeri hidup,jahat,1,4.715252739368826,0.39499243565731973
+jahat bebas keliar ngeri hidup,hidup,1,7.3894013887953545,0.6190034371308285
+jahat bebas keliar ngeri hidup,bebas,1,6.003107027675465,0.5028748186869207
+marah,marah,1,5.885323992019081,1.0
+terima kasih polisi kronologi,terima,1,3.549949076202044,0.6783565241586844
+terima kasih polisi kronologi,polisi,1,1.5271916775446353,0.29182966174027636
+terima kasih polisi kronologi,kasih,1,3.528671677754759,0.6742906455378898
+polisi aman cemas,polisi,1,1.5271916775446353,0.20629975169982231
+polisi aman cemas,cemas,1,6.136638420299986,0.8289640396776429
+polisi aman cemas,aman,1,3.8484420647580406,0.5198644374930016
+teknologi bantu tingkat efektivitas kinerja polisi layan publik,tingkat,1,5.192176811459135,0.35224633032428726
+teknologi bantu tingkat efektivitas kinerja polisi layan publik,teknologi,1,6.983936280687191,0.47380241764135383
+teknologi bantu tingkat efektivitas kinerja polisi layan publik,publik,1,5.37449836825309,0.364615342715765
+teknologi bantu tingkat efektivitas kinerja polisi layan publik,polisi,1,1.5271916775446353,0.10360734690884166
+teknologi bantu tingkat efektivitas kinerja polisi layan publik,layan,1,4.94705435342615,0.33561679526461285
+teknologi bantu tingkat efektivitas kinerja polisi layan publik,kinerja,1,4.253907172866205,0.2885924816495586
+teknologi bantu tingkat efektivitas kinerja polisi layan publik,efektivitas,1,6.696254208235409,0.4542855641132576
+teknologi bantu tingkat efektivitas kinerja polisi layan publik,bantu,1,4.786711703350971,0.32473887023732917
+polisi integritas hati masyarakat,polisi,1,1.5271916775446353,0.1804471719664391
+polisi integritas hati masyarakat,masyarakat,1,3.4975810906847284,0.4132609061568874
+polisi integritas hati masyarakat,integritas,1,5.779963476361254,0.6829385457728264
+polisi integritas hati masyarakat,hati,1,4.863672744487099,0.5746731107937797
+sedih tidakadil rajalela,tidakadil,1,6.003107027675465,0.5848680072793053
+sedih tidakadil rajalela,sedih,1,4.94705435342615,0.4819793830514367
+sedih tidakadil rajalela,rajalela,1,6.696254208235409,0.652399638545647
+polisi bikin sedih,sedih,1,4.94705435342615,0.7267766599774333
+polisi bikin sedih,polisi,1,1.5271916775446353,0.22436124353121936
+polisi bikin sedih,bikin,1,4.418986923225654,0.6491977502372995
+shock parah berita hilang gitu aja,parah,1,6.473110656921199,0.5021207153051598
+shock parah berita hilang gitu aja,hilang,1,4.9044947390073546,0.3804428098147287
+shock parah berita hilang gitu aja,gitu,1,7.3894013887953545,0.5731976027710339
+shock parah berita hilang gitu aja,berita,1,5.0868162958013095,0.3945855358339489
+shock parah berita hilang gitu aja,aja,1,4.444962409628914,0.3447967790016087
+takut polisi jahat,takut,1,3.373018368042966,0.5626139329151623
+takut polisi jahat,polisi,1,1.5271916775446353,0.2547330676165908
+takut polisi jahat,jahat,1,4.715252739368826,0.7864964251364241
+miris hukum pasti korban,pasti,1,6.003107027675465,0.5875085374528513
+miris hukum pasti korban,miris,1,5.779963476361254,0.5656700560014534
+miris hukum pasti korban,korban,1,4.94705435342615,0.4841553972770988
+miris hukum pasti korban,hukum,1,3.2383614828967087,0.31693005135325847
+kerja polisi lingkung kondusif,polisi,1,1.5271916775446353,0.13926715370017592
+kerja polisi lingkung kondusif,lingkung,1,6.696254208235409,0.6106425786271444
+kerja polisi lingkung kondusif,kondusif,1,7.3894013887953545,0.6738518249524565
+kerja polisi lingkung kondusif,kerja,1,4.298358935437038,0.39197451329912625
+hukum negeri duit,negeri,1,5.5976419195673,0.6013049336068804
+hukum negeri duit,hukum,1,3.2383614828967087,0.3478683996669096
+hukum negeri duit,duit,1,6.696254208235409,0.7193190900658819
+kesal lihat hilang,lihat,1,4.27588607958498,0.4724482255963216
+kesal lihat hilang,kesal,1,6.290789100127245,0.6950774863123268
+kesal lihat hilang,hilang,1,4.9044947390073546,0.5419040156269598
+dikit damai aja hukum negara kayak tawar tawar,negara,1,5.885323992019081,0.4842934462406307
+dikit damai aja hukum negara kayak tawar tawar,kayak,1,5.309959847115519,0.436947695189966
+dikit damai aja hukum negara kayak tawar tawar,hukum,1,3.2383614828967087,0.2664793382406332
+dikit damai aja hukum negara kayak tawar tawar,damai,1,7.3894013887953545,0.6080614540657225
+dikit damai aja hukum negara kayak tawar tawar,aja,1,4.444962409628914,0.36576850598002997
+polisi bagus aja kerja tidak sangka,tidak,1,3.477378383367209,0.311389147167501
+polisi bagus aja kerja tidak sangka,sangka,1,4.824452031333818,0.4320156847966796
+polisi bagus aja kerja tidak sangka,polisi,1,1.5271916775446353,0.13675558469752852
+polisi bagus aja kerja tidak sangka,kerja,1,4.298358935437038,0.3849055741323984
+polisi bagus aja kerja tidak sangka,bagus,1,6.983936280687191,0.6253912351665136
+polisi bagus aja kerja tidak sangka,aja,1,4.444962409628914,0.39803348998382104
+tambah kinerja polisi polisi jujur adil lindung rakyat,tambah,1,6.003107027675465,0.5480813592831052
+tambah kinerja polisi polisi jujur adil lindung rakyat,rakyat,1,3.2073512461541487,0.2928299333305774
+tambah kinerja polisi polisi jujur adil lindung rakyat,polisi,2,1.5271916775446353,0.278864023798231
+tambah kinerja polisi polisi jujur adil lindung rakyat,lindung,1,4.211347558447409,0.3844944099124638
+tambah kinerja polisi polisi jujur adil lindung rakyat,kinerja,1,4.253907172866205,0.38838008631531323
+tambah kinerja polisi polisi jujur adil lindung rakyat,jujur,1,4.022105558808881,0.3672166882398085
+tambah kinerja polisi polisi jujur adil lindung rakyat,adil,1,3.5078375908519175,0.3202642208568048
+takut suara rakyat bungkam mudah,takut,1,3.373018368042966,0.27159221697196406
+takut suara rakyat bungkam mudah,suara,1,6.473110656921199,0.5212086867579374
+takut suara rakyat bungkam mudah,rakyat,1,3.2073512461541487,0.2582528585683945
+takut suara rakyat bungkam mudah,mudah,1,6.473110656921199,0.5212086867579374
+takut suara rakyat bungkam mudah,bungkam,1,6.983936280687191,0.5623398780254154
+aman moga polisi sigap,sigap,1,6.003107027675465,0.6848497963143765
+aman moga polisi sigap,polisi,1,1.5271916775446353,0.17422593075180415
+aman moga polisi sigap,moga,1,4.863672744487099,0.5548602203901679
+aman moga polisi sigap,aman,1,3.8484420647580406,0.43904010906795155
+harap ubah kecewa,ubah,1,5.37449836825309,0.6699273536772193
+harap ubah kecewa,kecewa,1,4.190728271244673,0.5223712630222246
+harap ubah kecewa,harap,1,4.232400967645241,0.5275657346374986
+jengkel lihat atur untung polisi,untung,1,7.3894013887953545,0.6189970413251817
+jengkel lihat atur untung polisi,polisi,1,1.5271916775446353,0.12793013671851444
+jengkel lihat atur untung polisi,lihat,1,4.27588607958498,0.35818338902525326
+jengkel lihat atur untung polisi,jengkel,1,6.136638420299986,0.5140553105706148
+jengkel lihat atur untung polisi,atur,1,5.443491239740042,0.4559916012936928
+tegak hukum bebas penting,tegak,1,4.298358935437038,0.4276234007504979
+tegak hukum bebas penting,penting,1,6.003107027675465,0.5972207255843762
+tegak hukum bebas penting,hukum,1,3.2383614828967087,0.3221692676149009
+tegak hukum bebas penting,bebas,1,6.003107027675465,0.5972207255843762
+darah lihat laku polisi,polisi,1,1.5271916775446353,0.23584607639530145
+darah lihat laku polisi,lihat,1,4.27588607958498,0.6603303107339853
+darah lihat laku polisi,laku,1,4.616812666555574,0.712980020039061
+sumpah heran banget gimana sih santai bikin rakyat sengsara,sumpah,1,6.003107027675465,0.36399771837146566
+sumpah heran banget gimana sih santai bikin rakyat sengsara,sih,1,4.824452031333818,0.2925301054440952
+sumpah heran banget gimana sih santai bikin rakyat sengsara,sengsara,1,6.983936280687191,0.4234701896371501
+sumpah heran banget gimana sih santai bikin rakyat sengsara,santai,1,6.696254208235409,0.4060266195814998
+sumpah heran banget gimana sih santai bikin rakyat sengsara,rakyat,1,3.2073512461541487,0.19447738150156832
+sumpah heran banget gimana sih santai bikin rakyat sengsara,heran,1,6.290789100127245,0.38144128842711583
+sumpah heran banget gimana sih santai bikin rakyat sengsara,gimana,1,5.885323992019081,0.3568559572727318
+sumpah heran banget gimana sih santai bikin rakyat sengsara,bikin,1,4.418986923225654,0.26794477428971114
+sumpah heran banget gimana sih santai bikin rakyat sengsara,banget,1,3.877855949964334,0.23513335868456203
+mantap terima kasih polisi tangkap laku,terima,1,3.549949076202044,0.3367363910354971
+mantap terima kasih polisi tangkap laku,tangkap,1,5.13810959018886,0.48738402805375913
+mantap terima kasih polisi tangkap laku,polisi,1,1.5271916775446353,0.1448643354811206
+mantap terima kasih polisi tangkap laku,mantap,1,6.003107027675465,0.5694348150092209
+mantap terima kasih polisi tangkap laku,laku,1,4.616812666555574,0.4379355314826525
+mantap terima kasih polisi tangkap laku,kasih,1,3.528671677754759,0.3347180876148101
+masyarakat butuh polisi responsif,responsif,1,6.136638420299986,0.6966016363291846
+masyarakat butuh polisi responsif,polisi,1,1.5271916775446353,0.1733594435101001
+masyarakat butuh polisi responsif,masyarakat,1,3.4975810906847284,0.3970285593013468
+masyarakat butuh polisi responsif,butuh,1,5.038026131631877,0.5718924607900229
+berani polisi lawan tidakadil patut apresiasi,tidakadil,1,6.003107027675465,0.4515527805218658
+berani polisi lawan tidakadil patut apresiasi,polisi,1,1.5271916775446353,0.1148751213673037
+berani polisi lawan tidakadil patut apresiasi,patut,1,6.003107027675465,0.4515527805218658
+berani polisi lawan tidakadil patut apresiasi,lawan,1,6.290789100127245,0.4731921814392598
+berani polisi lawan tidakadil patut apresiasi,berani,1,5.517599211893764,0.41503295784160676
+berani polisi lawan tidakadil patut apresiasi,apresiasi,1,5.684653296556929,0.42759874020720906
+viral tidak cepat sih tetap kaget,viral,1,5.192176811459135,0.4397557183910776
+viral tidak cepat sih tetap kaget,tidak,1,3.477378383367209,0.2945194442763029
+viral tidak cepat sih tetap kaget,tetap,1,6.290789100127245,0.5328035967241618
+viral tidak cepat sih tetap kaget,sih,1,4.824452031333818,0.40861096336322145
+viral tidak cepat sih tetap kaget,kaget,1,4.786711703350971,0.40541451500503317
+viral tidak cepat sih tetap kaget,cepat,1,3.819868692313985,0.3235269448530303
+polisi diam tidakadil,tidakadil,1,6.003107027675465,0.7085682065647639
+polisi diam tidakadil,polisi,1,1.5271916775446353,0.1802598992571112
+polisi diam tidakadil,diam,1,5.779963476361254,0.6822297746107318
+emosi polisi salah guna senjata wenang,wenang,1,5.5976419195673,0.40761359115019347
+emosi polisi salah guna senjata wenang,senjata,1,7.3894013887953545,0.5380873731862312
+emosi polisi salah guna senjata wenang,salah,1,4.556188044739139,0.3317761653134216
+emosi polisi salah guna senjata wenang,polisi,1,1.5271916775446353,0.11120827180506339
+emosi polisi salah guna senjata wenang,guna,1,6.136638420299986,0.4468626718234391
+emosi polisi salah guna senjata wenang,emosi,1,6.473110656921199,0.4713641777543708
+iya langsung tindak gue shock jujur,tindak,1,4.093564522791025,0.4235219785581066
+iya langsung tindak gue shock jujur,langsung,1,4.527200507865887,0.4683861475116918
+iya langsung tindak gue shock jujur,jujur,1,4.022105558808881,0.41612880284463427
+iya langsung tindak gue shock jujur,iya,1,4.94705435342615,0.5118244102743549
+iya langsung tindak gue shock jujur,gue,1,3.9394138429637673,0.4075734817033398
+takut bukti tindak,tindak,1,4.093564522791025,0.542111927121706
+takut bukti tindak,takut,1,3.373018368042966,0.44668979260890246
+takut bukti tindak,bukti,1,5.37449836825309,0.7117463646913875
+sedih lihat korban tidak adil,tidak,1,3.477378383367209,0.36327897461394826
+sedih lihat korban tidak adil,sedih,1,4.94705435342615,0.5168148630210029
+sedih lihat korban tidak adil,lihat,1,4.27588607958498,0.4466984432834599
+sedih lihat korban tidak adil,korban,1,4.94705435342615,0.5168148630210029
+sedih lihat korban tidak adil,adil,1,3.5078375908519175,0.366461023974905
+wow keren banget polisi tanggap,wow,1,5.779963476361254,0.5356252419794957
+wow keren banget polisi tanggap,tanggap,1,5.443491239740042,0.5044445911160966
+wow keren banget polisi tanggap,polisi,1,1.5271916775446353,0.14152380290625752
+wow keren banget polisi tanggap,keren,1,6.003107027675465,0.5563038014821038
+wow keren banget polisi tanggap,banget,1,3.877855949964334,0.3593582450920411
+sedih marah kecewa rakyat adu,sedih,1,4.94705435342615,0.4309131845295346
+sedih marah kecewa rakyat adu,rakyat,1,3.2073512461541487,0.2793763400694941
+sedih marah kecewa rakyat adu,marah,1,5.885323992019081,0.5126411642582074
+sedih marah kecewa rakyat adu,kecewa,1,4.190728271244673,0.3650333988364882
+sedih marah kecewa rakyat adu,adu,1,6.696254208235409,0.5832772432127458
+nama layan publik oke banget,publik,1,5.37449836825309,0.40328583448251354
+nama layan publik oke banget,oke,1,7.3894013887953545,0.5544779626335996
+nama layan publik oke banget,nama,1,7.3894013887953545,0.5544779626335996
+nama layan publik oke banget,layan,1,4.94705435342615,0.37121174972098653
+nama layan publik oke banget,banget,1,3.877855949964334,0.29098238861177045
+langsung selesai singkat,selesai,1,5.5976419195673,0.7775317174842966
+langsung selesai singkat,langsung,1,4.527200507865887,0.6288437232778269
+sedih hukum pihak lemah,sedih,1,4.94705435342615,0.4546956909401315
+sedih hukum pihak lemah,pihak,1,5.885323992019081,0.5409343152060431
+sedih hukum pihak lemah,lemah,1,6.983936280687191,0.6419104189606555
+sedih hukum pihak lemah,hukum,1,3.2383614828967087,0.2976456102528668
+polisi bikin tenang bikin ragu,tenang,1,6.003107027675465,0.4770074484955808
+polisi bikin tenang bikin ragu,ragu,1,6.473110656921199,0.5143539810389102
+polisi bikin tenang bikin ragu,polisi,1,1.5271916775446353,0.12135079419887278
+polisi bikin tenang bikin ragu,bikin,2,4.418986923225654,0.7022662322911898
+haru polisi bantu warga,warga,1,6.136638420299986,0.5661083697369191
+haru polisi bantu warga,polisi,1,1.5271916775446353,0.14088429717329196
+haru polisi bantu warga,haru,1,7.3894013887953545,0.6816764630786525
+haru polisi bantu warga,bantu,1,4.786711703350971,0.44157686557197906
+terima kasih saran polisi,terima,1,3.549949076202044,0.6783565241586844
+terima kasih saran polisi,polisi,1,1.5271916775446353,0.29182966174027636
+terima kasih saran polisi,kasih,1,3.528671677754759,0.6742906455378898
+institusi milik tantang jalan tugas,tugas,1,4.0394973015207505,0.3338736645431653
+institusi milik tantang jalan tugas,tantang,1,6.473110656921199,0.5350173585228214
+institusi milik tantang jalan tugas,milik,1,5.192176811459135,0.42914525486755156
+institusi milik tantang jalan tugas,jalan,1,4.393669115241364,0.36314677267973555
+institusi milik tantang jalan tugas,institusi,1,6.473110656921199,0.5350173585228214
+polisi disiplin bawa ubah negeri,ubah,1,5.37449836825309,0.4513829378919028
+polisi disiplin bawa ubah negeri,polisi,1,1.5271916775446353,0.12826281057337532
+polisi disiplin bawa ubah negeri,negeri,1,5.5976419195673,0.47012388539293987
+polisi disiplin bawa ubah negeri,disiplin,1,6.983936280687191,0.5865532856140933
+polisi disiplin bawa ubah negeri,bawa,1,5.517599211893764,0.46340141381123445
+kecewa tangan polisi nilai,tangan,1,4.58604100788882,0.49519936194806996
+kecewa tangan polisi nilai,polisi,1,1.5271916775446353,0.1649057090836289
+kecewa tangan polisi nilai,nilai,1,6.696254208235409,0.7230595639367738
+kecewa tangan polisi nilai,kecewa,1,4.190728271244673,0.45251360867648194
+polisi janji reformasi,reformasi,1,6.290789100127245,0.7350741402833311
+polisi janji reformasi,polisi,1,1.5271916775446353,0.17845123903395108
+polisi janji reformasi,janji,1,5.5976419195673,0.6540803953444632
+polisi jaga netralitas tugas,tugas,1,4.0394973015207505,0.6612014278797441
+polisi jaga netralitas tugas,polisi,1,1.5271916775446353,0.24997697546633388
+polisi jaga netralitas tugas,jaga,1,4.321348453661738,0.7073359763977027
+kinerja polisi,polisi,1,1.5271916775446353,0.3378937758414341
+kinerja polisi,kinerja,1,4.253907172866205,0.9411842520184975
+polisi solusi tambah,tambah,1,6.003107027675465,0.658096855826426
+polisi solusi tambah,solusi,1,6.696254208235409,0.7340838369094679
+polisi solusi tambah,polisi,1,1.5271916775446353,0.1674199771223441
+mana polisi jujur,polisi,1,1.5271916775446353,0.1786062047849864
+mana polisi jujur,mana,1,7.3894013887953545,0.8641959991607355
+mana polisi jujur,jujur,1,4.022105558808881,0.4703882424624169
+hilang bukti lenyap percaya,percaya,1,3.3640496980602057,0.4196672843257641
+hilang bukti lenyap percaya,hilang,1,4.9044947390073546,0.6118387577020801
+hilang bukti lenyap percaya,bukti,1,5.37449836825309,0.6704720016825563
+polisi ayom masyarakat tingkat layan,tingkat,1,5.192176811459135,0.5099795260013322
+polisi ayom masyarakat tingkat layan,polisi,1,1.5271916775446353,0.15000191944706123
+polisi ayom masyarakat tingkat layan,masyarakat,1,3.4975810906847284,0.3435350550547519
+polisi ayom masyarakat tingkat layan,layan,1,4.94705435342615,0.48590341313012725
+polisi ayom masyarakat tingkat layan,ayom,1,6.136638420299986,0.602745258196757
+viral sampe tindak mah malam,viral,1,5.192176811459135,0.4036318740940918
+viral sampe tindak mah malam,tindak,1,4.093564522791025,0.31822743717290536
+viral sampe tindak mah malam,sampe,1,5.779963476361254,0.449325509295102
+viral sampe tindak mah malam,malam,1,6.290789100127245,0.4890363110152782
+viral sampe tindak mah malam,mah,1,6.983936280687191,0.5429205113558715
+koordinasi polisi masyarakat cipta lingkung aman,polisi,1,1.5271916775446353,0.12125551077262955
+koordinasi polisi masyarakat cipta lingkung aman,masyarakat,1,3.4975810906847284,0.2776999035913567
+koordinasi polisi masyarakat cipta lingkung aman,lingkung,1,6.696254208235409,0.5316672007985216
+koordinasi polisi masyarakat cipta lingkung aman,koordinasi,1,6.696254208235409,0.5316672007985216
+koordinasi polisi masyarakat cipta lingkung aman,cipta,1,6.290789100127245,0.4994742026915777
+koordinasi polisi masyarakat cipta lingkung aman,aman,1,3.8484420647580406,0.3055574588982598
+saat ancam lindung terima kasih polisi tni semangat,terima,1,3.549949076202044,0.2588556568548589
+saat ancam lindung terima kasih polisi tni semangat,semangat,1,6.290789100127245,0.45871259268625764
+saat ancam lindung terima kasih polisi tni semangat,saat,1,7.3894013887953545,0.5388213490395327
+saat ancam lindung terima kasih polisi tni semangat,polisi,1,1.5271916775446353,0.11135996498773179
+saat ancam lindung terima kasih polisi tni semangat,lindung,1,4.211347558447409,0.3070835989715944
+saat ancam lindung terima kasih polisi tni semangat,kasih,1,3.528671677754759,0.25730414869713425
+saat ancam lindung terima kasih polisi tni semangat,ancam,1,6.983936280687191,0.5092555905911454
+berita bikin gue senang sekaligus kaget,senang,1,5.13810959018886,0.48937727129548236
+berita bikin gue senang sekaligus kaget,kaget,1,4.786711703350971,0.4559085147457794
+berita bikin gue senang sekaligus kaget,gue,1,3.9394138429637673,0.3752079559872518
+berita bikin gue senang sekaligus kaget,bikin,1,4.418986923225654,0.4208847095258436
+berita bikin gue senang sekaligus kaget,berita,1,5.0868162958013095,0.4844918612039836
+polisi ikut prosedur tindak,tindak,1,4.093564522791025,0.41100678082320363
+polisi ikut prosedur tindak,prosedur,1,5.5976419195673,0.5620208922452161
+polisi ikut prosedur tindak,polisi,1,1.5271916775446353,0.15333485806635022
+polisi ikut prosedur tindak,ikut,1,6.983936280687191,0.7012092156403895
+institusi polisi adaptasi kembang zaman,zaman,1,6.983936280687191,0.5130943333977768
+institusi polisi adaptasi kembang zaman,polisi,1,1.5271916775446353,0.11219939075436335
+institusi polisi adaptasi kembang zaman,kembang,1,6.136638420299986,0.4508452358412971
+institusi polisi adaptasi kembang zaman,institusi,1,6.473110656921199,0.4755651059857929
+institusi polisi adaptasi kembang zaman,adaptasi,1,7.3894013887953545,0.5428829570334359
+sadar hukum masyarakat peran dukung tugas polisi,tugas,1,4.0394973015207505,0.32038404841379975
+sadar hukum masyarakat peran dukung tugas polisi,sadar,1,7.3894013887953545,0.586074492834922
+sadar hukum masyarakat peran dukung tugas polisi,polisi,1,1.5271916775446353,0.12112592628082958
+sadar hukum masyarakat peran dukung tugas polisi,peran,1,6.003107027675465,0.4761235344467076
+sadar hukum masyarakat peran dukung tugas polisi,masyarakat,1,3.4975810906847284,0.2774031286188174
+sadar hukum masyarakat peran dukung tugas polisi,hukum,1,3.2383614828967087,0.25684368243721023
+sadar hukum masyarakat peran dukung tugas polisi,dukung,1,5.192176811459135,0.41180634687124984
+gimana aman masyarakat tangan polisi,tangan,1,4.58604100788882,0.4972952313213914
+gimana aman masyarakat tangan polisi,polisi,1,1.5271916775446353,0.16560365187538573
+gimana aman masyarakat tangan polisi,masyarakat,1,3.4975810906847284,0.3792662112190937
+gimana aman masyarakat tangan polisi,gimana,1,5.885323992019081,0.6381852126873561
+gimana aman masyarakat tangan polisi,aman,1,3.8484420647580406,0.41731242340151786
+polisi humanis hormat masyarakat,polisi,1,1.5271916775446353,0.15695580586743654
+polisi humanis hormat masyarakat,masyarakat,1,3.4975810906847284,0.35946087629140094
+polisi humanis hormat masyarakat,humanis,1,6.983936280687191,0.7177680203342044
+polisi humanis hormat masyarakat,hormat,1,5.5976419195673,0.5752928144917497
+masyarakat percaya lindung,percaya,1,3.3640496980602057,0.5235575257678492
+masyarakat percaya lindung,masyarakat,1,3.4975810906847284,0.544339432044425
+masyarakat percaya lindung,lindung,1,4.211347558447409,0.6554251291592357
+ubah sistem butuh tidak instan,ubah,1,5.37449836825309,0.5652259459719445
+ubah sistem butuh tidak instan,tidak,1,3.477378383367209,0.36570938375407547
+ubah sistem butuh tidak instan,sistem,1,4.9044947390073546,0.5157965429378123
+ubah sistem butuh tidak instan,butuh,1,5.038026131631877,0.5298397898683493
+tingkat integritas personel jaga percaya publik,tingkat,1,5.192176811459135,0.3937921588268791
+tingkat integritas personel jaga percaya publik,publik,1,5.37449836825309,0.4076200391278953
+tingkat integritas personel jaga percaya publik,personel,1,7.3894013887953545,0.5604370634894283
+tingkat integritas personel jaga percaya publik,percaya,1,3.3640496980602057,0.25514084768383577
+tingkat integritas personel jaga percaya publik,jaga,1,4.321348453661738,0.3277456062079724
+tingkat integritas personel jaga percaya publik,integritas,1,5.779963476361254,0.43837187714282927
+bangga kinerja polisi,polisi,1,1.5271916775446353,0.21227045592480248
+bangga kinerja polisi,kinerja,1,4.253907172866205,0.591267506445474
+bangga kinerja polisi,bangga,1,5.5976419195673,0.7780385526201307
+tampil henti polisi sheila on kecewa toleransi aparat,polisi,1,1.5271916775446353,0.16557803974897112
+tampil henti polisi sheila on kecewa toleransi aparat,kecewa,1,4.190728271244673,0.45435853434514745
+tampil henti polisi sheila on kecewa toleransi aparat,henti,1,6.473110656921199,0.7018143101554856
+tampil henti polisi sheila on kecewa toleransi aparat,aparat,1,4.824452031333818,0.52306683041615
+pakai ragam doang laku kaya preman jalan,ragam,1,6.290789100127245,0.434265161323946
+pakai ragam doang laku kaya preman jalan,preman,1,6.983936280687191,0.4821144322812277
+pakai ragam doang laku kaya preman jalan,laku,1,4.616812666555574,0.31870737764895657
+pakai ragam doang laku kaya preman jalan,kaya,1,6.696254208235409,0.46225519052080166
+pakai ragam doang laku kaya preman jalan,jalan,1,4.393669115241364,0.30330335300792965
+pakai ragam doang laku kaya preman jalan,doang,1,6.003107027675465,0.41440591956352
+polisi bukti jaga adil,polisi,1,1.5271916775446353,0.193646874273631
+polisi bukti jaga adil,jaga,1,4.321348453661738,0.5479440681893886
+polisi bukti jaga adil,bukti,1,5.37449836825309,0.6814827667698071
+polisi bukti jaga adil,adil,1,3.5078375908519175,0.44479143968368345
+kecewa tenggelam,tenggelam,1,6.983936280687191,0.8574730728166973
+kecewa tenggelam,kecewa,1,4.190728271244673,0.5145288421403518
+polisi hadir aman,polisi,1,1.5271916775446353,0.22330032452797874
+polisi hadir aman,hadir,1,5.443491239740042,0.7959271768383732
+polisi hadir aman,aman,1,3.8484420647580406,0.5627049797503094
+kasih wenang lindung rakyat sari untung pribadi,wenang,1,5.5976419195673,0.3692665633177975
+kasih wenang lindung rakyat sari untung pribadi,untung,1,7.3894013887953545,0.4874657748788524
+kasih wenang lindung rakyat sari untung pribadi,sari,1,6.983936280687191,0.46071795692840467
+kasih wenang lindung rakyat sari untung pribadi,rakyat,1,3.2073512461541487,0.21158330401240633
+kasih wenang lindung rakyat sari untung pribadi,pribadi,1,7.3894013887953545,0.4874657748788524
+kasih wenang lindung rakyat sari untung pribadi,lindung,1,4.211347558447409,0.27781516970719033
+kasih wenang lindung rakyat sari untung pribadi,kasih,1,3.528671677754759,0.23278024608299178
+hilang harap tangan serius,tangan,1,4.58604100788882,0.4784287818341078
+hilang harap tangan serius,serius,1,5.37449836825309,0.5606828859291925
+hilang harap tangan serius,hilang,1,4.9044947390073546,0.5116507766630866
+hilang harap tangan serius,harap,1,4.232400967645241,0.44153605161855586
+polisi adil sulit temu,temu,1,6.290789100127245,0.690102756011656
+polisi adil sulit temu,sulit,1,5.37449836825309,0.5895851978309977
+polisi adil sulit temu,polisi,1,1.5271916775446353,0.1675337018706126
+polisi adil sulit temu,adil,1,3.5078375908519175,0.3848115634713029
+deg degan temu razia tidak salah,tidak,1,3.477378383367209,0.2448623015253304
+deg degan temu razia tidak salah,temu,1,6.290789100127245,0.4429708037628175
+deg degan temu razia tidak salah,salah,1,4.556188044739139,0.32082752229474876
+deg degan temu razia tidak salah,razia,1,6.290789100127245,0.4429708037628175
+deg degan temu razia tidak salah,degan,1,6.696254208235409,0.4715219444826388
+deg degan temu razia tidak salah,deg,1,6.696254208235409,0.4715219444826388
+polisi usut proses adil,usut,1,6.696254208235409,0.746294378942004
+polisi usut proses adil,proses,1,4.58604100788882,0.5111121112420929
+polisi usut proses adil,polisi,1,1.5271916775446353,0.1702047934674978
+polisi usut proses adil,adil,1,3.5078375908519175,0.39094684802656393
+polri tindak jujur adil hukum jadi alat kuasa tindas lemah,tindas,1,6.983936280687191,0.4069056164236238
+polri tindak jujur adil hukum jadi alat kuasa tindas lemah,tindak,1,4.093564522791025,0.2385036644910887
+polri tindak jujur adil hukum jadi alat kuasa tindas lemah,polri,1,5.684653296556929,0.33120539203465943
+polri tindak jujur adil hukum jadi alat kuasa tindas lemah,lemah,1,6.983936280687191,0.4069056164236238
+polri tindak jujur adil hukum jadi alat kuasa tindas lemah,kuasa,1,5.37449836825309,0.3131348116032068
+polri tindak jujur adil hukum jadi alat kuasa tindas lemah,jujur,1,4.022105558808881,0.23434024537906795
+polri tindak jujur adil hukum jadi alat kuasa tindas lemah,jadi,1,5.5976419195673,0.3261358414879655
+polri tindak jujur adil hukum jadi alat kuasa tindas lemah,hukum,1,3.2383614828967087,0.18867690403254203
+polri tindak jujur adil hukum jadi alat kuasa tindas lemah,alat,1,6.983936280687191,0.4069056164236238
+polri tindak jujur adil hukum jadi alat kuasa tindas lemah,adil,1,3.5078375908519175,0.2043774112267692
+adil tunggu viral,viral,1,5.192176811459135,0.5847666985061959
+adil tunggu viral,tunggu,1,6.290789100127245,0.7084974388702258
+adil tunggu viral,adil,1,3.5078375908519175,0.39506871229255097
+rakyat aman lindung tindak kasar,tindak,1,4.093564522791025,0.5302903883068114
+rakyat aman lindung tindak kasar,rakyat,1,3.2073512461541487,0.4154881468925231
+rakyat aman lindung tindak kasar,lindung,1,4.211347558447409,0.5455482916246742
+rakyat aman lindung tindak kasar,aman,1,3.8484420647580406,0.498536623897009
+takut jadi suruh amai tidak benar,tidak,1,3.477378383367209,0.26869792191154296
+takut jadi suruh amai tidak benar,takut,1,3.373018368042966,0.2606339966906333
+takut jadi suruh amai tidak benar,suruh,1,6.473110656921199,0.5001789250596255
+takut jadi suruh amai tidak benar,jadi,1,5.5976419195673,0.4325312305922402
+takut jadi suruh amai tidak benar,benar,1,4.022105558808881,0.3107891308377892
+takut jadi suruh amai tidak benar,amai,1,7.3894013887953545,0.5709809455412123
+kerja penting mending mundur aja,penting,1,6.003107027675465,0.44318476362393067
+kerja penting mending mundur aja,mundur,1,7.3894013887953545,0.5455291889213103
+kerja penting mending mundur aja,mending,1,7.3894013887953545,0.5455291889213103
+kerja penting mending mundur aja,kerja,1,4.298358935437038,0.31733020584011135
+kerja penting mending mundur aja,aja,1,4.444962409628914,0.32815333888715487
+gue mimpi benar udah tindak,udah,1,4.418986923225654,0.4089614529663619
+gue mimpi benar udah tindak,tindak,1,4.093564522791025,0.3788447723737882
+gue mimpi benar udah tindak,mimpi,1,6.983936280687191,0.6463383527483849
+gue mimpi benar udah tindak,gue,1,3.9394138429637673,0.3645786776572439
+gue mimpi benar udah tindak,benar,1,4.022105558808881,0.3722315005435388
+hukum beli guna adil,hukum,1,3.2383614828967087,0.3237968607387064
+hukum beli guna adil,guna,1,6.136638420299986,0.6135893928074639
+hukum beli guna adil,beli,1,6.290789100127245,0.6290025906460686
+hukum beli guna adil,adil,1,3.5078375908519175,0.35074120227093447
+buset butuh petisi gerak mah langsung,mah,1,6.983936280687191,0.6317572066505338
+buset butuh petisi gerak mah langsung,langsung,1,4.527200507865887,0.40952429000609514
+buset butuh petisi gerak mah langsung,gerak,1,5.249335225299084,0.4748475967453828
+buset butuh petisi gerak mah langsung,butuh,1,5.038026131631877,0.45573286869091734
+pagi viral sore udah kembang,viral,1,5.192176811459135,0.3938169975350741
+pagi viral sore udah kembang,udah,1,4.418986923225654,0.3351719761181285
+pagi viral sore udah kembang,sore,1,6.696254208235409,0.5078984831947164
+pagi viral sore udah kembang,pagi,1,6.696254208235409,0.5078984831947164
+pagi viral sore udah kembang,kembang,1,6.136638420299986,0.46545266184064377
+butuh langsung jalan lancar,langsung,1,4.527200507865887,0.4499859757071737
+butuh langsung jalan lancar,lancar,1,6.003107027675465,0.5966852955661398
+butuh langsung jalan lancar,jalan,1,4.393669115241364,0.43671347896370416
+butuh langsung jalan lancar,butuh,1,5.038026131631877,0.5007600393536108
+lapor tindaklanjut biar masyarakat aman,tindaklanjut,1,6.696254208235409,0.6160176693649937
+lapor tindaklanjut biar masyarakat aman,masyarakat,1,3.4975810906847284,0.32175775962162134
+lapor tindaklanjut biar masyarakat aman,lapor,1,4.1705255639271535,0.38366486068552985
+lapor tindaklanjut biar masyarakat aman,biar,1,5.37449836825309,0.4944235771015757
+lapor tindaklanjut biar masyarakat aman,aman,1,3.8484420647580406,0.3540349929521537
+takut lapor isa damai tidak fear,tidak,1,3.477378383367209,0.3558997651504048
+takut lapor isa damai tidak fear,takut,1,3.373018368042966,0.3452188150637979
+takut lapor isa damai tidak fear,lapor,1,4.1705255639271535,0.4268414032407279
+takut lapor isa damai tidak fear,damai,1,7.3894013887953545,0.7562841683992337
+hukum indonesia butuh polisi jujur adil,polisi,1,1.5271916775446353,0.15264954315941395
+hukum indonesia butuh polisi jujur adil,jujur,1,4.022105558808881,0.40202718828211426
+hukum indonesia butuh polisi jujur adil,indonesia,1,5.779963476361254,0.5777328393795259
+hukum indonesia butuh polisi jujur adil,hukum,1,3.2383614828967087,0.323688511545583
+hukum indonesia butuh polisi jujur adil,butuh,1,5.038026131631877,0.5035729297944124
+hukum indonesia butuh polisi jujur adil,adil,1,3.5078375908519175,0.3506238369383166
+terima kasih polisi jalan tugas kawal,tugas,1,4.0394973015207505,0.3820665661465791
+terima kasih polisi jalan tugas kawal,terima,1,3.549949076202044,0.3357637726429778
+terima kasih polisi jalan tugas kawal,polisi,1,1.5271916775446353,0.14444591406644738
+terima kasih polisi jalan tugas kawal,kawal,1,6.983936280687191,0.6605595582262476
+terima kasih polisi jalan tugas kawal,kasih,1,3.528671677754759,0.33375129882396415
+terima kasih polisi jalan tugas kawal,jalan,1,4.393669115241364,0.41556509296653704
+polisi kinerja kayak tai,polisi,1,1.5271916775446353,0.2190127929412714
+polisi kinerja kayak tai,kinerja,1,4.253907172866205,0.6100479098604213
+polisi kinerja kayak tai,kayak,1,5.309959847115519,0.7614952030072119
+nama respons cepat bikin kejut gue,respons,1,6.290789100127245,0.4740105204420898
+nama respons cepat bikin kejut gue,nama,1,7.3894013887953545,0.5567908798575902
+nama respons cepat bikin kejut gue,kejut,1,5.684653296556929,0.4283382298699677
+nama respons cepat bikin kejut gue,gue,1,3.9394138429637673,0.29683455862512664
+nama respons cepat bikin kejut gue,cepat,1,3.819868692313985,0.2878268398518673
+nama respons cepat bikin kejut gue,bikin,1,4.418986923225654,0.3329703568130447
+salut polisi benar adil,salut,1,5.5976419195673,0.7100533007561791
+salut polisi benar adil,polisi,1,1.5271916775446353,0.19372219715186037
+salut polisi benar adil,benar,1,4.022105558808881,0.5101986459760515
+salut polisi benar adil,adil,1,3.5078375908519175,0.4449644503329615
+polisi bersih dukung penuh,polisi,1,1.5271916775446353,0.15455094895782903
+polisi bersih dukung penuh,penuh,1,5.684653296556929,0.5752837540940872
+polisi bersih dukung penuh,dukung,1,5.192176811459135,0.5254454075195095
+polisi bersih dukung penuh,bersih,1,6.003107027675465,0.6075110946874178
+hukum tegak pandang bulu polisi peran,tegak,1,4.298358935437038,0.33474527459715026
+hukum tegak pandang bulu polisi peran,polisi,1,1.5271916775446353,0.11893380826051998
+hukum tegak pandang bulu polisi peran,peran,1,6.003107027675465,0.4675067253802962
+hukum tegak pandang bulu polisi peran,pandang,1,6.983936280687191,0.5438912159647116
+hukum tegak pandang bulu polisi peran,hukum,1,3.2383614828967087,0.25219536574761975
+hukum tegak pandang bulu polisi peran,bulu,1,6.983936280687191,0.5438912159647116
+kerja nyata janji,nyata,1,5.192176811459135,0.5925961666932956
+kerja nyata janji,kerja,1,4.298358935437038,0.49058248990870507
+kerja nyata janji,janji,1,5.5976419195673,0.6388729167959672
+tidak aman jahat biar,tidak,1,3.477378383367209,0.3936812948161233
+tidak aman jahat biar,jahat,1,4.715252739368826,0.5338236450479387
+tidak aman jahat biar,biar,1,5.37449836825309,0.6084582243685004
+tidak aman jahat biar,aman,1,3.8484420647580406,0.4356901918771694
+gue update berita udah selesai kasus,update,1,6.290789100127245,0.4805017036872845
+gue update berita udah selesai kasus,udah,1,4.418986923225654,0.3375301113081043
+gue update berita udah selesai kasus,selesai,1,5.5976419195673,0.4275578844201031
+gue update berita udah selesai kasus,kasus,1,6.290789100127245,0.4805017036872845
+gue update berita udah selesai kasus,gue,1,3.9394138429637673,0.30089946315877525
+gue update berita udah selesai kasus,berita,1,5.0868162958013095,0.38854011119643656
+senang jujur integritas kuat tubuh polisi,senang,1,5.13810959018886,0.48048033098141146
+senang jujur integritas kuat tubuh polisi,polisi,1,1.5271916775446353,0.14281236120378893
+senang jujur integritas kuat tubuh polisi,kuat,1,6.003107027675465,0.5613688849848616
+senang jujur integritas kuat tubuh polisi,jujur,1,4.022105558808881,0.3761193832511525
+senang jujur integritas kuat tubuh polisi,integritas,1,5.779963476361254,0.5405020495252703
+langsung ada hasil gue sampe tidak percaya,tidak,1,3.477378383367209,0.2567243149119965
+langsung ada hasil gue sampe tidak percaya,sampe,1,5.779963476361254,0.42671719902059047
+langsung ada hasil gue sampe tidak percaya,percaya,1,3.3640496980602057,0.24835760128817014
+langsung ada hasil gue sampe tidak percaya,langsung,1,4.527200507865887,0.33422950301016474
+langsung ada hasil gue sampe tidak percaya,hasil,1,6.003107027675465,0.4431912116308314
+langsung ada hasil gue sampe tidak percaya,gue,1,3.9394138429637673,0.29083499363402787
+langsung ada hasil gue sampe tidak percaya,ada,1,7.3894013887953545,0.5455371259630668
+kaget kayak gue serius deh,serius,1,5.37449836825309,0.46241500885551146
+kaget kayak gue serius deh,kayak,1,5.309959847115519,0.45686219652243193
+kaget kayak gue serius deh,kaget,1,4.786711703350971,0.4118425912581068
+kaget kayak gue serius deh,gue,1,3.9394138429637673,0.3389421602283817
+kaget kayak gue serius deh,deh,1,6.290789100127245,0.5412514988610951
+polisi milik peran jaga aman tertib,tertib,1,5.517599211893764,0.4853147649465164
+polisi milik peran jaga aman tertib,polisi,1,1.5271916775446353,0.1343281093012671
+polisi milik peran jaga aman tertib,peran,1,6.003107027675465,0.5280188654886291
+polisi milik peran jaga aman tertib,milik,1,5.192176811459135,0.45669139276775733
+polisi milik peran jaga aman tertib,jaga,1,4.321348453661738,0.38009542348057346
+polisi milik peran jaga aman tertib,aman,1,3.8484420647580406,0.33849971415870495
+kecewa sakit hati polisi,sakit,1,6.136638420299986,0.6809742585009927
+kecewa sakit hati polisi,polisi,1,1.5271916775446353,0.16947034336658967
+kecewa sakit hati polisi,kecewa,1,4.190728271244673,0.46503930680512257
+kecewa sakit hati polisi,hati,1,4.863672744487099,0.5397150221222717
+lindung rakyat bikin takut,takut,1,3.373018368042966,0.4394005784098649
+lindung rakyat bikin takut,rakyat,1,3.2073512461541487,0.41781924642806506
+lindung rakyat bikin takut,lindung,1,4.211347558447409,0.5486090946312903
+lindung rakyat bikin takut,bikin,1,4.418986923225654,0.575658119281919
+miris aparat tutup mata derita rakyat,tutup,1,7.3894013887953545,0.5003838057465738
+miris aparat tutup mata derita rakyat,rakyat,1,3.2073512461541487,0.2171903430973678
+miris aparat tutup mata derita rakyat,miris,1,5.779963476361254,0.39139843259337925
+miris aparat tutup mata derita rakyat,mata,1,6.473110656921199,0.43833587798334145
+miris aparat tutup mata derita rakyat,derita,1,7.3894013887953545,0.5003838057465738
+miris aparat tutup mata derita rakyat,aparat,1,4.824452031333818,0.3266946185574791
+kolaborasi instansi tingkat efektivitas tegak hukum,tingkat,1,5.192176811459135,0.35832162587982636
+kolaborasi instansi tingkat efektivitas tegak hukum,tegak,1,4.298358935437038,0.2966376181492257
+kolaborasi instansi tingkat efektivitas tegak hukum,kolaborasi,1,7.3894013887953545,0.509956115914262
+kolaborasi instansi tingkat efektivitas tegak hukum,instansi,1,7.3894013887953545,0.509956115914262
+kolaborasi instansi tingkat efektivitas tegak hukum,hukum,1,3.2383614828967087,0.22348525365646377
+kolaborasi instansi tingkat efektivitas tegak hukum,efektivitas,1,6.696254208235409,0.462120760199082
+seram temu polisi muka galak,temu,1,6.290789100127245,0.712549098889267
+seram temu polisi muka galak,seram,1,6.003107027675465,0.679963743025411
+seram temu polisi muka galak,polisi,1,1.5271916775446353,0.17298291777793134
+benar bikin darah dengar,dengar,1,5.885323992019081,0.7017195638632884
+benar bikin darah dengar,bikin,1,4.418986923225654,0.5268851095858967
+benar bikin darah dengar,benar,1,4.022105558808881,0.47956410936200594
+percaya polisi bangun percaya masyarakat,polisi,1,1.5271916775446353,0.15141216308297364
+percaya polisi bangun percaya masyarakat,percaya,2,3.3640496980602057,0.6670518822114694
+percaya polisi bangun percaya masyarakat,masyarakat,1,3.4975810906847284,0.34676480122659853
+percaya polisi bangun percaya masyarakat,bangun,1,6.473110656921199,0.6417712333370424
+harap polisi kecewa,polisi,1,1.5271916775446353,0.24837233137619474
+harap polisi kecewa,kecewa,1,4.190728271244673,0.6815522676018174
+harap polisi kecewa,harap,1,4.232400967645241,0.6883296387150377
+terima kasih polisi udah siaga aman arus mudik moga sehat lancar tugas,udah,1,4.418986923225654,0.25075176311766534
+terima kasih polisi udah siaga aman arus mudik moga sehat lancar tugas,tugas,1,4.0394973015207505,0.22921793797162945
+terima kasih polisi udah siaga aman arus mudik moga sehat lancar tugas,terima,1,3.549949076202044,0.20143892826589713
+terima kasih polisi udah siaga aman arus mudik moga sehat lancar tugas,siaga,1,6.983936280687191,0.3962976958993633
+terima kasih polisi udah siaga aman arus mudik moga sehat lancar tugas,sehat,1,6.696254208235409,0.37997341430769666
+terima kasih polisi udah siaga aman arus mudik moga sehat lancar tugas,polisi,1,1.5271916775446353,0.08665923036572593
+terima kasih polisi udah siaga aman arus mudik moga sehat lancar tugas,mudik,1,5.517599211893764,0.3130916100446563
+terima kasih polisi udah siaga aman arus mudik moga sehat lancar tugas,moga,1,4.863672744487099,0.27598509275905303
+terima kasih polisi udah siaga aman arus mudik moga sehat lancar tugas,lancar,1,6.003107027675465,0.34064135004836793
+terima kasih polisi udah siaga aman arus mudik moga sehat lancar tugas,kasih,1,3.528671677754759,0.2002315598649698
+terima kasih polisi udah siaga aman arus mudik moga sehat lancar tugas,arus,1,6.983936280687191,0.3962976958993633
+terima kasih polisi udah siaga aman arus mudik moga sehat lancar tugas,aman,1,3.8484420647580406,0.21837666636267383
+takut butuh bantu polisi peduli,takut,1,3.373018368042966,0.34311379054692637
+takut butuh bantu polisi peduli,polisi,1,1.5271916775446353,0.15535062908005615
+takut butuh bantu polisi peduli,peduli,1,5.885323992019081,0.598673236597303
+takut butuh bantu polisi peduli,butuh,1,5.038026131631877,0.5124834952801129
+takut butuh bantu polisi peduli,bantu,1,4.786711703350971,0.4869190195797846
+suluh aman bantu tingkat sadar hukum masyarakat,tingkat,1,5.192176811459135,0.3702955229758847
+suluh aman bantu tingkat sadar hukum masyarakat,suluh,1,7.3894013887953545,0.5269971249252863
+suluh aman bantu tingkat sadar hukum masyarakat,sadar,1,7.3894013887953545,0.5269971249252863
+suluh aman bantu tingkat sadar hukum masyarakat,masyarakat,1,3.4975810906847284,0.2494403919888274
+suluh aman bantu tingkat sadar hukum masyarakat,hukum,1,3.2383614828967087,0.23095337513307948
+suluh aman bantu tingkat sadar hukum masyarakat,bantu,1,4.786711703350971,0.34137857355227813
+suluh aman bantu tingkat sadar hukum masyarakat,aman,1,3.8484420647580406,0.2744630852837797
+polisi lambat tindak rakyat butuh,tindak,1,4.093564522791025,0.4258202908122988
+polisi lambat tindak rakyat butuh,rakyat,1,3.2073512461541487,0.33363471682702717
+polisi lambat tindak rakyat butuh,polisi,1,1.5271916775446353,0.15886135436184426
+polisi lambat tindak rakyat butuh,lambat,1,6.136638420299986,0.6383446852232415
+polisi lambat tindak rakyat butuh,butuh,1,5.038026131631877,0.5240649660088338
+pecat oknum polisi,polisi,1,1.5271916775446353,0.15959186956091598
+pecat oknum polisi,pecat,1,7.3894013887953545,0.7721940866452977
+pecat oknum polisi,oknum,1,5.885323992019081,0.6150176645593899
+polisi jujur,polisi,1,1.5271916775446353,0.35497230783759354
+polisi jujur,jujur,1,4.022105558808881,0.9348768157722454
+polisi jujur bikin hati tenang,tenang,1,6.003107027675465,0.6072434018638652
+polisi jujur bikin hati tenang,polisi,1,1.5271916775446353,0.15448284784778993
+polisi jujur bikin hati tenang,jujur,1,4.022105558808881,0.40685549181894515
+polisi jujur bikin hati tenang,hati,1,4.863672744487099,0.49198409578556884
+polisi jujur bikin hati tenang,bikin,1,4.418986923225654,0.4470019674279491
+ngeri berani bicara kriminalisasi,ngeri,1,5.443491239740042,0.5506239167190952
+ngeri berani bicara kriminalisasi,bicara,1,6.136638420299986,0.6207376357669725
+ngeri berani bicara kriminalisasi,berani,1,5.517599211893764,0.5581201392884441
+polisi pakai sogok makan,sogok,1,7.3894013887953545,0.9793037819860813
+polisi pakai sogok makan,polisi,1,1.5271916775446353,0.20239590556075404
+polisi peduli masyarakat percaya penuh,polisi,1,1.5271916775446353,0.15850346261038162
+polisi peduli masyarakat percaya penuh,percaya,1,3.3640496980602057,0.3491464322233822
+polisi peduli masyarakat percaya penuh,penuh,1,5.684653296556929,0.5899961638688666
+polisi peduli masyarakat percaya penuh,peduli,1,5.885323992019081,0.6108232810820264
+polisi peduli masyarakat percaya penuh,masyarakat,1,3.4975810906847284,0.3630053265647931
+polisi lembaga tugas jaga tertib aman,tugas,1,4.0394973015207505,0.365490780622408
+polisi lembaga tugas jaga tertib aman,tertib,1,5.517599211893764,0.49922836744003585
+polisi lembaga tugas jaga tertib aman,polisi,1,1.5271916775446353,0.13817919328122769
+polisi lembaga tugas jaga tertib aman,lembaga,1,6.290789100127245,0.5691860267045734
+polisi lembaga tugas jaga tertib aman,jaga,1,4.321348453661738,0.3909924680666731
+polisi lembaga tugas jaga tertib aman,aman,1,3.8484420647580406,0.3482042416265499
+wow tidak sangka polisi tanggap cepat,wow,1,5.779963476361254,0.5382108795444341
+wow tidak sangka polisi tanggap cepat,tidak,1,3.477378383367209,0.3238018520143142
+wow tidak sangka polisi tanggap cepat,tanggap,1,5.443491239740042,0.5068797095197765
+wow tidak sangka polisi tanggap cepat,sangka,1,4.824452031333818,0.449236847555093
+wow tidak sangka polisi tanggap cepat,polisi,1,1.5271916775446353,0.14220698441535706
+wow tidak sangka polisi tanggap cepat,cepat,1,3.819868692313985,0.3556934048186815
+oknum benar diam kecewa berat,oknum,1,5.885323992019081,0.5061672328516494
+oknum benar diam kecewa berat,kecewa,1,4.190728271244673,0.3604235443223863
+oknum benar diam kecewa berat,diam,1,5.779963476361254,0.4971057027243932
+oknum benar diam kecewa berat,berat,1,5.779963476361254,0.4971057027243932
+oknum benar diam kecewa berat,benar,1,4.022105558808881,0.3459211495748233
+fix cepat sih tangan gue liat,tangan,1,4.58604100788882,0.45272700412330685
+fix cepat sih tangan gue liat,sih,1,4.824452031333818,0.4762625783165069
+fix cepat sih tangan gue liat,liat,1,5.309959847115519,0.5241911726180406
+fix cepat sih tangan gue liat,gue,1,3.9394138429637673,0.38889295234363647
+fix cepat sih tangan gue liat,cepat,1,3.819868692313985,0.37709163660789685
+dukung wujud terima kasih baik polisi,wujud,1,6.473110656921199,0.5845024313262733
+dukung wujud terima kasih baik polisi,terima,1,3.549949076202044,0.320549728885905
+dukung wujud terima kasih baik polisi,polisi,1,1.5271916775446353,0.13790081707805354
+dukung wujud terima kasih baik polisi,kasih,1,3.528671677754759,0.31862844377525446
+dukung wujud terima kasih baik polisi,dukung,1,5.192176811459135,0.4688379561268339
+dukung wujud terima kasih baik polisi,baik,1,5.13810959018886,0.4639558485957751
+percaya polisi rakyat,rakyat,1,3.2073512461541487,0.6555691319512639
+percaya polisi rakyat,polisi,1,1.5271916775446353,0.31215156854791615
+percaya polisi rakyat,percaya,1,3.3640496980602057,0.6875976377837129
+rakyat menang mata hukum hukum,rakyat,1,3.2073512461541487,0.27206744703794994
+rakyat menang mata hukum hukum,menang,1,6.696254208235409,0.568017858766248
+rakyat menang mata hukum hukum,mata,1,6.473110656921199,0.549089437252753
+rakyat menang mata hukum hukum,hukum,2,3.2383614828967087,0.5493958557200025
+hukum jalan polisi penuh tanggung,tanggung,1,5.517599211893764,0.5664432128254931
+hukum jalan polisi penuh tanggung,polisi,1,1.5271916775446353,0.15678329055941473
+hukum jalan polisi penuh tanggung,penuh,1,5.684653296556929,0.5835931812806588
+hukum jalan polisi penuh tanggung,jalan,1,4.393669115241364,0.45105922959476075
+hukum jalan polisi penuh tanggung,hukum,1,3.2383614828967087,0.3324539917122307
+putus ambil polisi sungguh kecewa cermin adil,sungguh,1,6.136638420299986,0.466241545018232
+putus ambil polisi sungguh kecewa cermin adil,putus,1,6.983936280687191,0.5306164415757288
+putus ambil polisi sungguh kecewa cermin adil,polisi,1,1.5271916775446353,0.11603098610502599
+putus ambil polisi sungguh kecewa cermin adil,kecewa,1,4.190728271244673,0.3183977106217032
+putus ambil polisi sungguh kecewa cermin adil,ambil,1,7.3894013887953545,0.5614223430331091
+putus ambil polisi sungguh kecewa cermin adil,adil,1,3.5078375908519175,0.2665139292909293
+aman ragu polisi tidak tindak cepat,tindak,1,4.093564522791025,0.4043634468080497
+aman ragu polisi tidak tindak cepat,tidak,1,3.477378383367209,0.3434964078678943
+aman ragu polisi tidak tindak cepat,ragu,1,6.473110656921199,0.6394156784947779
+aman ragu polisi tidak tindak cepat,polisi,1,1.5271916775446353,0.150856420420478
+aman ragu polisi tidak tindak cepat,cepat,1,3.819868692313985,0.37732769623602
+aman ragu polisi tidak tindak cepat,aman,1,3.8484420647580406,0.38015018194598776
+takut lapor gue kena,takut,1,3.373018368042966,0.38266187564040577
+takut lapor gue kena,lapor,1,4.1705255639271535,0.47313739818872425
+takut lapor gue kena,kena,1,5.779963476361254,0.6557247615229304
+takut lapor gue kena,gue,1,3.9394138429637673,0.4469182570585669
+tilang takut urus,urus,1,5.249335225299084,0.5838582860981181
+tilang takut urus,tilang,1,6.473110656921199,0.7199729359365009
+tilang takut urus,takut,1,3.373018368042966,0.37516459490941195
+serius kerja itu rakyat sari untung,untung,1,7.3894013887953545,0.5032161488658258
+serius kerja itu rakyat sari untung,serius,1,5.37449836825309,0.3660018218876167
+serius kerja itu rakyat sari untung,sari,1,6.983936280687191,0.4756040894490726
+serius kerja itu rakyat sari untung,rakyat,1,3.2073512461541487,0.2184197145653792
+serius kerja itu rakyat sari untung,kerja,1,4.298358935437038,0.29271703026085816
+serius kerja itu rakyat sari untung,itu,1,7.3894013887953545,0.5032161488658258
+kali gue puas cepat respons aparat,respons,1,6.290789100127245,0.4922131635460488
+kali gue puas cepat respons aparat,puas,1,6.983936280687191,0.5464474036574418
+kali gue puas cepat respons aparat,kali,1,4.6485613648701545,0.3637195682326078
+kali gue puas cepat respons aparat,gue,1,3.9394138429637673,0.3082334059050036
+kali gue puas cepat respons aparat,cepat,1,3.819868692313985,0.2988797785855425
+kali gue puas cepat respons aparat,aparat,1,4.824452031333818,0.3774818641863144
+takut hukum tunduk uang kuasa,uang,1,6.003107027675465,0.6443908083454133
+takut hukum tunduk uang kuasa,takut,1,3.373018368042966,0.36206951212541966
+takut hukum tunduk uang kuasa,kuasa,1,5.37449836825309,0.5769141432933557
+takut hukum tunduk uang kuasa,hukum,1,3.2383614828967087,0.34761505401420517
+polisi integritas kinerja andal,polisi,1,1.5271916775446353,0.1537404454759054
+polisi integritas kinerja andal,kinerja,1,4.253907172866205,0.42823542937391706
+polisi integritas kinerja andal,integritas,1,5.779963476361254,0.5818615781870449
+polisi integritas kinerja andal,andal,1,6.696254208235409,0.6741034017741556
+polisi hati nurani,polisi,1,1.5271916775446353,0.18535082319685053
+polisi hati nurani,nurani,1,6.473110656921199,0.7856226605645471
+polisi hati nurani,hati,1,4.863672744487099,0.5902898504529215
+tidak sangka polisi cepat tangan kasus,tidak,1,3.477378383367209,0.327273418236642
+tidak sangka polisi cepat tangan kasus,tangan,1,4.58604100788882,0.43161518573996843
+tidak sangka polisi cepat tangan kasus,sangka,1,4.824452031333818,0.4540532358990619
+tidak sangka polisi cepat tangan kasus,polisi,1,1.5271916775446353,0.14373162351363383
+tidak sangka polisi cepat tangan kasus,kasus,1,6.290789100127245,0.5920575287555768
+tidak sangka polisi cepat tangan kasus,cepat,1,3.819868692313985,0.3595068889046796
+kritik gue polisi tulus rakyat,tulus,1,6.983936280687191,0.6571357839010543
+kritik gue polisi tulus rakyat,rakyat,1,3.2073512461541487,0.3017875866387693
+kritik gue polisi tulus rakyat,polisi,1,1.5271916775446353,0.14369723030916778
+kritik gue polisi tulus rakyat,kritik,1,6.003107027675465,0.5648471412006191
+kritik gue polisi tulus rakyat,gue,1,3.9394138429637673,0.37066916131026606
+terima kasih polri bagi buku ilmu,terima,1,3.549949076202044,0.23869892804713141
+terima kasih polri bagi buku ilmu,polri,1,5.684653296556929,0.3822366515914783
+terima kasih polri bagi buku ilmu,kasih,1,3.528671677754759,0.23726823366476796
+terima kasih polri bagi buku ilmu,ilmu,1,7.3894013887953545,0.4968640824286142
+terima kasih polri bagi buku ilmu,buku,1,7.3894013887953545,0.4968640824286142
+terima kasih polri bagi buku ilmu,bagi,1,7.3894013887953545,0.4968640824286142
+percaya hukum tegak pandang bulu,tegak,1,4.298358935437038,0.36612561319364034
+percaya hukum tegak pandang bulu,percaya,1,3.3640496980602057,0.2865430218872457
+percaya hukum tegak pandang bulu,pandang,1,6.983936280687191,0.5948777176776013
+percaya hukum tegak pandang bulu,hukum,1,3.2383614828967087,0.27583715121912505
+percaya hukum tegak pandang bulu,bulu,1,6.983936280687191,0.5948777176776013
+takut orang salah paksa ngaku,takut,1,3.373018368042966,0.43657816738397637
+takut orang salah paksa ngaku,salah,1,4.556188044739139,0.5897187651495345
+takut orang salah paksa ngaku,orang,1,5.249335225299084,0.6794345309109311
+sosialisasi atur hukum masyarakat cegah langgar,sosialisasi,1,7.3894013887953545,0.5309444123969106
+sosialisasi atur hukum masyarakat cegah langgar,masyarakat,1,3.4975810906847284,0.2513087379202291
+sosialisasi atur hukum masyarakat cegah langgar,langgar,1,6.696254208235409,0.4811402938867139
+sosialisasi atur hukum masyarakat cegah langgar,hukum,1,3.2383614828967087,0.23268325053670982
+sosialisasi atur hukum masyarakat cegah langgar,cegah,1,6.473110656921199,0.4651069488971819
+sosialisasi atur hukum masyarakat cegah langgar,atur,1,5.443491239740042,0.39112657515856986
+tidak aman polisi,tidak,1,3.477378383367209,0.6431326245820529
+tidak aman polisi,polisi,1,1.5271916775446353,0.282450364480635
+tidak aman polisi,aman,1,3.8484420647580406,0.711759944646337
+salut polisi tolong sopir truk kontainer pingsan,tolong,1,6.983936280687191,0.7691798830360558
+salut polisi tolong sopir truk kontainer pingsan,salut,1,5.5976419195673,0.616499547522625
+salut polisi tolong sopir truk kontainer pingsan,polisi,1,1.5271916775446353,0.1681981433816627
+tertib masyarakat cipta,tertib,1,5.517599211893764,0.6083864770087396
+tertib masyarakat cipta,masyarakat,1,3.4975810906847284,0.38565342571950423
+tertib masyarakat cipta,cipta,1,6.290789100127245,0.6936406344957778
+seram lihat ujung diam,ujung,1,5.885323992019081,0.5320358046704361
+seram lihat ujung diam,seram,1,6.003107027675465,0.5426834414423366
+seram lihat ujung diam,lihat,1,4.27588607958498,0.3865419294020297
+seram lihat ujung diam,diam,1,5.779963476361254,0.5225111690166439
+keren terima kasih polisi,terima,1,3.549949076202044,0.44575662447245695
+keren terima kasih polisi,polisi,1,1.5271916775446353,0.19176495000120972
+keren terima kasih polisi,keren,1,6.003107027675465,0.7537924256272346
+keren terima kasih polisi,kasih,1,3.528671677754759,0.44308488436976107
+kali aman diam urus polisi,urus,1,5.249335225299084,0.5256819914876237
+kali aman diam urus polisi,polisi,1,1.5271916775446353,0.1529369201962612
+kali aman diam urus polisi,kali,1,4.6485613648701545,0.4655189449628148
+kali aman diam urus polisi,diam,1,5.779963476361254,0.5788204754643379
+kali aman diam urus polisi,aman,1,3.8484420647580406,0.3853929310851899
+tolong bukti hoax bukti valid biar rakyat percaya,tolong,1,6.983936280687191,0.47651613249876595
+tolong bukti hoax bukti valid biar rakyat percaya,rakyat,1,3.2073512461541487,0.2188385675294404
+tolong bukti hoax bukti valid biar rakyat percaya,percaya,1,3.3640496980602057,0.2295301513683856
+tolong bukti hoax bukti valid biar rakyat percaya,bukti,2,5.37449836825309,0.7334073718979852
+tolong bukti hoax bukti valid biar rakyat percaya,biar,1,5.37449836825309,0.3667036859489926
+integritas polisi pondasi utama percaya publik,utama,1,6.003107027675465,0.5672918376609546
+integritas polisi pondasi utama percaya publik,publik,1,5.37449836825309,0.5078885053649798
+integritas polisi pondasi utama percaya publik,polisi,1,1.5271916775446353,0.14431916159760477
+integritas polisi pondasi utama percaya publik,percaya,1,3.3640496980602057,0.3179017009687278
+integritas polisi pondasi utama percaya publik,integritas,1,5.779963476361254,0.546204838094957
+takut lapor polisi khawatir adil,takut,1,3.373018368042966,0.3651921563262606
+takut lapor polisi khawatir adil,polisi,1,1.5271916775446353,0.16534698628683553
+takut lapor polisi khawatir adil,lapor,1,4.1705255639271535,0.45153718643638013
+takut lapor polisi khawatir adil,khawatir,1,6.473110656921199,0.7008349736058829
+takut lapor polisi khawatir adil,adil,1,3.5078375908519175,0.37978885202122
+tanggap bikin menetizen heboh kaget benar,tanggap,1,5.443491239740042,0.4069503198264367
+tanggap bikin menetizen heboh kaget benar,menetizen,1,6.473110656921199,0.48392370559446285
+tanggap bikin menetizen heboh kaget benar,kaget,1,4.786711703350971,0.3578500952430395
+tanggap bikin menetizen heboh kaget benar,heboh,1,6.983936280687191,0.5221125520188831
+tanggap bikin menetizen heboh kaget benar,bikin,1,4.418986923225654,0.3303593342057809
+tanggap bikin menetizen heboh kaget benar,benar,1,4.022105558808881,0.3006888541646903
+anggota polisi ikut latih tugas,tugas,1,4.0394973015207505,0.318317045345299
+anggota polisi ikut latih tugas,polisi,1,1.5271916775446353,0.12034446521078872
+anggota polisi ikut latih tugas,latih,1,6.983936280687191,0.5503422321661782
+anggota polisi ikut latih tugas,ikut,1,6.983936280687191,0.5503422321661782
+anggota polisi ikut latih tugas,anggota,1,6.696254208235409,0.5276725531278512
+polisi prinsip jujur dukung,prinsip,1,6.983936280687191,0.7194060288592655
+polisi prinsip jujur dukung,polisi,1,1.5271916775446353,0.1573139925528074
+polisi prinsip jujur dukung,jujur,1,4.022105558808881,0.4143117679519783
+polisi prinsip jujur dukung,dukung,1,5.192176811459135,0.534839258398767
+laku serang kunjung tangkap rakyat kecewa polisi,tangkap,1,5.13810959018886,0.37563209425532046
+laku serang kunjung tangkap rakyat kecewa polisi,serang,1,7.3894013887953545,0.5402174224283813
+laku serang kunjung tangkap rakyat kecewa polisi,rakyat,1,3.2073512461541487,0.23448002508662155
+laku serang kunjung tangkap rakyat kecewa polisi,polisi,1,1.5271916775446353,0.11164849602678512
+laku serang kunjung tangkap rakyat kecewa polisi,laku,1,4.616812666555574,0.33752160795367864
+laku serang kunjung tangkap rakyat kecewa polisi,kunjung,1,7.3894013887953545,0.5402174224283813
+laku serang kunjung tangkap rakyat kecewa polisi,kecewa,1,4.190728271244673,0.30637182982404115
+moga koordinasi polisi masyarakat kuat,polisi,1,1.5271916775446353,0.13993992988597895
+moga koordinasi polisi masyarakat kuat,moga,1,4.863672744487099,0.44566902299137157
+moga koordinasi polisi masyarakat kuat,masyarakat,1,3.4975810906847284,0.32049104234765674
+moga koordinasi polisi masyarakat kuat,kuat,1,6.003107027675465,0.5500778906165686
+moga koordinasi polisi masyarakat kuat,koordinasi,1,6.696254208235409,0.6135924901750041
+polisi terima kasih,terima,1,3.549949076202044,0.6783565241586844
+polisi terima kasih,polisi,1,1.5271916775446353,0.29182966174027636
+polisi terima kasih,kasih,1,3.528671677754759,0.6742906455378898
+percaya rakyat polisi kuat jujur,rakyat,1,3.2073512461541487,0.36754377997935544
+percaya rakyat polisi kuat jujur,polisi,1,1.5271916775446353,0.17500727511239067
+percaya rakyat polisi kuat jujur,percaya,1,3.3640496980602057,0.38550051028743265
+percaya rakyat polisi kuat jujur,kuat,1,6.003107027675465,0.6879211159732243
+percaya rakyat polisi kuat jujur,jujur,1,4.022105558808881,0.46090988080372697
+kaget benar tidak sangka polisi langsung turun tangan,turun,1,6.983936280687191,0.5402837082406664
+kaget benar tidak sangka polisi langsung turun tangan,tidak,1,3.477378383367209,0.2690131771558354
+kaget benar tidak sangka polisi langsung turun tangan,tangan,1,4.58604100788882,0.35478033336841
+kaget benar tidak sangka polisi langsung turun tangan,sangka,1,4.824452031333818,0.3732240285362075
+kaget benar tidak sangka polisi langsung turun tangan,polisi,1,1.5271916775446353,0.11814494714389225
+kaget benar tidak sangka polisi langsung turun tangan,langsung,1,4.527200507865887,0.3502283783863698
+kaget benar tidak sangka polisi langsung turun tangan,kaget,1,4.786711703350971,0.3703044021917951
+kaget benar tidak sangka polisi langsung turun tangan,benar,1,4.022105558808881,0.31115377044001863
+percaya rakyat mahal tidak dapat kerja hati,tidak,1,3.477378383367209,0.30448246783752464
+percaya rakyat mahal tidak dapat kerja hati,rakyat,1,3.2073512461541487,0.2808386419268911
+percaya rakyat mahal tidak dapat kerja hati,percaya,1,3.3640496980602057,0.29455930332252434
+percaya rakyat mahal tidak dapat kerja hati,mahal,1,7.3894013887953545,0.6470228208308411
+percaya rakyat mahal tidak dapat kerja hati,kerja,1,4.298358935437038,0.3763682843872843
+percaya rakyat mahal tidak dapat kerja hati,hati,1,4.863672744487099,0.4258676844254011
+terima kasih jajar polri indonesia,terima,1,3.549949076202044,0.3725927448099389
+terima kasih jajar polri indonesia,polri,1,5.684653296556929,0.5966453404236003
+terima kasih jajar polri indonesia,kasih,1,3.528671677754759,0.37035952846803855
+terima kasih jajar polri indonesia,indonesia,1,5.779963476361254,0.6066488308228527
+tegas polisi imbang adil,tegas,1,7.3894013887953545,0.664006330807542
+tegas polisi imbang adil,polisi,1,1.5271916775446353,0.13723235332484007
+tegas polisi imbang adil,imbang,1,7.3894013887953545,0.664006330807542
+tegas polisi imbang adil,adil,1,3.5078375908519175,0.31521178038889397
+rakyat kecewa kinerja polisi,rakyat,1,3.2073512461541487,0.4616095968981283
+rakyat kecewa kinerja polisi,polisi,1,1.5271916775446353,0.21979704764261856
+rakyat kecewa kinerja polisi,kinerja,1,4.253907172866205,0.6122324075554183
+rakyat kecewa kinerja polisi,kecewa,1,4.190728271244673,0.6031395502187136
+polisi hati kenang jasa,polisi,1,1.5271916775446353,0.17011812995898679
+polisi hati kenang jasa,jasa,1,7.3894013887953545,0.8231259797062803
+polisi hati kenang jasa,hati,1,4.863672744487099,0.5417780388607807
