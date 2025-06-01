@@ -33,8 +33,8 @@ class PredictService:
 
         # Buat list hasil prediksi lengkap
         predict_results = [
-            {"text": text, "predicted_emotion": pred}
-            for text, pred in zip(texts, predictions)
+            {"text": text, "true_label": true, "predicted_emotion": pred}
+            for text, true, pred in zip(texts, true_labels, predictions)
         ]
 
         # Hitung metrik evaluasi
