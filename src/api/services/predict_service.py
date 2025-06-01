@@ -6,7 +6,7 @@ from src.features.classifier import TweetClassifier
 class PredictService:
 
     def predict(self, text, model_path='./src/storage/models/trained/8fa43f64-ec68-42af-a5f8-3a7a8e6237a1.joblib'):
-        """Mengklasifikasikan teks tunggal menggunakan model hybrid dan DeepSeek"""
+        """Mengklasifikasikan teks tunggal menggunakan model hybrid"""
         classifier = TweetClassifier(model_path)
         result = classifier.classify(text)
         return result
@@ -26,10 +26,8 @@ class PredictService:
 
         classifier = TweetClassifier(model_path)
 
-        predictions = []
-        for text in texts:
-            pred = classifier.classify(text)
-            predictions.append(pred)
+        # Gunakan classify_batch untuk prediksi banyak
+        predictions = classifier.classify_batch(texts)
 
         # Buat list hasil prediksi lengkap
         predict_results = [
@@ -48,4 +46,3 @@ class PredictService:
             "predict_results": predict_results,
             "evaluation_metrics": evaluation_metrics
         }
-
